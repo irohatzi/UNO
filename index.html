@@ -12,13 +12,48 @@
     
     <body>
         <div class="container">
+            <!--MODDAL DIALOG-->
+            <div class="playerNamesModDia">
+                <div class="modal fade" id="playerNames" tabindex="-1" role="dialog"
+                data-keyboard="false" data-backdrop="static">
+                    <form id="playerNamesForm">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Players:</h5>   
+                            </div>
+                            <div class="modal-body" id="test">
+                              <div class="form-group">
+                                <input type="text" class="form-control" id="pn1"
+                                  placeholder="Please type in a name"></input>
+                                </br>
+                                <input type="text" class="form-control" id="pn2"
+                                  placeholder="Please type in a name"></input>
+                                </br>
+                                <input type="text" class="form-control" id="pn3"
+                                  placeholder="Please type in a name"></input>
+                                </br>
+                                <input type="text" class="form-control" id="pn4"
+                                  placeholder="Please type in a name"></input>
+                                </br>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="submit" class="btn btn-primary"
+                              id="playerNamesSubmit">Confirm!</button>
+                            </div>
+                          </div>
+                        </div>
+                    </form>   
+                </div>
+            </div>
             <!--PLAYGROUND-->
             <div class="row playground">
                 <div class="row justify-content-between" style="width: 100%;">
                     <!--PLAYER 1 Left corner up-->
                     <div class="col-3 align-items-start player1">
                         <br>
-
+                        <p id='p1'></p>
                         <h5>NAME</h5>
                         <img>Karte1</img>
                         <img>Karte1</img>
@@ -31,7 +66,7 @@
                     <!--PLAYER 2 Right corner up-->
                     <div class="col-3 align-items-end player2">
                         <br>
-
+                        <p id='p2'></p>
                         <h5>NAME</h5>
                         <img>Karte1</img>
                         <img>Karte1</img>
@@ -47,6 +82,7 @@
                     <div class="col-3 align-self-start decks">
                         <br>
 
+                        <p id='gId'></p>
                         <h5>AblegeStapel</h5>
                         <h5>HebeStapel</h5>
 
@@ -58,7 +94,7 @@
                     <!--PLAYER 3 Left corner down-->
                     <div class="col-3 align-self-start player3">
                         <br>
-
+                        <p id='p3'></p>
                         <h5>NAME</h5>
                         <img>Karte1</img>
                         <img>Karte1</img>
@@ -71,7 +107,7 @@
                     <!--PLAYER 4 Right corner down-->
                     <div class="col-3 align-self-end player4">
                         <br>
-
+                        <p id='p4'></p>
                         <h5>NAME</h5>
                         <img>Karte1</img>
                         <img>Karte1</img>
@@ -85,13 +121,11 @@
             </div>
             <!--END PLAYGROUND-->           
         </div>
-    </body>
-
-<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-
+        <!-- Chris fragen ob beides notwendig bzw warum -->
+                <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         <!-- Custom JS -->
         <script src="main.js"></script>
-    
+    </body>
 </html>

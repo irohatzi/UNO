@@ -79,8 +79,6 @@ async function post(){
         alert("HTTP-Error: " + response.status)
     }
 }
-
-
 post();
 
 

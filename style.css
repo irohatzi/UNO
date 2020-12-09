@@ -8,8 +8,9 @@ div{
     border: solid black 5px;
 }
 
-.cardDiv2Style{
+.cards{
     width: 80px;
     border: solid green 2px;
-    background-color: black;
+    padding: 0;
+    margin: 0;
 }

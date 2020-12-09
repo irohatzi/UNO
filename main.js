@@ -2,8 +2,9 @@
 
 
 // let players = [''];
-const gameId = {};
+let gameId;
 let playersCards = [];
+let game = {};
 
 // modaler dialog funzt, damit erspart man sich das permanente eingeben:
 let players = [''];
@@ -82,10 +83,10 @@ players.push(player1,player2,player3,player4);
     playersCards.push(document.getElementById("p3cards").id);
     playersCards.push(document.getElementById("p4cards").id);
 
-
-    $('#playerNames').modal('hide');
-    post();
 // unbedingt für mod dialog wieder einkommentieren!
+    // $('#playerNames').modal('hide');
+    // post();
+
 // })
 
 
@@ -121,8 +122,9 @@ async function post() {
         console.log(result);
 
 
-        let game = {};
-        game.Id = result.Id;
+
+        gameId = result.Id;
+        console.log(gameId);
 
 
     
@@ -158,6 +160,24 @@ async function post() {
             }
         }
 
+        let scores = [];
+        scores.push(document.getElementById("score1").id);
+        scores.push(document.getElementById("score2").id);
+        scores.push(document.getElementById("score3").id);
+        scores.push(document.getElementById("score4").id);
+
+        for(let i = 0; i < scores.length; i++){
+            let p = document.createElement("p");
+            p.innerText = "Score";
+            let score = document.createElement("div");
+            score.innerText = result.Players[i].Score;
+            score.setAttribute("id", "scoreStyle");
+
+            document.getElementById(scores[i]).appendChild(p).appendChild(score);
+        }
+
+      //  getTopCard();
+      drawCard();
     }
     else {
         alert("HTTP-Error: " + response.status)
@@ -168,21 +188,43 @@ async function post() {
 post();
 
 
-// async function getTopCard(){
-//     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
-//         method: "POST",
-//         body: JSON.stringify(names),
-//         headers: {
-//             "Content-type": "application/json; charset=UTF-8"
-//         }
-//     });
 
-//     if(response.ok){
-//         let result = await response.json();
-//         alert(JSON.stringify(result))
-//     }
-//     else{
-//         alert("HTTP-Error: " + response.status)
-//     }
-// }
-//post();
+async function getTopCard(){
+
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/topCard/" + gameId , {
+        method: "GET",
+        contentType: "application/json",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+
+    if(response.ok){
+        let result = await response.json();
+        console.log(result);
+        alert(JSON.stringify(result))
+    }
+    else{
+        alert("HTTP-Error: " + response.status)
+    }
+}
+
+async function drawCard(){
+
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/drawCard/" + gameId , {
+        method: "PUT",
+        contentType: "application/json",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+
+    if(response.ok){
+        let result = await response.json();
+        console.log(result);
+        alert(JSON.stringify(result))
+    }
+    else{
+        alert("HTTP-Error: " + response.status)
+    }
+}

@@ -2,9 +2,6 @@
 
 
 
-
-
-
 const log = document.getElementById('log');
 let players = [''];
 const gameId = {};

@@ -7,3 +7,9 @@ div{
 .row{
     border: solid black 5px;
 }
+
+.cardDiv2Style{
+    width: 80px;
+    border: solid green 2px;
+    background-color: black;
+}

@@ -3,6 +3,8 @@
 
 let players = [''];
 const gameId = {};
+let playersCards = [];
+
 
 
 // Modalen Dialog öffnen um Namen einzugeben
@@ -30,11 +32,12 @@ document.getElementById('playerNamesForm').addEventListener('submit', function (
     players.push(player4);
     document.getElementById('p4').innerText = player4;
 
-    let playersCards = [];
-    playersCards.push(document.getElementById("p1").id);
-    playersCards.push(document.getElementById("p2").id);
-    playersCards.push(document.getElementById("p3").id);
-    playersCards.push(document.getElementById("p4").id);
+
+    playersCards.push(document.getElementById("cardsP1").id);
+    playersCards.push(document.getElementById("cardsP2").id);
+    playersCards.push(document.getElementById("cardsP3").id);
+    playersCards.push(document.getElementById("cardsP4").id);
+
 
     $('#playerNames').modal('hide');
     post();
@@ -87,6 +90,7 @@ async function post() {
         game.topCard = result.TopCard;
 
 
+
         let card = {};
         card.color = result.Color;
         card.text = result.Text;
@@ -95,10 +99,24 @@ async function post() {
 
         let firstCard = document.getElementById("gId");
         let img = new Image();
-        img.src = "cards/" + result.TopCard.Color + result.TopCard.Value + ".png";
+        img.src = "cards/" + game.topCard.Color + game.topCard.Value + ".png";
         img.height = 200;
         firstCard.appendChild(img);
         firstCard = game.topCard;
+
+        // playerCards
+        for (let i = 0; i < playersCards.length; i++) {
+
+            for (let j = 0; j < 7; j++) {
+                let karte = document.createElement("div");
+                karte.setAttribute("class", "Handkarten" + i) //Klassen Attribut, falls wir es brauchen
+                let img = new Image();
+                img.src = "cards/" + result.Players[i].Cards[j].Color + result.Players[i].Cards[j].Value + ".png";
+                img.height = 90;
+                karte.appendChild(img);
+                document.getElementById(playersCards[i]).appendChild(karte);
+            }
+        }
 
     }
     else {
@@ -107,19 +125,7 @@ async function post() {
 }
 
 
-// playerCards
-for (let i = 0; i < playersCards.length; i++) {
 
-    for (let j = 0; j < 7; j++) {
-        let card = document.createElement("div");
-        Karte.setAttribute("class", "pcards" + i) //Klassen Attribut, falls wir es brauchen
-        let img = new Image();
-        img.src = "cards/" + game.TopCard.Color + game.TopCard.Value + ".png";
-        img.height = 90;
-        startkarte.appendChild(img);
-        document.getElementById(playersCards[i]).appendChild(Karte);
-    }
-}
 
 
 // async function getTopCard(){

@@ -170,7 +170,7 @@ async function post() {
         scores.push(document.getElementById("score4").id);
 
         for(let i = 0; i < scores.length; i++){
-            document.getElementById("p" + i)
+            document.getElementById("score" + i)
         //    let p = document.createElement("p");
          //   p.innerText = "Score";
             let score = document.createElement("p");

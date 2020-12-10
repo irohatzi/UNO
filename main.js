@@ -128,10 +128,8 @@ async function post() {
         gameId = result.Id;
         console.log(gameId);
 
-
-    
-        currentPlayer = result.NextPlayer;
         game.topCard = result.TopCard;
+        currentPlayer = result.NextPlayer;
 
         console.log(currentPlayer);
         
@@ -147,13 +145,14 @@ async function post() {
         firstCard.appendChild(img);
         firstCard = game.topCard;
 
+
         // playerCards
         for (let i = 0; i < playersCards.length; i++) {
 
             for (let j = 0; j < 7; j++) {
                 let cardDiv = document.createElement("div");
                 cardDiv.setAttribute("id", "card2play" + j);
-                cardDiv.setAttribute("onclick", "replyId(card.color + card.value)");
+                cardDiv.setAttribute("onclick", "replyId(this.id)");
                 let img = new Image();
                 img.src = "cards/" + result.Players[i].Cards[j].Color + result.Players[i].Cards[j].Value + ".png";
                 img.height = 100;
@@ -182,6 +181,9 @@ async function post() {
 
       //  getTopCard();
       // drawCard();
+
+        const btnDraw = document.getElementById('drawC');
+        btnDraw.addEventListener("click", drawCard);
     }
     else {
         alert("HTTP-Error: " + response.status)
@@ -219,8 +221,7 @@ async function getTopCard(){
 }
 
 
-// const btnDraw = document.getElementById('drawC');
-// btnDraw.addEventListener("click", drawCard());
+
 
 async function drawCard(){
 
@@ -235,18 +236,50 @@ async function drawCard(){
     if(response.ok){
         let result = await response.json();
         console.log(result);
-        alert(JSON.stringify(result))
+        // alert to check response
+       // alert(JSON.stringify(result))
+       // console.log(currentPlayer);
+       // console.log(result.Player);
 
-        if(result.Player == currentPlayer){
+      //  if(result.Player === currentPlayer){
             let cardDiv = document.createElement("div");
-                cardDiv.setAttribute("id", "card2play" + j);
-                cardDiv.setAttribute("onclick", "replyId(card.color + card.value)");
+                cardDiv.setAttribute("id", "card2play" + result.Player.Cards);
+                cardDiv.setAttribute("onclick", "replyId(this.id)");
                 let img = new Image();
-                img.src = "cards/" + result.Player.Card.Color + result.Player.Card.Value + ".png";
+                img.src = "cards/" + result.Card.Color + result.Card.Value + ".png";
                 img.height = 100;
                 cardDiv.appendChild(img);
-                document.getElementById(playersCards[i]).appendChild(cardDiv);
+                let check = players.indexOf(currentPlayer);
+                check += 1;
+                console.log("p" + check + "cards");
+                document.getElementById("p" + check + "cards").appendChild(cardDiv);
+                currentPlayer = result.NextPlayer;
+                getCards();
+      //  }
+    }
+    else{
+        alert("HTTP-Error: " + response.status)
+    }
+}
+
+
+async function getCards(){
+
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/getCards/" + gameId 
+    + "?playerName=" + currentPlayer, {
+        method: "GET",
+        contentType: "application/json",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
         }
+    });
+
+    if(response.ok){
+        let result = await response.json();
+        console.log(result);
+        // alert to check response
+       alert(JSON.stringify(result))
+
     }
     else{
         alert("HTTP-Error: " + response.status)
@@ -263,7 +296,7 @@ async function playCard(){
 
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameId +
     "? playerName=Player " + nr, {
-        method: "PUT",
+        method: "GET",
         contentType: "application/json",
         headers: {
             "Content-type": "application/json; charset=UTF-8"

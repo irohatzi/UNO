@@ -1,66 +1,114 @@
 "use strict";
 
 
+// let players = [''];
+let gameId;
+let playersCards = [];
+let game = {};
+let card = {};
 
-const log = document.getElementById('log');
+// modaler dialog funzt, damit erspart man sich das permanente eingeben:
 let players = [''];
-const gameId = {};
+let player1 = 'Hansi';
+let player2 = 'Helga';
+let player3 = 'Wurschti';
+let player4 = 'Greti';
+
+players.push(player1,player2,player3,player4);
+// // Modalen Dialog öffnen um Namen einzugeben
+// $('#playerNames').modal()
+
+// document.getElementById('playerNamesForm').addEventListener('submit', function (evt) {
+//     console.log('submit')
+
+//     evt.preventDefault()
 
 
-// Modalen Dialog öffnen um Namen einzugeben
-    $('#playerNames').modal()
-    
-    document.getElementById('playerNamesForm').addEventListener('submit', function(evt){
-        console.log('submit')
-      
-        evt.preventDefault()
-      
-
-        let pl1 = document.getElementById('pn1').value;
-        players.push(pn1);
-        document.getElementById('p1').innerText = pl1;
-      
-        let pl2 = document.getElementById('pn2').value;
-        players.push(pn2);
-        document.getElementById('p2').innerText = pl2;
-
-        let pl3 = document.getElementById('pn3').value;
-        players.push(pn3);
-        document.getElementById('p3').innerText = pl3;
-
-        let pl4 = document.getElementById('pn4').value;
-        players.push(pn4);
-        document.getElementById('p4').innerText = pl4;
-
-        let playersCards = [];
-            playersCards.push(document.getElementById("oben").id);
-            handkartenDivNames.push(document.getElementById("rechts").id);
-            handkartenDivNames.push(document.getElementById("unten").id);
-            handkartenDivNames.push(document.getElementById("links").id);
-        
-        $('#playerNames').modal('hide');
-      })
+//     let player1 = document.getElementById('pn1').value;
+//     players.push(player1);
     
 
+//     let player2 = document.getElementById('pn2').value;
+//     players.push(player2);
+    
+
+//     let player3 = document.getElementById('pn3').value;
+//     players.push(player3);
+    
+
+//     let player4 = document.getElementById('pn4').value;
+//     players.push(player4);
 
 
-function checkIfDuplicateExists(players){
-    return new Set(players).size !== players.length 
-}
+/*     let uniq = players.map((name) => {
+      return {
+        count: 1,
+        name: name
+      }
+    })
+    .reduce((a, b) => {
+      a[b.name] = (a[b.name] || 0) + b.count
+      return a
+    }, {})
+  
+  let duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1)
+  
+  console.log(duplicates) // [ 'Nancy' ]
 
-function hasDuplicates() {
-    var valuesSoFar = Object.create(null);
-    for (var i = 0; i < array.length; ++i) {
-        var value = players[i];
-        if (value in valuesSoFar) {
-            return true;
-        }
-        valuesSoFar[value] = true;
-    }
-    return false;
-}
+    players.forEach(function (value, index, arr){
 
-async function post(){
+        let first_index = arr.indexOf(value);
+        let last_index = arr.lastIndexOf(value);
+
+         if(first_index !== last_index){
+
+         console.log('Duplicate item in array ' + value);
+         $('#playerNames').modal('show');
+
+         }else{
+
+         console.log('unique items in array ' + value); */
+
+         document.getElementById('p1').innerText = player1;
+         document.getElementById('p2').innerText = player2;
+         document.getElementById('p3').innerText = player3;
+         document.getElementById('p4').innerText = player4;
+
+        // die klammern gehören auch zum modalen dialog 
+    //      }
+
+    // });
+
+    playersCards.push(document.getElementById("p1cards").id);
+    playersCards.push(document.getElementById("p2cards").id);
+    playersCards.push(document.getElementById("p3cards").id);
+    playersCards.push(document.getElementById("p4cards").id);
+
+// unbedingt für mod dialog wieder einkommentieren!
+    // $('#playerNames').modal('hide');
+    // post();
+
+// })
+
+
+
+
+
+
+
+// function hasDuplicates() {
+//     var valuesSoFar = Object.create(null);
+//     for (var i = 0; i < array.length; ++i) {
+//         var value = players[i];
+//         if (value in valuesSoFar) {
+//             return true;
+//         }
+//         valuesSoFar[value] = true;
+//     }
+//     return false;
+// }
+
+async function post() {
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
         method: "POST",
         body: JSON.stringify(players),
@@ -69,60 +117,149 @@ async function post(){
         }
     });
 
-    if(response.ok){
+    if (response.ok) {
         let result = await response.json();
         // alert(JSON.stringify(result))
-
-        const gameId = document.createElement('p');
-        gameId.innerText = result.Id;
-        document.getElementById('gId').appendChild(gameId);
-
-        // let player1 = createElement('p');
-        // player1.innerText = result.Players[1];
-        // document.getElementById('p1').appendChild(player1.Cards[1])
-        // const player2 = result.player2;
-        // const player3 = {};
-        // const player4 = {};
+        console.log(result);
 
 
+
+        gameId = result.Id;
+        console.log(gameId);
+
+
+    
+        game.nextPlayer = result.NextPlayer;
+        game.topCard = result.TopCard;
+
+
+
+        
+        card.color = result.Color;
+        card.text = result.Text;
+        card.value = result.Value;
+        card.score = result.Score;
+
+        let firstCard = document.getElementById("decks");
+        let img = new Image();
+        img.src = "cards/" + game.topCard.Color + game.topCard.Value + ".png";
+        img.height = 150;
+        firstCard.appendChild(img);
+        firstCard = game.topCard;
+
+        // playerCards
+        for (let i = 0; i < playersCards.length; i++) {
+
+            for (let j = 0; j < 7; j++) {
+                let cardDiv = document.createElement("div");
+                cardDiv.setAttribute("id", "card2play" + j);
+                cardDiv.setAttribute("onclick", "replyId(card.color + card.value)");
+                let img = new Image();
+                img.src = "cards/" + result.Players[i].Cards[j].Color + result.Players[i].Cards[j].Value + ".png";
+                img.height = 100;
+    //            cardDiv.addEventListener("click", removeCard());
+                cardDiv.appendChild(img);
+                document.getElementById(playersCards[i]).appendChild(cardDiv);
+            }
+        }
+
+        let scores = [];
+        scores.push(document.getElementById("score1").id);
+        scores.push(document.getElementById("score2").id);
+        scores.push(document.getElementById("score3").id);
+        scores.push(document.getElementById("score4").id);
+
+        for(let i = 0; i < scores.length; i++){
+            let p = document.createElement("p");
+            p.innerText = "Score";
+            let score = document.createElement("div");
+            score.innerText = result.Players[i].Score;
+            score.setAttribute("class", "scoreStyle");
+
+            document.getElementById(scores[i]).appendChild(p).appendChild(score);
+        }
+
+      //  getTopCard();
+      // drawCard();
+    }
+    else {
+        alert("HTTP-Error: " + response.status)
+    }
+}
+
+// wenn modaler dialog auskommentiert! - da post aufrufen!
+ post();
+
+function replyId(clickedId){
+    alert(clickedId);
+}
+
+
+
+
+async function getTopCard(){
+
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/topCard/" + gameId , {
+        method: "GET",
+        contentType: "application/json",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+
+    if(response.ok){
+        let result = await response.json();
+        console.log(result);
+        alert(JSON.stringify(result))
     }
     else{
         alert("HTTP-Error: " + response.status)
     }
 }
-post();
 
-if(checkIfDuplicateExists){
-    document.getElementById('pn1').value = "";
-    document.getElementById('pn2').value = "";
-    document.getElementById('pn3').value = "";
-    document.getElementById('pn4').value = "";
+async function drawCard(){
 
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/drawCard/" + gameId , {
+        method: "PUT",
+        contentType: "application/json",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
 
-} else {
-    
-
-
+    if(response.ok){
+        let result = await response.json();
+        console.log(result);
+        alert(JSON.stringify(result))
+    }
+    else{
+        alert("HTTP-Error: " + response.status)
+    }
 }
 
-
-// post();
-
-// async function getTopCard(){
-//     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
-//         method: "POST",
-//         body: JSON.stringify(names),
-//         headers: {
-//             "Content-type": "application/json; charset=UTF-8"
-//         }
-//     });
-
-//     if(response.ok){
-//         let result = await response.json();
-//         alert(JSON.stringify(result))
-//     }
-//     else{
-//         alert("HTTP-Error: " + response.status)
-//     }
+// function removeCard(event){
+//     let cardDiv = event.target.parentElement;
+//     cardDiv.parentElement.removeChild(cardDiv);
 // }
-//post();
+
+
+async function playCard(){
+
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameId +
+    "? playerName=Player " + nr, {
+        method: "PUT",
+        contentType: "application/json",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+
+    if(response.ok){
+        let result = await response.json();
+        console.log(result);
+        alert(JSON.stringify(result))
+    }
+    else{
+        alert("HTTP-Error: " + response.status)
+    }
+}

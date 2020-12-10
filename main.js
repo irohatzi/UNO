@@ -218,8 +218,9 @@ async function getTopCard(){
     }
 }
 
-const btnDraw = document.getElementById('drawC');
-btnDraw.addEventListener("click", drawCard());
+
+// const btnDraw = document.getElementById('drawC');
+// btnDraw.addEventListener("click", drawCard());
 
 async function drawCard(){
 

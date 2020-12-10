@@ -9,11 +9,16 @@ let card = {};
 let currentPlayer;
 
 // modaler dialog funzt, damit erspart man sich das permanente eingeben:
-let players = [''];
-let player1 = 'Hansi';
-let player2 = 'Helga';
-let player3 = 'Wurschti';
-let player4 = 'Greti';
+let players = [ ];
+// let player1 = 'Hansi';
+// let player2 = 'Helga';
+// let player3 = 'Wurschti';
+// let player4 = 'Greti';
+
+let player1 = 'p1';
+let player2 = 'p2';
+let player3 = 'p3';
+let player4 = 'p4';
 
 players.push(player1,player2,player3,player4);
 // // Modalen Dialog öffnen um Namen einzugeben
@@ -169,11 +174,14 @@ async function post() {
         scores.push(document.getElementById("score4").id);
 
         for(let i = 0; i < scores.length; i++){
-            document.getElementById("score" + i)
-        //    let p = document.createElement("p");
+            let idString = i + 1;
+            document.getElementById("score" + idString);
+       //     console.log("TEST FÜR SCORE: " + "score" + idString);
+       // für Score evtl ein div im index.html einbauen, mir is das zu stressig zum aufrufen
+         //   let p = document.createElement("p");
          //   p.innerText = "Score";
             let score = document.createElement("p");
-            score.innerText = "Score " + result.Players[i].Score;
+            score.innerText = result.Players[i].Score;
             score.setAttribute("class", "scoreStyle");
 
             document.getElementById(scores[i]).appendChild(score);
@@ -221,8 +229,6 @@ async function getTopCard(){
 }
 
 
-
-
 async function drawCard(){
 
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/drawCard/" + gameId , {
@@ -249,12 +255,29 @@ async function drawCard(){
                 img.src = "cards/" + result.Card.Color + result.Card.Value + ".png";
                 img.height = 100;
                 cardDiv.appendChild(img);
+                // Hilfsvariable um auf richtigen index zuzugreifen
                 let check = players.indexOf(currentPlayer);
                 check += 1;
                 console.log("p" + check + "cards");
                 document.getElementById("p" + check + "cards").appendChild(cardDiv);
+
+             //   console.log(result.Card.Score);
+                console.log(document.getElementById("score" + check).innerText);
+                let newScore = document.getElementById("score" + check).innerText; 
+           //     console.log(newScore);
+
+                newScore = parseInt(newScore);
+                newScore += result.Card.Score;
+          //      console.log(newScore);
+                document.getElementById("score" + check).innerText = newScore;
+
+
+             //   console.log(result.NextPlayer);
+            //    console.log(result.Player)
+                // das sollte auch nach dem ablegen einer karte gemacht werden!
                 currentPlayer = result.NextPlayer;
                 getCards();
+        
       //  }
     }
     else{
@@ -295,7 +318,7 @@ async function getCards(){
 async function playCard(){
 
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameId +
-    "? playerName=Player " + nr, {
+    "?value=" + value + "&color=" + color +"&wildColor=" + wildColor, {
         method: "GET",
         contentType: "application/json",
         headers: {

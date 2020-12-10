@@ -14,3 +14,12 @@ div{
     padding: 0;
     margin: 0;
 }
+
+.container{
+    border: solid 3px pink;
+    position: absolute;
+    top: 5%;
+    left: 15%;
+    
+    
+}

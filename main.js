@@ -6,6 +6,7 @@ let gameId;
 let playersCards = [];
 let game = {};
 let card = {};
+let currentPlayer;
 
 // modaler dialog funzt, damit erspart man sich das permanente eingeben:
 let players = [''];
@@ -129,11 +130,10 @@ async function post() {
 
 
     
-        game.nextPlayer = result.NextPlayer;
+        currentPlayer = result.NextPlayer;
         game.topCard = result.TopCard;
 
-
-
+        console.log(currentPlayer);
         
         card.color = result.Color;
         card.text = result.Text;
@@ -218,6 +218,9 @@ async function getTopCard(){
     }
 }
 
+const btnDraw = document.getElementById('drawC');
+btnDraw.addEventListener("click", drawCard());
+
 async function drawCard(){
 
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/drawCard/" + gameId , {
@@ -232,6 +235,17 @@ async function drawCard(){
         let result = await response.json();
         console.log(result);
         alert(JSON.stringify(result))
+
+        if(result.Player == currentPlayer){
+            let cardDiv = document.createElement("div");
+                cardDiv.setAttribute("id", "card2play" + j);
+                cardDiv.setAttribute("onclick", "replyId(card.color + card.value)");
+                let img = new Image();
+                img.src = "cards/" + result.Player.Card.Color + result.Player.Card.Value + ".png";
+                img.height = 100;
+                cardDiv.appendChild(img);
+                document.getElementById(playersCards[i]).appendChild(cardDiv);
+        }
     }
     else{
         alert("HTTP-Error: " + response.status)

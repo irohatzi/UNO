@@ -170,13 +170,14 @@ async function post() {
         scores.push(document.getElementById("score4").id);
 
         for(let i = 0; i < scores.length; i++){
-            let p = document.createElement("p");
-            p.innerText = "Score";
-            let score = document.createElement("div");
-            score.innerText = result.Players[i].Score;
+            document.getElementById("p" + i)
+        //    let p = document.createElement("p");
+         //   p.innerText = "Score";
+            let score = document.createElement("p");
+            score.innerText = "Score " + result.Players[i].Score;
             score.setAttribute("class", "scoreStyle");
 
-            document.getElementById(scores[i]).appendChild(p).appendChild(score);
+            document.getElementById(scores[i]).appendChild(score);
         }
 
       //  getTopCard();

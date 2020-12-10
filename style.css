@@ -12,7 +12,8 @@ div{
     width: 80px;
     border: solid green 2px;
     padding: 0;
-    margin: 0;
+    margin: 20px;
+    position: relative;
 }
 
 .container{
@@ -24,5 +25,16 @@ div{
 }
 
 .points{
-    
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+}
+
+.player{
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-size: 18px;
+    font-weight: bold;
 }

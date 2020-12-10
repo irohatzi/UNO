@@ -156,7 +156,7 @@ async function post() {
 
             for (let j = 0; j < 7; j++) {
                 let cardDiv = document.createElement("div");
-                cardDiv.setAttribute("id", "card2play" + j);
+                cardDiv.setAttribute("id", i + "card2play" + j);
                 cardDiv.setAttribute("onclick", "replyId(this.id)");
                 let img = new Image();
                 img.src = "cards/" + result.Players[i].Cards[j].Color + result.Players[i].Cards[j].Value + ".png";
@@ -190,7 +190,7 @@ async function post() {
       //  getTopCard();
       // drawCard();
 
-        const btnDraw = document.getElementById('drawC');
+        const btnDraw = document.getElementById('drawDeck');
         btnDraw.addEventListener("click", drawCard);
     }
     else {

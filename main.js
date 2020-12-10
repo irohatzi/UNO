@@ -236,9 +236,10 @@ async function drawCard(){
     if(response.ok){
         let result = await response.json();
         console.log(result);
-        alert(JSON.stringify(result))
-        console.log(currentPlayer);
-        console.log(result.Player);
+        // alert to check response
+       // alert(JSON.stringify(result))
+       // console.log(currentPlayer);
+       // console.log(result.Player);
 
       //  if(result.Player === currentPlayer){
             let cardDiv = document.createElement("div");
@@ -253,7 +254,32 @@ async function drawCard(){
                 console.log("p" + check + "cards");
                 document.getElementById("p" + check + "cards").appendChild(cardDiv);
                 currentPlayer = result.NextPlayer;
+                getCards();
       //  }
+    }
+    else{
+        alert("HTTP-Error: " + response.status)
+    }
+}
+
+
+async function getCards(){
+
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/getCards/" + gameId 
+    + "?playerName=" + currentPlayer, {
+        method: "GET",
+        contentType: "application/json",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+
+    if(response.ok){
+        let result = await response.json();
+        console.log(result);
+        // alert to check response
+       alert(JSON.stringify(result))
+
     }
     else{
         alert("HTTP-Error: " + response.status)
@@ -270,7 +296,7 @@ async function playCard(){
 
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameId +
     "? playerName=Player " + nr, {
-        method: "PUT",
+        method: "GET",
         contentType: "application/json",
         headers: {
             "Content-type": "application/json; charset=UTF-8"

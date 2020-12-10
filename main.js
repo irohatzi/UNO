@@ -5,6 +5,7 @@
 let gameId;
 let playersCards = [];
 let game = {};
+let card = {};
 
 // modaler dialog funzt, damit erspart man sich das permanente eingeben:
 let players = [''];
@@ -14,8 +15,8 @@ let player3 = 'Wurschti';
 let player4 = 'Greti';
 
 players.push(player1,player2,player3,player4);
-// Modalen Dialog öffnen um Namen einzugeben
-//$('#playerNames').modal()
+// // Modalen Dialog öffnen um Namen einzugeben
+// $('#playerNames').modal()
 
 // document.getElementById('playerNamesForm').addEventListener('submit', function (evt) {
 //     console.log('submit')
@@ -39,41 +40,41 @@ players.push(player1,player2,player3,player4);
 //     players.push(player4);
 
 
-//     let uniq = players.map((name) => {
-//       return {
-//         count: 1,
-//         name: name
-//       }
-//     })
-//     .reduce((a, b) => {
-//       a[b.name] = (a[b.name] || 0) + b.count
-//       return a
-//     }, {})
+/*     let uniq = players.map((name) => {
+      return {
+        count: 1,
+        name: name
+      }
+    })
+    .reduce((a, b) => {
+      a[b.name] = (a[b.name] || 0) + b.count
+      return a
+    }, {})
   
-//   let duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1)
+  let duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1)
   
-//   console.log(duplicates) // [ 'Nancy' ]
+  console.log(duplicates) // [ 'Nancy' ]
 
-    // players.forEach(function (value, index, arr){
+    players.forEach(function (value, index, arr){
 
-    //     let first_index = arr.indexOf(value);
-    //     let last_index = arr.lastIndexOf(value);
+        let first_index = arr.indexOf(value);
+        let last_index = arr.lastIndexOf(value);
 
-    //      if(first_index !== last_index){
+         if(first_index !== last_index){
 
-    //      console.log('Duplicate item in array ' + value);
-    //      $('#playerNames').modal('show');
+         console.log('Duplicate item in array ' + value);
+         $('#playerNames').modal('show');
 
-    //      }else{
+         }else{
 
-    //      console.log('unique items in array ' + value);
+         console.log('unique items in array ' + value); */
 
          document.getElementById('p1').innerText = player1;
          document.getElementById('p2').innerText = player2;
          document.getElementById('p3').innerText = player3;
          document.getElementById('p4').innerText = player4;
 
-         // die klammern gehören glaub ich auch zum modalen dialog, bin ma aber nimma sicher :D 
+        // die klammern gehören auch zum modalen dialog 
     //      }
 
     // });
@@ -133,7 +134,7 @@ async function post() {
 
 
 
-        let card = {};
+        
         card.color = result.Color;
         card.text = result.Text;
         card.value = result.Value;
@@ -151,10 +152,12 @@ async function post() {
 
             for (let j = 0; j < 7; j++) {
                 let cardDiv = document.createElement("div");
-                cardDiv.setAttribute("class", "cardDiv2Style" + i) //Klassen Attribut, falls wir es brauchen
+                cardDiv.setAttribute("id", "card2play" + j);
+                cardDiv.setAttribute("onclick", "replyId(card.color + card.value)");
                 let img = new Image();
                 img.src = "cards/" + result.Players[i].Cards[j].Color + result.Players[i].Cards[j].Value + ".png";
                 img.height = 100;
+    //            cardDiv.addEventListener("click", removeCard());
                 cardDiv.appendChild(img);
                 document.getElementById(playersCards[i]).appendChild(cardDiv);
             }
@@ -171,21 +174,26 @@ async function post() {
             p.innerText = "Score";
             let score = document.createElement("div");
             score.innerText = result.Players[i].Score;
-            score.setAttribute("id", "scoreStyle");
+            score.setAttribute("class", "scoreStyle");
 
             document.getElementById(scores[i]).appendChild(p).appendChild(score);
         }
 
       //  getTopCard();
-      drawCard();
+      // drawCard();
     }
     else {
         alert("HTTP-Error: " + response.status)
     }
 }
 
+// wenn modaler dialog auskommentiert! - da post aufrufen!
+ post();
 
-post();
+function replyId(clickedId){
+    alert(clickedId);
+}
+
 
 
 
@@ -212,6 +220,33 @@ async function getTopCard(){
 async function drawCard(){
 
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/drawCard/" + gameId , {
+        method: "PUT",
+        contentType: "application/json",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+
+    if(response.ok){
+        let result = await response.json();
+        console.log(result);
+        alert(JSON.stringify(result))
+    }
+    else{
+        alert("HTTP-Error: " + response.status)
+    }
+}
+
+// function removeCard(event){
+//     let cardDiv = event.target.parentElement;
+//     cardDiv.parentElement.removeChild(cardDiv);
+// }
+
+
+async function playCard(){
+
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameId +
+    "? playerName=Player " + nr, {
         method: "PUT",
         contentType: "application/json",
         headers: {

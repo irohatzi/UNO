@@ -1,119 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css" />
-    <title>Uno Web II</title> 
-    </head>
-    
-    <body>
-          <!--PLAYGROUND-->
-            <div class="row playground">
-                <div class="row justify-content-between" style="width: 100%;">
-                    <!--PLAYER 1 Left corner up-->
-                    <div class="col-3 align-items-start player1">
-                        <br>
-                        <p id='p1'>SPIELER 1</p>
-                        <div id="score1"></div>
-                        <div class="cards" id="p1cards">KARTEN</div>
 
-                        <br>
-                    </div>
-                    <!--END Player 1-->
-                    <!--PLAYER 2 Right corner up-->
-                    <div class="col-3 align-items-end player2">
-                        <br>
-                        <p id='p2'> SPIELER 2</p>
-                        <div id="score2"></div>
-                        <div class="cards" id="p2cards">KARTEN</div>
-                        
-                        <br>
-                    </div>
-                    <!--END Player 2-->
-                </div>                    
-                <div class="row justify-content-center" style="width: 100%;">
-                    <!--DECKS IN THE MIDDLE-->
-                    <div class="col-3 align-self-start decks">
-                        <br>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+  <title>Uno Web II</title>
+</head>
 
-                        <p id='decks'></p>
-                        <h5>AblegeStapel</h5>
-                        <h5>HebeStapel</h5>
+<body>
+  <!--PLAYGROUND-->
+<div class="container">
+  <div class="row playground">
+    <div class="row justify-content-between" style="width: 100%;">
+      <!--PLAYER 1 Left corner up-->
+      <div class="col-3 align-items-start player1">
+        <br>
+        <p id='p1'>SPIELER 1</p>
+        <div id="score1"></div>
+        <div class="cards" id="p1cards">KARTEN</div>
 
-                        <br>
-                  </div>
-                  <!--END Decks Field-->
+        <br>
+      </div>
+      <!--END Player 1-->
+      <!--PLAYER 2 Right corner up-->
+      <div class="col-3 align-items-end player2">
+        <br>
+        <p id='p2'> SPIELER 2</p>
+        <div id="score2"></div>
+        <div class="cards" id="p2cards">KARTEN</div>
+
+        <br>
+      </div>
+      <!--END Player 2-->
+    </div>
+    <div class="row justify-content-center" style="width: 100%;">
+      <!--DECKS IN THE MIDDLE-->
+      <div class="col-3 align-self-start decks">
+        <br>
+
+        <p id='decks'></p>
+        <h5>AblegeStapel</h5>
+        <h5>HebeStapel</h5>
+
+        <br>
+      </div>
+      <!--END Decks Field-->
+    </div>
+    <div class="row justify-content-between" style="width: 100%;">
+      <!--PLAYER 3 Left corner down-->
+      <div class="col-3 align-self-start player3">
+        <br>
+        <p id='p3'>SPIELER 3</p>
+        <div id="score3"></div>
+        <div class="cards" id="p3cards">KARTEN</div>
+
+        <br>
+      </div>
+      <!--END Player 3-->
+      <!--PLAYER 4 Right corner down-->
+      <div class="col-3 align-self-end player4">
+        <br>
+        <p id='p4'>SPIELER 4</p>
+        <div id="score4"></div>
+        <div class="cards" id="p4cards">KARTEN</div>
+
+        <br>
+      </div>
+      <!--END Player 4-->
+    </div>
+  </div>
+  <!--END PLAYGROUND-->
+  
+    <!--MODDAL DIALOG-->
+    <div class="playerNamesModDia">
+      <div class="modal fade" id="playerNames" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+        <form id="playerNamesForm">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Players:</h5>
+              </div>
+              <div class="modal-body" id="test">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="pn1" placeholder="Please type in a name"></input>
+                  </br>
+                  <input type="text" class="form-control" id="pn2" placeholder="Please type in a name"></input>
+                  </br>
+                  <input type="text" class="form-control" id="pn3" placeholder="Please type in a name"></input>
+                  </br>
+                  <input type="text" class="form-control" id="pn4" placeholder="Please type in a name"></input>
+                  </br>
                 </div>
-                <div class="row justify-content-between" style="width: 100%;">
-                    <!--PLAYER 3 Left corner down-->
-                    <div class="col-3 align-self-start player3">
-                        <br>
-                        <p id='p3'>SPIELER 3</p>
-                        <div id="score3"></div>
-                        <div class="cards" id="p3cards">KARTEN</div>
-
-                        <br>
-                    </div>
-                    <!--END Player 3-->
-                    <!--PLAYER 4 Right corner down-->
-                    <div class="col-3 align-self-end player4">
-                        <br>
-                        <p id='p4'>SPIELER 4</p>
-                        <div id="score4"></div>
-                        <div class="cards" id="p4cards">KARTEN</div>      
-
-                        <br>
-                    </div>
-                    <!--END Player 4-->
-                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="playerNamesSubmit">Confirm!</button>
+              </div>
             </div>
-            <!--END PLAYGROUND-->        
-            <div class="container">
-              <!--MODDAL DIALOG-->
-              <div class="playerNamesModDia">
-                  <div class="modal fade" id="playerNames" tabindex="-1" role="dialog"
-                  data-keyboard="false" data-backdrop="static">
-                      <form id="playerNamesForm">
-                          <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">Players:</h5>   
-                              </div>
-                              <div class="modal-body" id="test">
-                                <div class="form-group">
-                                  <input type="text" class="form-control" id="pn1"
-                                    placeholder="Please type in a name"></input>
-                                  </br>
-                                  <input type="text" class="form-control" id="pn2"
-                                    placeholder="Please type in a name"></input>
-                                  </br>
-                                  <input type="text" class="form-control" id="pn3"
-                                    placeholder="Please type in a name"></input>
-                                  </br>
-                                  <input type="text" class="form-control" id="pn4"
-                                    placeholder="Please type in a name"></input>
-                                  </br>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"
-                                id="playerNamesSubmit">Confirm!</button>
-                              </div>
-                            </div>
-                          </div>
-                      </form>   
-                  </div>
-              </div>   
-        </div>
-        <!-- Chris fragen ob beides notwendig bzw warum -->
-                <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-        <!-- Custom JS -->
-        <script src="main.js"></script>
-    </body>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Chris fragen ob beides notwendig bzw warum -->
+  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"></script>
+  <!-- Custom JS -->
+  <script src="main.js"></script>
+</body>
+
 </html>

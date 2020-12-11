@@ -142,7 +142,7 @@ async function post() {
         firstCard.setAttribute("class", "topCard");
         let img = new Image();
         img.src = "cards/" + result.TopCard.Color + result.TopCard.Value + ".png";
-        img.height = 162;
+        img.height = 161;
         firstCard.appendChild(img);
         firstCard = game.topCard;
 

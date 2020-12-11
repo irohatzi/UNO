@@ -251,6 +251,8 @@ async function drawCard() {
         console.log(arrCardSize);
         cardDiv.setAttribute("id", check + "card2play" + arrCardSize);
         cardDiv.setAttribute("onclick", "replyId(this.id)");
+        cardDiv.setAttribute("class", "cards");
+
         let img = new Image();
         img.src = "cards/" + result.Card.Color + result.Card.Value + ".png";
         img.height = 100;

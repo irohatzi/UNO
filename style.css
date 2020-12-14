@@ -48,7 +48,7 @@ div{
     width: 110px;
 }
 
-.topCard {
+#topCard {
     top: 16px;
     border: 1px solid #ddd;
     border-radius: 4px;

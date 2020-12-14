@@ -1,13 +1,25 @@
 "use strict";
 
 
-// let players = [''];
 let gameId;
 let playersCards = [];
-let game = {};
-let card = {};
+
+let card = {
+    col: '',
+    val: '',
+    sco: '',
+    text: '',
+};
 let currentPlayer;
-let topCard;
+// let topCard;
+// let cardArr;
+
+let wildColor = "";
+let colorRC ;
+let valueRC ;
+
+let img;
+
 
 // modaler dialog funzt, damit erspart man sich das permanente eingeben:
 let players = [];
@@ -102,7 +114,6 @@ playersCards.push(document.getElementById("p4cards").id);
 
 
 
-
 // function hasDuplicates() {
 //     var valuesSoFar = Object.create(null);
 //     for (var i = 0; i < array.length; ++i) {
@@ -132,25 +143,30 @@ async function post() {
 
 
         gameId = result.Id;
-        console.log(gameId);
+     //   console.log(gameId);
 
         currentPlayer = result.NextPlayer;
 
         console.log(currentPlayer);
 
         let firstCard = document.getElementById("decks");
-        firstCard.setAttribute("class", "topCard");
-        let img = new Image();
+        firstCard.setAttribute("id", "topCard");
+        img = new Image();
         img.src = "cards/" + result.TopCard.Color + result.TopCard.Value + ".png";
         img.height = 161;
         firstCard.appendChild(img);
-        firstCard = game.topCard;
+        firstCard = result.TopCard;
+
+        if(result.TopCard.Text == "Draw2"){
+            drawCard();
+            drawCard();
+        }
 
 
         // playerCards
         for (let i = 0; i < playersCards.length; i++) {
 
-            for (let j = 0; j < 7; j++) {
+            for (let j = 0; j < result.Players[i].Cards.length; j++) {
                 let cardDiv = document.createElement("div");
                 cardDiv.setAttribute("id", i + "card2play" + j);
                 cardDiv.setAttribute("onclick", "replyId(this.id)");
@@ -189,6 +205,9 @@ async function post() {
 
         const btnDraw = document.getElementById('drawDeck');
         btnDraw.addEventListener("click", drawCard);
+
+       cardArr = getCards();
+       topCard = getTopCard();
     }
     else {
         alert("HTTP-Error: " + response.status)
@@ -197,11 +216,8 @@ async function post() {
 
 // wenn modaler dialog auskommentiert! - da post aufrufen!
 post();
-
-function replyId(clickedId) {
-    alert(clickedId);
-}
-
+let topCard;
+let cardArr;
 
 
 
@@ -218,7 +234,21 @@ async function getTopCard() {
     if (response.ok) {
         let result = await response.json();
         console.log(result);
-        alert(JSON.stringify(result))
+      //  alert(JSON.stringify(result))
+      if(topCard.Text == "Draw2" || topCard.Text == "Draw4"){
+        let cardArrSize = cardArr.length;
+        let helper = topCard.text.charAt(length-1);
+        console.log(helper);
+        while((cardArrSize + helper) > cardArr.length){
+            drawCard();
+        }
+      }
+  
+      
+      // TOPCARD value aus result rausspeichern - DAS FUNKTIONIERT -NICHT LÖSCHEN!!!!!!!!
+        topCard = result;
+        // return topCard;
+
     }
     else {
         alert("HTTP-Error: " + response.status)
@@ -253,9 +283,12 @@ async function drawCard() {
         cardDiv.setAttribute("onclick", "replyId(this.id)");
         cardDiv.setAttribute("class", "cards");
 
-        let img = new Image();
+        img = new Image();
         img.src = "cards/" + result.Card.Color + result.Card.Value + ".png";
         img.height = 100;
+        // 420Test ob vl das div attribute haben kann
+        cardDiv.val = result.Card.Value;
+        cardDiv.col = result.Card.Color;
         cardDiv.appendChild(img);
         // Hilfsvariable um auf richtigen index zuzugreifen
 
@@ -264,7 +297,7 @@ async function drawCard() {
         document.getElementById("p" + check + "cards").appendChild(cardDiv);
 
         //   console.log(result.Card.Score);
-        console.log(document.getElementById("score" + check).innerText);
+      //  console.log(document.getElementById("score" + check).innerText);
         let newScore = document.getElementById("score" + check).innerText;
         //     console.log(newScore);
 
@@ -275,10 +308,9 @@ async function drawCard() {
 
 
         //   console.log(result.NextPlayer);
-        //    console.log(result.Player)
         // das sollte auch nach dem ablegen einer karte gemacht werden!
-        currentPlayer = result.NextPlayer;
-        getCards();
+      //  currentPlayer = result.NextPlayer;
+      //  getCards();
 
         //  }
     }
@@ -301,9 +333,30 @@ async function getCards() {
 
     if (response.ok) {
         let result = await response.json();
-        console.log(result);
-        // alert to check response
-        alert(JSON.stringify(result))
+     //   console.log(result.Cards[2].Value);
+
+    
+     console.log(result);
+
+      // CardArr values aus result rausspeichern - DAS FUNKTIONIERT -NICHT LÖSCHEN!!!!!!!!
+     cardArr = result.Cards;       
+
+
+            // for(let i=0; i<result.Cards.length;i++){
+            //     cardArr[i] =  {card: {
+            //         val : result.Cards[i].Value,
+            //         col : result.Cards[i].Color,
+            //         sco : result.Cards[i].Score
+            //     }
+            //         };
+            //     }
+            
+        //    console.log(card);
+
+        // try later:
+        // cardArr = [];
+
+
 
     }
     else {
@@ -314,14 +367,71 @@ async function getCards() {
 // function removeCard(event){
 //     let cardDiv = event.target.parentElement;
 //     cardDiv.parentElement.removeChild(cardDiv);
-// }
+// }kinds o
 
 
-async function playCard() {
+function replyId(clickedId) {
 
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameId +
-        "?value=" + value + "&color=" + color + "&wildColor=" + wildColor, {
-        method: "GET",
+
+
+   // let anotherTest = document.getElementById(clickedId);
+   // console.log(anotherTest.getAttribute(val));
+
+
+    // check ob von richtiger Kartenhand gespielt:
+    cardCheck(clickedId);
+
+
+}
+
+
+function cardCheck(clickedId) {
+
+    // variable für richtiger player check
+    let i2CheckPlayer = players.indexOf(currentPlayer);
+    // indexNummer die an der ID angehängt ist rauslesen:
+    let i4CardArr = clickedId.charAt(clickedId.length-1);
+    console.log(i4CardArr);
+    console.log(i2CheckPlayer);
+    if (i2CheckPlayer == clickedId.charAt(0)) {
+        // alert(clickedId);
+         //  getCards();
+        //console.log(cardArr.pop());
+        let removeCard = cardArr.splice(i4CardArr, 1);
+        colorRC = removeCard[0].Color;
+        valueRC = removeCard[0].Value;
+        console.log(colorRC);
+
+        console.log(cardArr);
+        //check ob karte gespielt werden darf:
+        // let cardX = Object.assign({},cardArr[i4CardArr]);
+        let colorTC = topCard.Color;
+        let valueTC = topCard.Value;
+
+        if (colorRC == "Black" || valueRC == valueTC || colorRC == colorTC) {
+          //  alert("PlayCard kann implementiert werden!");
+
+               
+           
+            playCard(clickedId);
+        }
+    } else {
+        alert("Falsche Kartenhand!");
+        if(removeCard === defined){
+            cardArr.push(removeCard);
+            // check if removeCard in cardArr
+            console.log(cardArr);
+        }
+
+    }
+}
+
+
+async function playCard(clickedId) {
+
+    let response = await fetch( "https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameId +
+    "?value=" + valueRC + "&color=" + colorRC + "&wildColor=" + wildColor, {
+        method: "PUT",
         contentType: "application/json",
         headers: {
             "Content-type": "application/json; charset=UTF-8"
@@ -331,9 +441,65 @@ async function playCard() {
     if (response.ok) {
         let result = await response.json();
         console.log(result);
-        alert(JSON.stringify(result))
+     //   alert(JSON.stringify(result));
+
+     if(colorRC == "Black"){
+        $('#WCForm').modal()
+   }
+
+        let deleteCard = document.getElementById(clickedId);
+    //    console.log(clickedId);
+        deleteCard.parentElement.removeChild(deleteCard);
+        clickedId = "";
+
+        let newTC = document.getElementById("topCard").childNodes;
+        console.log(newTC);
+
+    //    document.getElementById("topCard").removeChild(img);
+
+    
+        let imgNew = new Image();
+        imgNew.src = "cards/" + colorRC + valueRC + ".png";
+        imgNew.height = 161;
+
+
+        document.getElementById("topCard").replaceChild(imgNew, img);
+        img = imgNew;
+
+        console.log(result.Player);
+
+        currentPlayer = result.Player;
+        console.log(currentPlayer);
+        getCards();
+        
     }
     else {
         alert("HTTP-Error: " + response.status)
     }
 }
+
+
+document.getElementById('WCForm').addEventListener('submit', function (evt) {
+    console.log('submit')
+
+    evt.preventDefault();
+
+
+    document.getElementById('red').value;
+    topCard.Color = "Red";
+
+
+    document.getElementById('green').value;
+    topCard.Color = "Green";
+
+
+    document.getElementById('blue').value;
+    topCard.Color = "Blue";
+
+
+
+    document.getElementById('yellow').value;
+    topCard.Color = "Yellow";
+
+
+});

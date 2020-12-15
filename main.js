@@ -199,13 +199,15 @@ async function startPost() {
 
 
 
-        //    cardArr = getCards();
+ //   getCards();
         //    topCard = getTopCard();
     }
     else {
         alert("HTTP-Error: " + response.status)
     }
 }
+
+// ClickEvent für den Stapel zum Abheben
 const btnDraw = document.getElementById('drawDeck');
 btnDraw.addEventListener("click", drawCard);
 
@@ -213,17 +215,17 @@ btnDraw.addEventListener("click", drawCard);
 
 //! wenn modaler dialog auskommentiert! - da post aufrufen!
 startPost();
+// ? Keine Ahnung ob die Methode überhaupt notwendig is, weil man evtl rekursion oder a schleife braucht
+// function game() {
 
-function game() {
+//     getTopCard();
+//     // wenn +2 oder +4 aufliegt, kartenhand neu generieren vom aktuellen spieler
+//     //klick auf play oder drawCard
+//     //
 
-    getTopCard();
-    // wenn +2 oder +4 aufliegt, kartenhand neu generieren vom aktuellen spieler
-    //klick auf play oder drawCard
-    //
-
-    playCard(clickedId);
-    // solange der nächste spieler noch karten hat, ruf game auf
-}
+//     playCard(clickedId);
+//     // solange der nächste spieler noch karten hat, ruf game auf
+// }
 
 function generateCard(card) {
     // console.log(card);
@@ -251,14 +253,14 @@ async function getTopCard() {
         let result = await response.json();
         console.log(result);
         //  alert(JSON.stringify(result))
-        if (topCard.Text == "Draw2" || topCard.Text == "Draw4") {
-            let cardArrSize = cardArr.length;
-            let helper = topCard.text.charAt(length - 1);
-            console.log(helper);
-            while ((cardArrSize + helper) > cardArr.length) {
-                generateCards();
-            }
-        }
+        // if (topCard.Text == "Draw2" || topCard.Text == "Draw4") {
+        //     let cardArrSize = cardArr.length;
+        //     let helper = topCard.text.charAt(length - 1);
+        //     console.log(helper);
+        //     while ((cardArrSize + helper) > cardArr.length) {
+        //         generateCards();
+        //     }
+        // }
 
 
         // TOPCARD value aus result rausspeichern - DAS FUNKTIONIERT -NICHT LÖSCHEN!!!!!!!!
@@ -303,13 +305,19 @@ async function drawCard() {
 
         document.getElementById(playersCards[check]).appendChild(img);
 
-        let additionalScore = result.Card.Score;
+                  
+        let newScore = document.getElementById("score" + check).innerText;
 
-        setScore(additionalScore);
+        newScore = parseInt(newScore);
+        newScore += result.Card.Score;
+
+        document.getElementById("score" + check).innerText = newScore;
 
 
 
 
+        //! Nächster Spieler wird auf current gesetzt
+        currentPlayer = result.Player;
         //   console.log(result.NextPlayer);
         // das sollte auch nach dem ablegen einer karte gemacht werden!
         //  currentPlayer = result.NextPlayer;
@@ -322,18 +330,7 @@ async function drawCard() {
     }
 }
 
-function setScore(additionalScore){
 
-
-  
-        let newScore = document.getElementById("score" + check).innerText;
-
-        newScore = parseInt(newScore);
-        newScore += result.Card.Score;
-
-        document.getElementById("score" + check).innerText = newScore;
-
-}
 
 async function getCards() {
 
@@ -351,26 +348,28 @@ async function getCards() {
         //   console.log(result.Cards[2].Value);
 
 
+        let check = players.indexOf(currentPlayer);
+        let arrCardSize = document.getElementById(playersCards[check]).childElementCount;
+        console.log(arrCardSize);
+
+
+        
+
+        let counter = 1;
+        while (arrCardSize != result.Cards.length){
+            card = result.Cards[arrCardSize + counter];
+            img = generateCard(card);
+            img.setAttribute("id", check + "card2play" + arrCardSize);
+            img.setAttribute("onclick", "replyId(this.id)");
+            img.setAttribute("class", "cards");
+            counter++;
+            document.getElementById(playersCards[check]).appendChild(img);
+        }
+
         //     console.log(result);
 
         // CardArr values aus result rausspeichern - DAS FUNKTIONIERT -NICHT LÖSCHEN!!!!!!!!
         cardArr = result.Cards;
-        // !!!!!!CHECK OB IM RESULTARRAY MEHR KARTEN ALS IM SPIELFELD(WEGEN +4 / +2)      
-
-
-        // for(let i=0; i<result.Cards.length;i++){
-        //     cardArr[i] =  {card: {
-        //         val : result.Cards[i].Value,
-        //         col : result.Cards[i].Color,
-        //         sco : result.Cards[i].Score
-        //     }
-        //         };
-        //     }
-
-        //    console.log(card);
-
-        // try later:
-        // cardArr = [];
 
 
 
@@ -401,9 +400,10 @@ function replyId(clickedId) {
 
 }
 
-
+let removeCard;
 function cardCheck(clickedId) {
 
+    console.log("aktueller spieler", currentPlayer);
     // variable für richtiger player check
     let i2CheckPlayer = players.indexOf(currentPlayer);
     // indexNummer die an der ID angehängt ist rauslesen:
@@ -412,10 +412,10 @@ function cardCheck(clickedId) {
     console.log(i4CardArr);
     console.log(i2CheckPlayer);
     if (i2CheckPlayer == clickedId.charAt(0)) {
-        alert(clickedId);
+        console.log(clickedId);
         //  getCards();
         //console.log(cardArr.pop());
-        let removeCard = cardArr.splice(i4CardArr, 1);
+        removeCard = cardArr.splice(i4CardArr, 1);
         colorRC = removeCard[0].Color;
         valueRC = removeCard[0].Value;
         //      console.log(colorRC);
@@ -433,7 +433,7 @@ function cardCheck(clickedId) {
         }
     } else {
         alert("Falsche Kartenhand!");
-        if (removeCard === defined) {
+        if (removeCard != defined) {
             cardArr.push(removeCard);
             // check if removeCard in cardArr
             //         console.log(cardArr);
@@ -459,38 +459,41 @@ async function playCard(clickedId) {
         //  console.log(result);
         //   alert(JSON.stringify(result));
 
-        if (colorRC == "Black") {
-            $('#WCForm').modal()
-        }
+        // if (colorRC == "Black") {
+        //     $('#WCForm').modal()
+        // }
 
         let deleteCard = document.getElementById(clickedId);
-        console.log(clickedId);
-        deleteCard.parentElement.removeChild(deleteCard);
-        clickedId = "";
-        console.log(deleteCard);
-
         let pic = deleteCard;
-        console.log(pic);
-        
-        let center = document.getElementById("decks");
-        center.remove(document.getElementById("topCard"));
+        deleteCard.parentElement.removeChild(deleteCard);
+        let oldTc = document.getElementById("topCard");
+        console.log(oldTc);
+       
+        oldTc.replaceWith(pic);
         pic.setAttribute("id", "topCard");
-        center.appendChild(pic);
 
+        // Score anpassen nachdem Karte gespielt wurde
 
-        // let imgNew = new Image();
-        // imgNew.src = "cards/" + colorRC + valueRC + ".png";
-        // // imgNew.height = 161;
+        let pscore = clickedId.charAt(0);
+        pscore ++;
+        console.log("Nummer für PlayerScore", pscore);
 
+        clickedId = "";
+        let path = deleteCard.src;
+        let numPlus = path.replace( /^\D+/g, ''); 
 
-        // let cardList = document.getElementById("decks").childNodes[0];
-        // document.getElementById("decks").replaceChild(img,cardList);
+        let num = numPlus.replace('.png', '');
  
 
-        //   console.log(result.Player);
+        let newScore = document.getElementById("score" + pscore).innerText;
+        newScore = parseInt(newScore);
+        newScore -= num;
+        document.getElementById("score" + pscore).innerText = newScore;
 
+
+        
         currentPlayer = result.Player;
-        //  console.log(currentPlayer);
+        //getTopCard();
         // getCards();
 
     }

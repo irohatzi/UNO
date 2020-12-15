@@ -1,19 +1,19 @@
 "use strict";
 
 
-let gameId;
+let gameID;
 let playersCards = [];
+let scores = [];
 
-let card = {};
 let currentPlayer;
-
+let card = {};
 
 let wildColor = "";
 let colorRC;
 let valueRC;
 
 let img;
-let topCard;
+let topCard = {};
 let cardArr;
 
 
@@ -28,6 +28,8 @@ let player1 = 'p1';
 let player2 = 'p2';
 let player3 = 'p3';
 let player4 = 'p4';
+
+
 
 
 
@@ -125,7 +127,8 @@ playersCards.push(document.getElementById("p4cards").id);
 //     return false;
 // }
 
-async function post() {
+
+async function startPost() {
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
         method: "POST",
         body: JSON.stringify(players),
@@ -138,11 +141,7 @@ async function post() {
         let result = await response.json();
         // alert(JSON.stringify(result))
         console.log(result);
-
-
-
-        gameId = result.Id;
-        //   console.log(gameId);
+        gameID = result.Id;
 
         // im response von post ist der nächste Player der erste zu spielende
         currentPlayer = result.NextPlayer;
@@ -151,28 +150,22 @@ async function post() {
 
         console.log(currentPlayer);
 
-        let center = document.getElementById("decks");
-        //  console.log(result.TopCard.Color);
-        card = result.TopCard;
-        let pic = generateCard(card);
+        //* TC globaleVariable zuweisen & ins html einfügen
+        topCard = result.TopCard;
+        let pic = generateCard(topCard);
         pic.setAttribute("id", "topCard");
+        let center = document.getElementById("decks");
         center.appendChild(pic);
 
 
-        // if(result.TopCard.Text == "Draw2"){
-        //     drawCard();
-        //     drawCard();
-        // }
-
-
-
-        // //* playerCards
+        //* playerCards zuweisen & ins html einfügen
         for (let i = 0; i < playersCards.length; i++) {
 
             for (let j = 0; j < result.Players[i].Cards.length; j++) {
 
                 card = result.Players[i].Cards[j];
                 img = generateCard(card);
+
                 img.setAttribute("id", i + "card2play" + j);
                 img.setAttribute("onclick", "replyId(this.id)");
                 img.setAttribute("class", "cards");
@@ -181,7 +174,7 @@ async function post() {
             }
         }
 
-        let scores = [];
+
         scores.push(document.getElementById("score1").id);
         scores.push(document.getElementById("score2").id);
         scores.push(document.getElementById("score3").id);
@@ -190,7 +183,7 @@ async function post() {
         for (let i = 0; i < scores.length; i++) {
             let idString = i + 1;
             document.getElementById("score" + idString);
-            console.log("TEST FÜR SCORE: " + "score" + idString);
+            //console.log("TEST FÜR SCORE: " + "score" + idString);
             // für Score evtl ein div im index.html einbauen, mir is das zu stressig zum aufrufen
             //   let p = document.createElement("p");
             //   p.innerText = "Score";
@@ -219,7 +212,7 @@ btnDraw.addEventListener("click", drawCard);
 
 
 //! wenn modaler dialog auskommentiert! - da post aufrufen!
-post();
+startPost();
 
 function game() {
 
@@ -233,8 +226,8 @@ function game() {
 }
 
 function generateCard(card) {
-    console.log(card);
-    console.log(card.Color);
+    // console.log(card);
+    // console.log(card.Color);
 
     let pic = document.createElement("img");
     let color = card.Color;
@@ -246,7 +239,7 @@ function generateCard(card) {
 
 async function getTopCard() {
 
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/topCard/" + gameId, {
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/topCard/" + gameID, {
         method: "GET",
         contentType: "application/json",
         headers: {
@@ -281,7 +274,7 @@ async function getTopCard() {
 
 async function drawCard() {
 
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/drawCard/" + gameId, {
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/drawCard/" + gameID, {
         method: "PUT",
         contentType: "application/json",
         headers: {
@@ -298,39 +291,23 @@ async function drawCard() {
         // console.log(result.Player);
 
         //  if(result.Player === currentPlayer){
-        let cardDiv = document.createElement("div");
+    
         let check = players.indexOf(currentPlayer);
         let arrCardSize = document.getElementById(playersCards[check]).childElementCount;
         console.log(arrCardSize);
-        cardDiv.setAttribute("id", check + "card2play" + arrCardSize);
-        cardDiv.setAttribute("onclick", "replyId(this.id)");
-        cardDiv.setAttribute("class", "cards");
-
-
         card = result.Card;
         img = generateCard(card);
-        img.setAttribute("id", i + "card2play" + j);
+        img.setAttribute("id", check + "card2play" + arrCardSize);
         img.setAttribute("onclick", "replyId(this.id)");
         img.setAttribute("class", "cards");
 
-        document.getElementById(playersCards[i]).appendChild(img);
+        document.getElementById(playersCards[check]).appendChild(img);
+
+        let additionalScore = result.Card.Score;
+
+        setScore(additionalScore);
 
 
-        // Hilfsvariable um auf richtigen player zuzugreifen (index vom array ≙ +1 von id -->weil ich die ids ab p1 und nicht p0 vergeben habe)
-
-        check += 1;
-        console.log("p" + check + "cards");
-        document.getElementById("p" + check + "cards").appendChild(img);
-
-        //   console.log(result.Card.Score);
-        //  console.log(document.getElementById("score" + check).innerText);
-        let newScore = document.getElementById("score" + check).innerText;
-        //     console.log(newScore);
-
-        newScore = parseInt(newScore);
-        newScore += result.Card.Score;
-        //      console.log(newScore);
-        document.getElementById("score" + check).innerText = newScore;
 
 
         //   console.log(result.NextPlayer);
@@ -345,10 +322,22 @@ async function drawCard() {
     }
 }
 
+function setScore(additionalScore){
+
+
+  
+        let newScore = document.getElementById("score" + check).innerText;
+
+        newScore = parseInt(newScore);
+        newScore += result.Card.Score;
+
+        document.getElementById("score" + check).innerText = newScore;
+
+}
 
 async function getCards() {
 
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/getCards/" + gameId
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/getCards/" + gameID
         + "?playerName=" + currentPlayer, {
         method: "GET",
         contentType: "application/json",
@@ -399,7 +388,8 @@ async function getCards() {
 
 function replyId(clickedId) {
 
-
+    let ausgabe = document.getElementById(clickedId);
+    console.log(ausgabe);
 
     // let anotherTest = document.getElementById(clickedId);
     // console.log(anotherTest.getAttribute(val));
@@ -439,7 +429,7 @@ function cardCheck(clickedId) {
         if (colorRC == "Black" || valueRC == valueTC || colorRC == colorTC) {
             alert("Valid CarD!");
 
-            //      playCard(clickedId);
+                  playCard(clickedId);
         }
     } else {
         alert("Falsche Kartenhand!");
@@ -455,7 +445,7 @@ function cardCheck(clickedId) {
 
 async function playCard(clickedId) {
 
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameId +
+    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameID +
         "?value=" + valueRC + "&color=" + colorRC + "&wildColor=" + wildColor, {
         method: "PUT",
         contentType: "application/json",
@@ -474,23 +464,28 @@ async function playCard(clickedId) {
         }
 
         let deleteCard = document.getElementById(clickedId);
-        //    console.log(clickedId);
+        console.log(clickedId);
         deleteCard.parentElement.removeChild(deleteCard);
         clickedId = "";
+        console.log(deleteCard);
 
-        let newTC = document.getElementById("topCard").childNodes;
-        console.log(newTC);
-
-        //    document.getElementById("topCard").removeChild(img);
-
-
-        let imgNew = new Image();
-        imgNew.src = "cards/" + colorRC + valueRC + ".png";
-        // imgNew.height = 161;
+        let pic = deleteCard;
+        console.log(pic);
+        
+        let center = document.getElementById("decks");
+        center.remove(document.getElementById("topCard"));
+        pic.setAttribute("id", "topCard");
+        center.appendChild(pic);
 
 
-        document.getElementById("topCard").replaceChild(imgNew, img);
-        img = imgNew;
+        // let imgNew = new Image();
+        // imgNew.src = "cards/" + colorRC + valueRC + ".png";
+        // // imgNew.height = 161;
+
+
+        // let cardList = document.getElementById("decks").childNodes[0];
+        // document.getElementById("decks").replaceChild(img,cardList);
+ 
 
         //   console.log(result.Player);
 

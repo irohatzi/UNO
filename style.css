@@ -5,10 +5,13 @@ div{
     border: solid red 3px;
 }
 .row{
-    border: solid black 5px;
+
 }
 
+
+
 .cards{
+    width: 100px;
     border: 1px solid #ddd;
     border-radius: 3px;
     margin-top: 10px;
@@ -38,6 +41,17 @@ div{
     font-weight: bold;
 }
 
+.decks{
+    height: 350px;
+}
+
+.deckInfo{
+  position: absolute;
+  bottom: 20px;
+  width: 370px; 
+}
+
+
 #drawDeck {
     position: absolute;
     top: 24px;
@@ -45,14 +59,18 @@ div{
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 3px;
-    width: 110px;
+    width: 150px;
+
 }
 
-.topCard {
-    top: 16px;
+#topCard {
+    position: absolute;
+    width: 150px;
+    top: 24px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    width: 110px;
     padding: 2px;
+    /* unbedingt marginTop = 0 lassen, sonst ist die TC weiter unten - übernimmt margintop von den normalen karten mit */
+    margin-top: 0;
 
 }

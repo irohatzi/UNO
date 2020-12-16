@@ -45,8 +45,11 @@
 
         <p id='decks'></p>
         <img src="cards\back0.png" id="drawDeck">
+        <div class="row justify-content-around deckInfo">
         <h5>AblegeStapel</h5>
+        
         <h5>HebeStapel</h5>
+        </div>
 
 
         <br>
@@ -109,6 +112,37 @@
       </div>
     </div>
   </div>
+      <!--MODDAL DIALOG-->
+      <div class="WCDia">
+        <div class="modal fade" id="wildcolor" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+          <form id="WCForm">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Players:</h5>
+                </div>
+                <div class="modal-body" id="test">
+                  <div class="form-group">
+                    <button type="submit" class="form-control" id="red">red</button>
+                    </br>
+                    <input type="submit" class="form-control" id="green">green</button>
+                    </br>
+                    <input type="submit" class="form-control" id="blue">blue</button>
+                    </br>
+                    <input type="submit" class="form-control" id="yellow">yellow</button>
+                    </br>
+                  </div>
+                </div>
+                <div class="modal-footer">
+    
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
   <!-- Chris fragen ob beides notwendig bzw warum -->
   <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -120,5 +154,6 @@
   <!-- Custom JS -->
   <script src="main.js"></script>
 </body>
+
 
 </html>

@@ -316,7 +316,7 @@ async function drawCard() {
 
 
 
-        //! Nächster Spieler wird auf current gesetzt
+        //? kann sein dass hier noch Nächster Spieler auf current gesetzt werden muss, check heut scho nix mehr
         currentPlayer = result.Player;
         //   console.log(result.NextPlayer);
         // das sollte auch nach dem ablegen einer karte gemacht werden!

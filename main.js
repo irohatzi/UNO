@@ -104,6 +104,7 @@ playersCards.push(document.getElementById("p2cards").id);
 playersCards.push(document.getElementById("p3cards").id);
 playersCards.push(document.getElementById("p4cards").id);
 
+
 //! unbedingt für mod dialog wieder einkommentieren!
 // $('#playerNames').modal('hide');
 // post();
@@ -141,14 +142,17 @@ async function startPost() {
         let result = await response.json();
         // alert(JSON.stringify(result))
         console.log(result);
+
+        //* gameID in globale Variable speichern
         gameID = result.Id;
 
-        // im response von post ist der nächste Player der erste zu spielende
+        //* im response von post ist der nächste Player der erste zu spielende, 
+        //* wenn +2 aufliegt oä ist der p2 als NextPlayer im response
         currentPlayer = result.NextPlayer;
         cardArr = result.Players[0].Cards;
         console.log(cardArr);
 
-        console.log(currentPlayer);
+        console.log("Am Zug ist nun: ",currentPlayer);
 
         //* TC globaleVariable zuweisen & ins html einfügen
         topCard = result.TopCard;
@@ -167,7 +171,8 @@ async function startPost() {
                 img = generateCard(card);
 
                 img.setAttribute("id", i + "card2play" + j);
-                img.setAttribute("onclick", "replyId(this.id)");
+                // img.setAttribute("onclick", "replyId(this.id)");
+                img.setAttribute("onclick", "cardCheck(this.id)");
                 img.setAttribute("class", "cards");
 
                 document.getElementById(playersCards[i]).appendChild(img);
@@ -252,20 +257,13 @@ async function getTopCard() {
     if (response.ok) {
         let result = await response.json();
         console.log(result);
-        //  alert(JSON.stringify(result))
-        // if (topCard.Text == "Draw2" || topCard.Text == "Draw4") {
-        //     let cardArrSize = cardArr.length;
-        //     let helper = topCard.text.charAt(length - 1);
-        //     console.log(helper);
-        //     while ((cardArrSize + helper) > cardArr.length) {
-        //         generateCards();
-        //     }
-        // }
 
 
         // TOPCARD value aus result rausspeichern - DAS FUNKTIONIERT -NICHT LÖSCHEN!!!!!!!!
         topCard = result;
-        // return topCard;
+
+        console.log(topCard);
+        return topCard;
 
     }
     else {
@@ -300,12 +298,14 @@ async function drawCard() {
         card = result.Card;
         img = generateCard(card);
         img.setAttribute("id", check + "card2play" + arrCardSize);
-        img.setAttribute("onclick", "replyId(this.id)");
+        // img.setAttribute("onclick", "replyId(this.id)");
+        img.setAttribute("onclick", "cardCheck(this.id)");
         img.setAttribute("class", "cards");
 
         document.getElementById(playersCards[check]).appendChild(img);
 
-                  
+        //! check muss eins größer als index vom array sein!
+        check++;          
         let newScore = document.getElementById("score" + check).innerText;
 
         newScore = parseInt(newScore);
@@ -317,7 +317,8 @@ async function drawCard() {
 
 
         //? kann sein dass hier noch Nächster Spieler auf current gesetzt werden muss, check heut scho nix mehr
-        currentPlayer = result.Player;
+        currentPlayer = result.NextPlayer;
+        console.log("Am Zug ist nun: ",currentPlayer);
         //   console.log(result.NextPlayer);
         // das sollte auch nach dem ablegen einer karte gemacht werden!
         //  currentPlayer = result.NextPlayer;
@@ -360,7 +361,8 @@ async function getCards() {
             card = result.Cards[arrCardSize + counter];
             img = generateCard(card);
             img.setAttribute("id", check + "card2play" + arrCardSize);
-            img.setAttribute("onclick", "replyId(this.id)");
+            // img.setAttribute("onclick", "replyId(this.id)");
+            img.setAttribute("onclick", "cardCheck(this.id)");
             img.setAttribute("class", "cards");
             counter++;
             document.getElementById(playersCards[check]).appendChild(img);
@@ -385,22 +387,23 @@ async function getCards() {
 // }kinds o
 
 
-function replyId(clickedId) {
+// function replyId(clickedId) {
 
-    let ausgabe = document.getElementById(clickedId);
-    console.log(ausgabe);
+//     let ausgabe = document.getElementById(clickedId);
+//     console.log(ausgabe);
 
-    // let anotherTest = document.getElementById(clickedId);
-    // console.log(anotherTest.getAttribute(val));
-
-
-    // check ob von richtiger Kartenhand gespielt:
-    cardCheck(clickedId);
+//     // let anotherTest = document.getElementById(clickedId);
+//     // console.log(anotherTest.getAttribute(val));
 
 
-}
+//     // check ob von richtiger Kartenhand gespielt:
+//     cardCheck(clickedId);
+
+
+// }
 
 let removeCard;
+
 function cardCheck(clickedId) {
 
     console.log("aktueller spieler", currentPlayer);
@@ -416,15 +419,17 @@ function cardCheck(clickedId) {
         //  getCards();
         //console.log(cardArr.pop());
         removeCard = cardArr.splice(i4CardArr, 1);
+        console.log(removeCard);
         colorRC = removeCard[0].Color;
         valueRC = removeCard[0].Value;
-        //      console.log(colorRC);
+              console.log(colorRC);
 
         //     console.log(cardArr);
         //check ob karte gespielt werden darf:
         // let cardX = Object.assign({},cardArr[i4CardArr]);
         let colorTC = topCard.Color;
         let valueTC = topCard.Value;
+
 
         if (colorRC == "Black" || valueRC == valueTC || colorRC == colorTC) {
             alert("Valid CarD!");
@@ -443,7 +448,9 @@ function cardCheck(clickedId) {
 }
 
 
-async function playCard(clickedId) {
+async function playCard() {
+
+     console.log(await getTopCard());
 
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameID +
         "?value=" + valueRC + "&color=" + colorRC + "&wildColor=" + wildColor, {
@@ -478,7 +485,7 @@ async function playCard(clickedId) {
         pscore ++;
         console.log("Nummer für PlayerScore", pscore);
 
-        clickedId = "";
+        // clickedId = "";
         let path = deleteCard.src;
         let numPlus = path.replace( /^\D+/g, ''); 
 
@@ -491,8 +498,12 @@ async function playCard(clickedId) {
         document.getElementById("score" + pscore).innerText = newScore;
 
 
+        colorRC = "";
+        colorRC = "";
+
         
         currentPlayer = result.Player;
+        console.log("playCard response Spieler:", currentPlayer);
         //getTopCard();
         // getCards();
 

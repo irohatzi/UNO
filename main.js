@@ -14,7 +14,8 @@ let valueRC;
 
 let img;
 let topCard = {};
-let cardArr;
+let currentCards;
+let clickedId;
 
 
 // modaler dialog funzt, damit erspart man sich das permanente eingeben:
@@ -104,7 +105,6 @@ playersCards.push(document.getElementById("p2cards").id);
 playersCards.push(document.getElementById("p3cards").id);
 playersCards.push(document.getElementById("p4cards").id);
 
-
 //! unbedingt für mod dialog wieder einkommentieren!
 // $('#playerNames').modal('hide');
 // post();
@@ -149,8 +149,8 @@ async function startPost() {
         //* im response von post ist der nächste Player der erste zu spielende, 
         //* wenn +2 aufliegt oä ist der p2 als NextPlayer im response
         currentPlayer = result.NextPlayer;
-        cardArr = result.Players[0].Cards;
-        console.log(cardArr);
+        currentCards = result.Players[0].Cards;
+        console.log(currentCards);
 
         console.log("Am Zug ist nun: ",currentPlayer);
 
@@ -316,9 +316,11 @@ async function drawCard() {
 
 
 
-        //? kann sein dass hier noch Nächster Spieler auf current gesetzt werden muss, check heut scho nix mehr
+        //! Nächsten Spieler auf current setzen
         currentPlayer = result.NextPlayer;
         console.log("Am Zug ist nun: ",currentPlayer);
+        //! getCards holt die karten vom aktuellen spieler und weißt sie dem currentCardArr zu
+        getCards();
         //   console.log(result.NextPlayer);
         // das sollte auch nach dem ablegen einer karte gemacht werden!
         //  currentPlayer = result.NextPlayer;
@@ -370,8 +372,9 @@ async function getCards() {
 
         //     console.log(result);
 
-        // CardArr values aus result rausspeichern - DAS FUNKTIONIERT -NICHT LÖSCHEN!!!!!!!!
-        cardArr = result.Cards;
+        //! CardArr values aus result rausspeichern 
+        currentCards = result.Cards;
+        currentPlayer = result.Player;
 
 
 
@@ -418,11 +421,13 @@ function cardCheck(clickedId) {
         console.log(clickedId);
         //  getCards();
         //console.log(cardArr.pop());
-        removeCard = cardArr.splice(i4CardArr, 1);
+        removeCard = currentCards.splice(i4CardArr, 1);
         console.log(removeCard);
         colorRC = removeCard[0].Color;
         valueRC = removeCard[0].Value;
               console.log(colorRC);
+              console.log(valueRC);
+              console.log(currentPlayer);
 
         //     console.log(cardArr);
         //check ob karte gespielt werden darf:
@@ -439,7 +444,7 @@ function cardCheck(clickedId) {
     } else {
         alert("Falsche Kartenhand!");
         if (removeCard != defined) {
-            cardArr.push(removeCard);
+            currentCards.push(removeCard);
             // check if removeCard in cardArr
             //         console.log(cardArr);
         }
@@ -448,9 +453,11 @@ function cardCheck(clickedId) {
 }
 
 
-async function playCard() {
+async function playCard(clickedId) {
 
-     console.log(await getTopCard());
+     //console.log(await getTopCard());
+     console.log("kartenhand von der gespielt wird: ", currentCards);
+     
 
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameID +
         "?value=" + valueRC + "&color=" + colorRC + "&wildColor=" + wildColor, {
@@ -472,6 +479,8 @@ async function playCard() {
 
         let deleteCard = document.getElementById(clickedId);
         let pic = deleteCard;
+        console.log(clickedId);
+        console.log(deleteCard.parentElement);
         deleteCard.parentElement.removeChild(deleteCard);
         let oldTc = document.getElementById("topCard");
         console.log(oldTc);
@@ -498,11 +507,15 @@ async function playCard() {
         document.getElementById("score" + pscore).innerText = newScore;
 
 
-        colorRC = "";
-        colorRC = "";
+        // colorRC = "";
+        // colorRC = "";
 
+        // Im Result für playCard() steckt der nächste Spieler +spielerhand
+        console.log(result);
         
+        //! Nächsten Spieler und seine Kartenhand zuweisen 
         currentPlayer = result.Player;
+        currentCards = result.Cards;
         console.log("playCard response Spieler:", currentPlayer);
         //getTopCard();
         // getCards();

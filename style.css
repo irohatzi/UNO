@@ -80,3 +80,11 @@ div{
     margin-top: 0;
 
 }
+
+.active{
+    background: none;
+}
+
+.active .highlight{
+    background: yellow;
+}

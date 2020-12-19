@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,74 +15,77 @@
 
 <body>
   <!--PLAYGROUND-->
-<div class="container-fluid">
-  <div class="row playground">
-    <div class="row justify-content-between" style="width: 100%;">
-      <!--PLAYER 1 Left corner up-->
-      <div class="col-6 align-items-start">
-        <br>
-        <p class="player" id='p1'>SPIELER 1</p>
-        <div class="points" id="score1"></div>
-        <div class="d-flex flex-fill flex-row" id="p1cards"></div>
+  <div class="container-fluid">
+    <div class="row playground">
+      <div class="row justify-content-between active" style="width: 100%;">
+        <!--PLAYER 1 Left corner up-->
+        <div class="col-6 align-items-start" id="act1">
+          <br>
+          <p class="player" id='p1'>SPIELER 1</p>
+          <div class="points" id="score1"></div>
+          <div class="d-flex flex-fill flex-row" id="p1cards"></div>
 
-        <br>
-      </div>
-      <!--END Player 1-->
-      <!--PLAYER 2 Right corner up-->
-      <div class="col-6 align-items-end">
-        <br>
-        <p class="player" id='p2'> SPIELER 2</p>
-        <div class="points" id="score2"></div>
-        <div class="d-flex flex-fill flex-row" id="p2cards"></div>
-
-        <br>
-      </div>
-      <!--END Player 2-->
-    </div>
-    <div class="row justify-content-center" style="width: 100%;">
-      <!--DECKS IN THE MIDDLE-->
-      <div class="col-3 align-self-start decks">
-        <br>
-
-        <p id='decks'></p>
-        <img src="cards\back0.png" id="drawDeck">
-        <div class="row justify-content-around deckInfo">
-        <h5>AblegeStapel</h5>
-        
-        <h5>HebeStapel</h5>
+          <br>
         </div>
+        <!--END Player 1-->
+        <!--PLAYER 2 Right corner up-->
+        <div class="col-6 align-items-end"id="act2">
+          <br>
+          <p class="player" id='p2'> SPIELER 2</p>
+          <div class="points" id="score2"></div>
+          <div class="d-flex flex-fill flex-row" id="p2cards"></div>
 
-
-        <br>
+          <br>
+        </div>
+        <!--END Player 2-->
       </div>
-      <!--END Decks Field-->
-    </div>
-    <div class="row justify-content-between" style="width: 100%;">
-      <!--PLAYER 3 Left corner down-->
-      <div class="col-6 align-self-start">
-        <br>
-        <p class="player" id='p3'>SPIELER 3</p>
-        <div class="points" id="score3"></div>
-        <div class="d-flex flex-row" id="p3cards"></div>
+      <div class="row justify-content-center" style="width: 100%;">
+        <!--DECKS IN THE MIDDLE-->
+        <div class="col-3 align-self-start decks">
+          <br>
 
-        <br>
+          <p id='decks'></p>
+          <img src="cards\back0.png" id="drawDeck">
+          <div class="row justify-content-around deckInfo">
+
+          
+            <h5>AblegeStapel</h5>
+            <h2 id="activePlayer">bla</h2>
+            
+            <h5>HebeStapel</h5>
+          </div>
+
+
+          <br>
+        </div>
+        <!--END Decks Field-->
       </div>
-      <!--
+      <div class="row justify-content-between active" style="width: 100%;">
+        <!--PLAYER 3 Left corner down-->
+        <div class="col-6 align-self-start" id="act3">
+          <br>
+          <p class="player" id='p3'>SPIELER 3</p>
+          <div class="points" id="score3"></div>
+          <div class="d-flex flex-row" id="p3cards"></div>
+
+          <br>
+        </div>
+        <!--
         ND Player 3-->
-      <!--PLAYER 4 Right corner down-->
-      <div class="col-6 align-self-end">
-        <br>
-        <p class="player" id='p4'>SPIELER 4</p>
-        <div class="points" id="score4"></div>
-        <div class="d-flex flex-row" id="p4cards"></div>
+        <!--PLAYER 4 Right corner down-->
+        <div class="col-6 align-self-end" id="act4">
+          <br>
+          <p class="player" id='p4'>SPIELER 4</p>
+          <div class="points" id="score4"></div>
+          <div class="d-flex flex-row" id="p4cards"></div>
 
-        <br>
+          <br>
+        </div>
+        <!--END Player 4-->
       </div>
-      <!--END Player 4-->
     </div>
-  </div>
-  <!--END PLAYGROUND-->
-  
+    <!--END PLAYGROUND-->
+
     <!--MODDAL DIALOG-->
     <div class="playerNamesModDia">
       <div class="modal fade" id="playerNames" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
@@ -114,39 +116,31 @@
       </div>
     </div>
   </div>
-      <!--MODDAL DIALOG-->
-      <div class="WCDia">
-        <div class="modal fade" id="wildcolor" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
-          <form id="WCForm">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Players:</h5>
-                </div>
-                <div class="modal-body" id="test">
-                  <div class="form-group">
-                    <button type="submit" class="form-control" id="red">red</button>
-                    </br>
-                    <input type="submit" class="form-control" id="green">green</button>
-                    </br>
-                    <input type="submit" class="form-control" id="blue">blue</button>
-                    </br>
-                    <input type="submit" class="form-control" id="yellow">yellow</button>
-                    </br>
-                  </div>
-                </div>
-                <div class="modal-footer">
-    
-                </div>
-              </div>
-            </div>
-          </form>
+  <!--MODDAL DIALOG-->
+  <div class="modal fade" id="pickColor" tabindex="-1" role="dialog"
+  data-keyboard="false" data-backdrop="static">
+  
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Bitte Farbe wählen</h5>   
+          </div>
+          <div class="row modal-body justify-content-around">
+          <button type="submit" class="btn btn-lg btn-outline-danger"
+          id="red">Rot</button>
+          <button type="submit" class="btn btn-lg btn-outline-warning"
+          id="yellow">Gelb</button>
+          <button type="submit" class="btn btn-lg btn-outline-success"
+          id="green">Grün</button>
+          <button type="submit" class="btn btn-lg btn-outline-primary"
+          id="blue">Blau</button>
+
         </div>
-        
       </div>
-    </div>
-  <!-- Chris fragen ob beides notwendig bzw warum -->
-  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  
+  </div>
+  
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>

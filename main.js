@@ -1,14 +1,19 @@
 "use strict";
 
 
+//**** global variables ****/  
+
 let gameId;
 let playersCards = [];
 let scores = [];
 
 let currentPlayer;
+let currentNum;
+let player;
 let card = {};
 
 let wildColor = "";
+let pickedColor;
 let colorRC;
 let valueRC;
 
@@ -16,22 +21,63 @@ let img;
 let topCard = {};
 let currentCards;
 let clickedId;
+//* value that is needed to get the prev/next player
+let direction = 1;
+let colorCheck = "";
+
+
 
 
 // modaler dialog funzt, damit erspart man sich das permanente eingeben:
 let players = [];
-// let player1 = 'Hansi';
-// let player2 = 'Helga';
-// let player3 = 'Wurschti';
-// let player4 = 'Greti';
+let player1 = 'Hansi';
+let player2 = 'Helga';
+let player3 = 'Wurschti';
+let player4 = 'Greti';
 
-let player1 = 'p1';
-let player2 = 'p2';
-let player3 = 'p3';
-let player4 = 'p4';
+// let player1 = 'p1';
+// let player2 = 'p2';
+// let player3 = 'p3';
+// let player4 = 'p4';
 
 
 
+
+let redBtn = document.getElementById("red");
+redBtn.addEventListener("click", function () {
+    wildColor = "Red";
+    colorCheck = "Red";
+    $('#pickColor').modal('hide');
+    console.log(clickedId);
+    playCard(clickedId);
+});
+
+let yellowBtn = document.getElementById("yellow");
+yellowBtn.addEventListener("click", function () {
+    wildColor = "Yellow";
+    colorCheck = "Yellow";
+    $('#pickColor').modal('hide');
+    console.log(clickedId);
+    playCard(clickedId);
+});
+
+let greenBtn = document.getElementById("green");
+greenBtn.addEventListener("click", function () {
+    wildColor = "Green";
+    colorCheck = "Green";
+    $('#pickColor').modal('hide');
+    console.log(clickedId);
+    playCard(clickedId);
+});
+
+let blueBtn = document.getElementById("blue");
+blueBtn.addEventListener("click", function () {
+    wildColor = "Blue";
+    colorCheck = "Blue";
+    $('#pickColor').modal('hide');
+    console.log(clickedId);
+    playCard(clickedId);
+});
 
 
 
@@ -146,12 +192,14 @@ async function startResponse() {
         //* gameID in globale Variable speichern
         gameId = result.Id;
 
-        // TODO VERSUCH, den currentplayer erst nach aufruf topcard festzulegen
-         //* im response von post ist der nächste Player der erste zu spielende, 
-         //* wenn +2 aufliegt oä ist der p2 als NextPlayer im response - 
+        //* im response von post ist der nächste Player der erste zu spielende, 
+        //* wenn +2 aufliegt oä ist der p2 als NextPlayer im response - 
         //* daher nur player und net current cards, die werden dann mit der getCard
-        // * geholt weil man eh nur den current player übergibt
-         currentPlayer = result.NextPlayer;
+        // * geholt 
+        currentPlayer = result.NextPlayer;
+        currentNum = players.indexOf(currentPlayer);
+        currentCards = result.Players[currentNum].Cards;
+        showActivePlayer();
 
 
 
@@ -161,7 +209,7 @@ async function startResponse() {
         pic.setAttribute("id", "topCard");
         let center = document.getElementById("decks");
         center.appendChild(pic);
-        console.log("TC ZUWEISUNG: ", pic);
+
 
 
         //* playerCards zuweisen & ins html einfügen
@@ -173,7 +221,6 @@ async function startResponse() {
                 img = generateCardImg(card);
 
                 img.setAttribute("id", i + "card" + j);
-                // img.setAttribute("onclick", "replyId(this.id)");
                 img.setAttribute("onclick", "cardCheck(this.id)");
                 img.setAttribute("class", "cards");
 
@@ -187,13 +234,9 @@ async function startResponse() {
         scores.push(document.getElementById("score3").id);
         scores.push(document.getElementById("score4").id);
 
+
+
         for (let i = 0; i < scores.length; i++) {
-            let idString = i + 1;
-            document.getElementById("score" + idString);
-            //console.log("TEST FÜR SCORE: " + "score" + idString);
-            // für Score evtl ein div im index.html einbauen, mir is das zu stressig zum aufrufen
-            //   let p = document.createElement("p");
-            //   p.innerText = "Score";
             let score = document.createElement("p");
             score.innerText = result.Players[i].Score;
             score.setAttribute("class", "score");
@@ -201,8 +244,9 @@ async function startResponse() {
             document.getElementById(scores[i]).appendChild(score);
         }
 
-    // check if +2/skip or whatever to have set the right current player for next turn
-         getTopCard();
+        // check if +2/skip or whatever to have set the right current player for next turn --> notwendig?
+        getTopCard();
+
 
     }
     else {
@@ -210,7 +254,7 @@ async function startResponse() {
     }
 }
 
-// ClickEvent für den Stapel zum Abheben
+//* ClickEvent für den Stapel zum Abheben
 const btnDraw = document.getElementById('drawDeck');
 btnDraw.addEventListener("click", drawCard);
 
@@ -218,17 +262,28 @@ btnDraw.addEventListener("click", drawCard);
 
 //! wenn modaler dialog auskommentiert! - da post aufrufen!
 startResponse();
-// ? Keine Ahnung ob die Methode überhaupt notwendig is, weil man evtl rekursion oder a schleife braucht
-// function game() {
 
-//     getTopCard();
-//     // wenn +2 oder +4 aufliegt, kartenhand neu generieren vom aktuellen spieler
-//     //klick auf play oder drawCard
-//     //
+function showActivePlayer() {
+    // let highlightField = document.getElementById("act"+(direction+currentNum));
 
-//     playCard(clickedId);
-//     // solange der nächste spieler noch karten hat, ruf game auf
-// }
+
+    // for(let el of document.querySelectorAll("active")){
+    //     if(el.id == highlightField){
+    //         $(highlightField).classlist.toggle("highlight");
+
+    //     }
+    // }
+    // console.log("Erste id ", "act"+(direction+currentNum));
+
+
+    document.getElementById("activePlayer").innerText = currentPlayer;
+
+
+
+
+
+
+}
 
 function generateCardImg(card) {
     // console.log(card);
@@ -256,17 +311,38 @@ async function getTopCard() {
     if (response.ok) {
         let result = await response.json();
         console.log(result);
+        card = result;
+
 
         let tcDom = document.getElementById("topCard");
         console.log(tcDom);
 
-        card = result;
+
         img = generateCardImg(card);
 
 
-       
+
         tcDom.replaceWith(img);
         img.setAttribute("id", "topCard");
+
+        // if (card.Color == "Black") {
+        //     pickedColor = wildColor;
+        //     wildColor = "";
+        // }
+
+        if (card.Value == 12) {
+            direction *= -1;
+            console.log("Richtungswechsel abgespeichert! ", direction);
+        }
+
+        // if(card.Value == 13 || card.Value == 10){
+        //     correctCards();
+
+        // }
+
+
+
+
 
         // if(tcDom.Value != result.Value){
         //     card = result;
@@ -279,13 +355,37 @@ async function getTopCard() {
         topCard = result;
 
         console.log(topCard);
-        getCards();
+        // for(let el of players){
+        //     getCards(el);
+        // }
+
+
+
     }
     else {
         alert("HTTP-Error: " + response.status)
     }
 }
 
+function previousPlayer() {
+
+
+    let oldIdx = players.indexOf(currentPlayer);
+    let maxIdx = (players.length - 1);
+
+    let newIdx = oldIdx - direction;
+    if (newIdx < 0) {
+        newIdx = maxIdx
+    }
+    else {
+        if (newIdx > maxIdx) {
+            newIdx = 0
+        }
+    }
+    let previousPlayer = players[newIdx];
+    console.log(previousPlayer);
+    return previousPlayer;
+}
 
 async function drawCard() {
 
@@ -306,7 +406,7 @@ async function drawCard() {
         // console.log(result.Player);
 
         //  if(result.Player === currentPlayer){
-    
+
         let check = players.indexOf(currentPlayer);
         let arrCardSize = document.getElementById(playersCards[check]).childElementCount;
         console.log(arrCardSize);
@@ -320,7 +420,7 @@ async function drawCard() {
         document.getElementById(playersCards[check]).appendChild(img);
 
         //! check muss eins größer als index vom array sein!
-        check++;          
+        check++;
         let newScore = document.getElementById("score" + check).innerText;
 
         newScore = parseInt(newScore);
@@ -329,13 +429,13 @@ async function drawCard() {
         document.getElementById("score" + check).innerText = newScore;
 
 
-
-
         //! Nächsten Spieler auf current setzen
         currentPlayer = result.NextPlayer;
-        console.log("Am Zug ist nun: ",currentPlayer);
+        currentNum = players.indexOf(currentPlayer);
+        console.log("Am Zug ist nun: ", currentPlayer);
+        showActivePlayer();
         //! getCards holt die karten vom aktuellen spieler und weißt sie dem currentCardArr zu
-        getCards();
+        getCards(currentPlayer);
         //   console.log(result.NextPlayer);
         // das sollte auch nach dem ablegen einer karte gemacht werden!
         //  currentPlayer = result.NextPlayer;
@@ -372,7 +472,7 @@ async function drawCard() {
 //         console.log(arrCardSize);
 
 
-        
+
 
 //         while (arrCardSize != result.Cards.length){
 //             card = result.Cards[arrCardSize];
@@ -400,11 +500,11 @@ async function drawCard() {
 // }
 
 
-async function getCards() {
+async function getCards(player) {
 
 
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/getCards/" + gameId
-        + "?playerName=" + currentPlayer, {
+        + "?playerName=" + player, {
         method: "GET",
         contentType: "application/json",
         headers: {
@@ -417,39 +517,41 @@ async function getCards() {
         //   console.log(result.Cards[2].Value);
 
 
-        let check = players.indexOf(currentPlayer);
-        // let displayedCards = document.getElementById(playersCards[check]).childElementCount;
+        let check = players.indexOf(player);
 
         let myNode = document.getElementById(playersCards[check]);
         while (myNode.firstChild) {
-          myNode.removeChild(myNode.lastChild);
+            myNode.removeChild(myNode.lastChild);
         }
-        console.log(myNode.childElementCount);
-        console.log(result.Cards.length);
-        
+        // console.log(myNode.childElementCount);
+        // console.log(result.Cards.length);
 
-        let i = 0;
-        while (myNode.childElementCount < result.Cards.length){
-            card = result.Cards[i];
+
+        while (myNode.childElementCount < result.Cards.length) {
+            card = result.Cards[myNode.childElementCount];
             img = generateCardImg(card);
-            img.setAttribute("id", check + "card" + myNode.childElementCount);
-            // img.setAttribute("onclick", "replyId(this.id)");
+            img.setAttribute("id", check + "card" + (myNode.childElementCount));
+            console.log("id", check + "card" + (myNode.childElementCount));
             img.setAttribute("onclick", "cardCheck(this.id)");
             img.setAttribute("class", "cards");
 
-            console.log(img);
+            //console.log(img);
             document.getElementById(playersCards[check]).appendChild(img);
-            i++;
         }
+
+
+
+        let newScore = result.Score;
+
+        document.getElementById("score" + (check + 1)).innerText = newScore;
 
         //     console.log(result);
 
         //! CardArr values aus result rausspeichern 
-        currentCards = result.Cards;
-        currentPlayer = result.Player;
+        if (player == currentPlayer) {
+            currentCards = result.Cards;
+        }
 
-        console.log(currentCards);
-        console.log(currentPlayer);
 
 
     }
@@ -458,28 +560,24 @@ async function getCards() {
     }
 }
 
-// 
-// function removeCard(event){
-//     let cardDiv = event.target.parentElement;
-//     cardDiv.parentElement.removeChild(cardDiv);
-// }kinds o
+function updatePlayground() {
+    players.forEach(async ele => {
+        let val = await new Promise(rsv => setTimeout(() => rsv(ele), 1000));
 
 
-// function replyId(clickedId) {
+        // if(val == currentPlayer || val == prePlayer){
+        getCards(val);
+        console.log(val);
+        // }
 
-//     let ausgabe = document.getElementById(clickedId);
-//     console.log(ausgabe);
-
-//     // let anotherTest = document.getElementById(clickedId);
-//     // console.log(anotherTest.getAttribute(val));
-
-
-//     // check ob von richtiger Kartenhand gespielt:
-//     cardCheck(clickedId);
+    });
 
 
-// }
+    console.log("Ende kartenausteilen");
 
+    getTopCard();
+
+}
 
 
 function cardCheck(clickedId) {
@@ -495,14 +593,14 @@ function cardCheck(clickedId) {
     if (i2CheckPlayer == clickedId.charAt(0)) {
         console.log(clickedId);
         //  getCards();
-      
+
         let removeCard = currentCards.splice(i4CardArr, 1);
         console.log(removeCard);
         colorRC = removeCard[0].Color;
         valueRC = removeCard[0].Value;
-              console.log(colorRC);
-              console.log(valueRC);
-              console.log(currentPlayer);
+        console.log(colorRC);
+        console.log(valueRC);
+        console.log(currentPlayer);
 
         //     console.log(cardArr);
         //check ob karte gespielt werden darf:
@@ -510,22 +608,31 @@ function cardCheck(clickedId) {
         let colorTC = topCard.Color;
         let valueTC = topCard.Value;
 
+        // else if (colorTc == "Black") {
+        //     if (colorRC == wildColor) {
+        //         playCard(clickedId);
+        //     } else {
+        //         alert("Bitte die gewünschte Farbe -->" + wildColor + " spielen!");
+        //     }
+        // }
+        if(topCard.Color == "Black"){
+            colorTC = colorCheck;
+        }
 
-        if (colorRC == "Black" || valueRC == valueTC || colorRC == colorTC) {
-            alert("Valid CarD!");
 
-                  playCard(clickedId);
+
+        console.log(topCard.Color);
+        if (colorRC == "Black") {
+            $('#pickColor').modal();
+        } else if (valueRC == valueTC || colorRC == colorTC) {
+            // alert("Valid CarD!");
+            playCard(clickedId);
         } else {
             alert("Bitte eine passende Karte spielen!");
-            
+            getCards(currentPlayer);
         }
     } else {
         alert("Falsche Kartenhand!");
-        if (removeCard != defined) {
-            currentCards.push(removeCard);
-            // check if removeCard in cardArr
-            //         console.log(cardArr);
-        }
 
     }
 }
@@ -533,9 +640,9 @@ function cardCheck(clickedId) {
 
 async function playCard(clickedId) {
 
-     //console.log(await getTopCard());
-     console.log("kartenhand von der gespielt wird: ", currentCards);
-     
+
+    console.log(wildColor);
+    console.log(currentPlayer, "  CurrentPlayer in playCard");
 
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameId +
         "?value=" + valueRC + "&color=" + colorRC + "&wildColor=" + wildColor, {
@@ -548,7 +655,7 @@ async function playCard(clickedId) {
 
     if (response.ok) {
         let result = await response.json();
-          console.log(result);
+        console.log(result);
         //   alert(JSON.stringify(result));
 
         // if (colorRC == "Black") {
@@ -558,56 +665,70 @@ async function playCard(clickedId) {
 
 
 
-        let deleteCard = document.getElementById(clickedId);
-        let pic = deleteCard;
-        console.log(clickedId);
-        console.log(deleteCard.parentElement);
-        deleteCard.parentElement.removeChild(deleteCard);
-        let oldTc = document.getElementById("topCard");
-        console.log(oldTc);
-       
-        oldTc.replaceWith(pic);
-        pic.setAttribute("id", "topCard");
+        // let deleteCard = document.getElementById(clickedId);
+        // let pic = deleteCard;
+        // console.log(clickedId);
+        // console.log(deleteCard.parentElement);
+        // deleteCard.parentElement.removeChild(deleteCard);
+        // let oldTc = document.getElementById("topCard");
+        // console.log(oldTc);
 
-        // Score anpassen nachdem Karte gespielt wurde
+        // oldTc.replaceWith(pic);
+        // pic.setAttribute("id", "topCard");
 
-        let pscore = clickedId.charAt(0);
-        pscore ++;
-        console.log("Nummer für PlayerScore", pscore);
+        // // Score anpassen nachdem Karte gespielt wurde
 
-        // clickedId = "";
-        let path = deleteCard.src;
-        let numPlus = path.replace( /^\D+/g, ''); 
+        // let pscore = clickedId.charAt(0);
+        // pscore++;
+        // console.log("Nummer für PlayerScore", pscore);
 
-        let num = numPlus.replace('.png', '');
- 
+        // // clickedId = "";
+        // let path = deleteCard.src;
+        // let numPlus = path.replace(/^\D+/g, '');
 
-        let newScore = document.getElementById("score" + pscore).innerText;
-        newScore = parseInt(newScore);
-        newScore -= num;
-        document.getElementById("score" + pscore).innerText = newScore;
+        // let num = numPlus.replace('.png', '');
+
+
+        // let newScore = document.getElementById("score" + pscore).innerText;
+        // newScore = parseInt(newScore);
+        // newScore -= num;
+        // document.getElementById("score" + pscore).innerText = newScore;
+
+
+        // //* Methode die nach +2 / +4 die neuen Karten gleich ins html einfügt
+        // if(valueRC == 10){
+        //     correctCards();
+        // } 
+
 
 
         // colorRC = "";
         // colorRC = "";
 
         // Im Result für playCard() steckt der nächste Spieler +spielerhand
+        //
         console.log(result);
-        
-                //! Nächsten Spieler und seine Kartenhand zuweisen 
-                currentPlayer = result.Player;
+
+        //! Nächsten Spieler und seine Kartenhand zuweisen 
+        currentPlayer = result.Player;
+        console.log(currentPlayer, result.Player, " da sollte das gleiche ste");
+        currentNum = players.indexOf(currentPlayer);
+        showActivePlayer();
 
 
-
-                // die topcard vor der getcard aufrufen 
-                getTopCard();
+        // versuch getCards mal vorher als die topcard vor der getcard aufrufen 
+        // getTopCard();
         // das war vor änderung von getCard noch drinnen
         // //! Nächsten Spieler und seine Kartenhand zuweisen 
         // currentPlayer = result.Player;
         // currentCards = result.Cards;
         // console.log("playCard response Spieler:", currentPlayer);
-        //getTopCard();
+
+        updatePlayground();
+
+
         // getCards();
+
 
     }
     else {
@@ -616,27 +737,4 @@ async function playCard(clickedId) {
 }
 
 
-document.getElementById('WCForm').addEventListener('submit', function (evt) {
-    console.log('submit')
 
-    evt.preventDefault();
-
-
-    document.getElementById('red').value;
-    topCard.Color = "Red";
-
-
-    document.getElementById('green').value;
-    topCard.Color = "Green";
-
-
-    document.getElementById('blue').value;
-    topCard.Color = "Blue";
-
-
-
-    document.getElementById('yellow').value;
-    topCard.Color = "Yellow";
-
-
-});

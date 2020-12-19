@@ -35,10 +35,10 @@ let player2 = 'Helga';
 let player3 = 'Wurschti';
 let player4 = 'Greti';
 
-// let player1 = 'p1';
-// let player2 = 'p2';
-// let player3 = 'p3';
-// let player4 = 'p4';
+// let player1;
+// let player2;
+// let player3;
+// let player4;
 
 
 
@@ -91,88 +91,40 @@ players.push(player1, player2, player3, player4);
 //     evt.preventDefault()
 
 
-//     let player1 = document.getElementById('pn1').value;
+//     player1 = document.getElementById('pn1').value;
 //     players.push(player1);
 
 
-//     let player2 = document.getElementById('pn2').value;
+//     player2 = document.getElementById('pn2').value;
 //     players.push(player2);
 
 
-//     let player3 = document.getElementById('pn3').value;
+//     player3 = document.getElementById('pn3').value;
 //     players.push(player3);
 
 
-//     let player4 = document.getElementById('pn4').value;
+//     player4 = document.getElementById('pn4').value;
 //     players.push(player4);
 
 
-/*     let uniq = players.map((name) => {
-      return {
-        count: 1,
-        name: name
-      }
-    })
-    .reduce((a, b) => {
-      a[b.name] = (a[b.name] || 0) + b.count
-      return a
-    }, {})
-  
-  let duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1)
-  
-  console.log(duplicates) // [ 'Nancy' ]
+//     // erstellt ein neues Array mit den Namen in kleinbuchstaben und ohne duplikate
+    let nameCheck = players.join(',').toLowerCase().split(',').sort().join(',').replace(/(([^,]+),)(?=\2)/g,'').split(',');
+    
+    if(nameCheck.length < players.length){
+        console.log(nameCheck);
+        alert("Bitte 4 verschiedene Namen eingeben!");
+        players = [];
+        $("#playerNamesForm")[0].reset();
+    } else {
+        $('#playerNames').modal('hide');
+        startResponse();
+    }
 
-    players.forEach(function (value, index, arr){
-
-        let first_index = arr.indexOf(value);
-        let last_index = arr.lastIndexOf(value);
-
-         if(first_index !== last_index){
-
-         console.log('Duplicate item in array ' + value);
-         $('#playerNames').modal('show');
-
-         }else{
-
-         console.log('unique items in array ' + value); */
-
-document.getElementById('p1').innerText = player1;
-document.getElementById('p2').innerText = player2;
-document.getElementById('p3').innerText = player3;
-document.getElementById('p4').innerText = player4;
-
-//! die klammern gehören auch zum modalen dialog 
-//      }
 
 // });
 
-playersCards.push(document.getElementById("p1cards").id);
-playersCards.push(document.getElementById("p2cards").id);
-playersCards.push(document.getElementById("p3cards").id);
-playersCards.push(document.getElementById("p4cards").id);
-
-//! unbedingt für mod dialog wieder einkommentieren!
-// $('#playerNames').modal('hide');
-// post();
-
-// })
 
 
-
-
-
-
-// function hasDuplicates() {
-//     var valuesSoFar = Object.create(null);
-//     for (var i = 0; i < array.length; ++i) {
-//         var value = players[i];
-//         if (value in valuesSoFar) {
-//             return true;
-//         }
-//         valuesSoFar[value] = true;
-//     }
-//     return false;
-// }
 
 
 async function startResponse() {
@@ -211,6 +163,15 @@ async function startResponse() {
         center.appendChild(pic);
 
 
+        document.getElementById('p1').innerText = player1;
+        document.getElementById('p2').innerText = player2;
+        document.getElementById('p3').innerText = player3;
+        document.getElementById('p4').innerText = player4;
+
+        playersCards.push(document.getElementById("p1cards").id);
+        playersCards.push(document.getElementById("p2cards").id);
+        playersCards.push(document.getElementById("p3cards").id);
+        playersCards.push(document.getElementById("p4cards").id);
 
         //* playerCards zuweisen & ins html einfügen
         for (let i = 0; i < playersCards.length; i++) {
@@ -261,22 +222,27 @@ btnDraw.addEventListener("click", drawCard);
 
 
 //! wenn modaler dialog auskommentiert! - da post aufrufen!
-startResponse();
+//startResponse();
 
 function showActivePlayer() {
-    // let highlightField = document.getElementById("act"+(direction+currentNum));
+    
 
 
     // for(let el of document.querySelectorAll("active")){
     //     if(el.id == highlightField){
-    //         $(highlightField).classlist.toggle("highlight");
+            
 
     //     }
     // }
-    // console.log("Erste id ", "act"+(direction+currentNum));
+    console.log("Erste id ", "act"+(direction+currentNum));
 
 
     document.getElementById("activePlayer").innerText = currentPlayer;
+
+    // let i = players.indexOf(currentPlayer);
+    // let highlightField = document.getElementById("act"+(i+direction));
+    // $(highlightField).siblings().removeClass("highlight");
+    // $(highlightField).addClass("highlight");
 
 
 
@@ -373,18 +339,18 @@ function previousPlayer() {
     let oldIdx = players.indexOf(currentPlayer);
     let maxIdx = (players.length - 1);
 
-    let newIdx = oldIdx - direction;
-    if (newIdx < 0) {
-        newIdx = maxIdx
+    let prevIdx = oldIdx - direction;
+    if (prevIdx < 0) {
+        prevIdx = maxIdx
     }
     else {
-        if (newIdx > maxIdx) {
-            newIdx = 0
+        if (prevIdx > maxIdx) {
+            prevIdx = 0
         }
     }
-    let previousPlayer = players[newIdx];
+    let previousPlayer = players[prevIdx];
     console.log(previousPlayer);
-    return previousPlayer;
+    return prevIdx;
 }
 
 async function drawCard() {
@@ -419,7 +385,7 @@ async function drawCard() {
 
         document.getElementById(playersCards[check]).appendChild(img);
 
-        //! check muss eins größer als index vom array sein!
+        //* check muss eins größer als index vom array sein!
         check++;
         let newScore = document.getElementById("score" + check).innerText;
 
@@ -429,13 +395,13 @@ async function drawCard() {
         document.getElementById("score" + check).innerText = newScore;
 
 
-        //! Nächsten Spieler auf current setzen
+        //* Nächsten Spieler auf current setzen
         currentPlayer = result.NextPlayer;
         currentNum = players.indexOf(currentPlayer);
         console.log("Am Zug ist nun: ", currentPlayer);
-        showActivePlayer();
-        //! getCards holt die karten vom aktuellen spieler und weißt sie dem currentCardArr zu
-        getCards(currentPlayer);
+        
+        //* getCards holt die karten vom aktuellen spieler und weißt sie dem currentCardArr zu
+        updatePlayground();
         //   console.log(result.NextPlayer);
         // das sollte auch nach dem ablegen einer karte gemacht werden!
         //  currentPlayer = result.NextPlayer;
@@ -448,56 +414,6 @@ async function drawCard() {
     }
 }
 
-
-// async function getCards() {
-
-
-//     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/getCards/" + gameID
-//         + "?playerName=" + currentPlayer, {
-//         method: "GET",
-//         contentType: "application/json",
-//         headers: {
-//             "Content-type": "application/json; charset=UTF-8"
-//         }
-//     });
-
-//     if (response.ok) {
-//         let result = await response.json();
-//         //   console.log(result.Cards[2].Value);
-
-
-//         let check = players.indexOf(currentPlayer);
-//         let arrCardSize = document.getElementById(playersCards[check]).childElementCount;
-
-//         console.log(arrCardSize);
-
-
-
-
-//         while (arrCardSize != result.Cards.length){
-//             card = result.Cards[arrCardSize];
-//             img = generateCard(card);
-//             img.setAttribute("id", check + "card2play" + arrCardSize);
-//             // img.setAttribute("onclick", "replyId(this.id)");
-//             img.setAttribute("onclick", "cardCheck(this.id)");
-//             img.setAttribute("class", "cards");
-
-//             document.getElementById(playersCards[check]).appendChild(img);
-//         }
-
-//         //     console.log(result);
-
-//         //! CardArr values aus result rausspeichern 
-//         currentCards = result.Cards;
-//         currentPlayer = result.Player;
-
-
-
-//     }
-//     else {
-//         alert("HTTP-Error: " + response.status)
-//     }
-// }
 
 
 async function getCards(player) {
@@ -514,28 +430,22 @@ async function getCards(player) {
 
     if (response.ok) {
         let result = await response.json();
-        //   console.log(result.Cards[2].Value);
-
 
         let check = players.indexOf(player);
 
-        let myNode = document.getElementById(playersCards[check]);
-        while (myNode.firstChild) {
-            myNode.removeChild(myNode.lastChild);
+        let parentNode = document.getElementById(playersCards[check]);
+        while (parentNode.firstChild) {
+            parentNode.removeChild(parentNode.lastChild);
         }
-        // console.log(myNode.childElementCount);
-        // console.log(result.Cards.length);
 
-
-        while (myNode.childElementCount < result.Cards.length) {
-            card = result.Cards[myNode.childElementCount];
+        while (parentNode.childElementCount < result.Cards.length) {
+            card = result.Cards[parentNode.childElementCount];
             img = generateCardImg(card);
-            img.setAttribute("id", check + "card" + (myNode.childElementCount));
-            console.log("id", check + "card" + (myNode.childElementCount));
+            img.setAttribute("id", check + "card" + (parentNode.childElementCount));
+            console.log("id", check + "card" + (parentNode.childElementCount));
             img.setAttribute("onclick", "cardCheck(this.id)");
             img.setAttribute("class", "cards");
 
-            //console.log(img);
             document.getElementById(playersCards[check]).appendChild(img);
         }
 
@@ -552,6 +462,7 @@ async function getCards(player) {
             currentCards = result.Cards;
         }
 
+        console.log(player + " hat neu gemischte Karten");
 
 
     }
@@ -572,10 +483,12 @@ function updatePlayground() {
 
     });
 
-
-    console.log("Ende kartenausteilen");
-
     getTopCard();
+
+
+    showActivePlayer();
+
+
 
 }
 
@@ -615,7 +528,7 @@ function cardCheck(clickedId) {
         //         alert("Bitte die gewünschte Farbe -->" + wildColor + " spielen!");
         //     }
         // }
-        if(topCard.Color == "Black"){
+        if (topCard.Color == "Black") {
             colorTC = colorCheck;
         }
 
@@ -695,25 +608,13 @@ async function playCard(clickedId) {
         // document.getElementById("score" + pscore).innerText = newScore;
 
 
-        // //* Methode die nach +2 / +4 die neuen Karten gleich ins html einfügt
-        // if(valueRC == 10){
-        //     correctCards();
-        // } 
 
-
-
-        // colorRC = "";
-        // colorRC = "";
-
-        // Im Result für playCard() steckt der nächste Spieler +spielerhand
-        //
-        console.log(result);
 
         //! Nächsten Spieler und seine Kartenhand zuweisen 
         currentPlayer = result.Player;
         console.log(currentPlayer, result.Player, " da sollte das gleiche ste");
         currentNum = players.indexOf(currentPlayer);
-        showActivePlayer();
+        //showActivePlayer();
 
 
         // versuch getCards mal vorher als die topcard vor der getcard aufrufen 
@@ -724,6 +625,7 @@ async function playCard(clickedId) {
         // currentCards = result.Cards;
         // console.log("playCard response Spieler:", currentPlayer);
 
+    
         updatePlayground();
 
 
@@ -735,6 +637,4 @@ async function playCard(clickedId) {
         alert("HTTP-Error: " + response.status)
     }
 }
-
-
-
+    

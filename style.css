@@ -81,10 +81,10 @@ div{
 
 }
 
-.active{
+.playground div{
     background: none;
 }
 
-.active .highlight{
+.playground div.highlight{
     background: yellow;
 }

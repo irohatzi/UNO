@@ -172,21 +172,21 @@ async function startResponse() {
         playersCards.push(document.getElementById("p3cards").id);
         playersCards.push(document.getElementById("p4cards").id);
 
-        //* playerCards zuweisen & ins html einfügen
-        for (let i = 0; i < playersCards.length; i++) {
+        // //* playerCards zuweisen & ins html einfügen
+        // for (let i = 0; i < playersCards.length; i++) {
 
-            for (let j = 0; j < result.Players[i].Cards.length; j++) {
+        //     for (let j = 0; j < result.Players[i].Cards.length; j++) {
 
-                card = result.Players[i].Cards[j];
-                img = generateCardImg(card);
+        //         card = result.Players[i].Cards[j];
+        //         img = generateCardImg(card);
 
-                img.setAttribute("id", i + "card" + j);
-                img.setAttribute("onclick", "cardCheck(this.id)");
-                img.setAttribute("class", "cards");
+        //         img.setAttribute("id", i + "card" + j);
+        //         img.setAttribute("onclick", "cardCheck(this.id)");
+        //         img.setAttribute("class", "cards");
 
-                document.getElementById(playersCards[i]).appendChild(img);
-            }
-        }
+        //         document.getElementById(playersCards[i]).appendChild(img);
+        //     }
+        // }
 
 
         scores.push(document.getElementById("score1").id);
@@ -194,18 +194,17 @@ async function startResponse() {
         scores.push(document.getElementById("score3").id);
         scores.push(document.getElementById("score4").id);
 
+        players.forEach(element =>
+            getCards(element));
 
 
-        for (let i = 0; i < scores.length; i++) {
-            let score = document.createElement("p");
-            score.innerText = result.Players[i].Score;
-            score.setAttribute("class", "score");
+        // for (let i = 0; i < scores.length; i++) {
+        //     let score = document.createElement("p");
+        //     score.innerText = result.Players[i].Score;
+        //     score.setAttribute("class", "score");
 
-            document.getElementById(scores[i]).appendChild(score);
-        }
-
-
-
+        //     document.getElementById(scores[i]).appendChild(score);
+        // }
 
     }
     else {
@@ -224,29 +223,17 @@ btnDraw.addEventListener("click", drawCard);
 
 function showActivePlayer() {
 
+     document.getElementById("activePlayer").innerText = currentPlayer;
 
+    // let prevP = previousIndex();
+    // let currP = currentIndex();
 
-    // for(let el of document.querySelectorAll("active")){
-    //     if(el.id == highlightField){
-
-
-    //     }
-    // }
-
-    let prevP = previousIndex();
-    console.log("Erste id ", "act" + (prevP));
-
-
-    document.getElementById("activePlayer").innerText = currentPlayer;
-
-    // let i = players.indexOf(currentPlayer);
-    // let highlightField = document.getElementById("act"+(i+direction));
-    // $(highlightField).siblings().removeClass("highlight");
+    // let highlightField = document.getElementById("act"+ currP);
+    // console.log("act"+ currP);
+    // console.log("act" + (prevP));
+    // let removeHighlight = document.getElementById("act" + (prevP));
+    // $(removeHighlight).removeClass("highlight");
     // $(highlightField).addClass("highlight");
-
-
-
-
 
 
 }
@@ -273,7 +260,7 @@ async function getTopCard() {
 
     if (response.ok) {
         let result = await response.json();
-        console.log(result);
+       // console.log(result);
         card = result;
 
         let tcDom = document.getElementById("topCard");
@@ -288,15 +275,30 @@ async function getTopCard() {
             console.log("Richtungswechsel abgespeichert! ", direction);
         }
 
-
         topCard = result;
-
         console.log(topCard);
 
     }
     else {
         alert("HTTP-Error: " + response.status)
     }
+}
+
+function currentIndex(){
+
+    let domId = currentNum + direction;
+    let maxIdx = (players.length - 1);
+
+    if (domId < 0) {
+        domId = maxIdx
+    }
+    else {
+        if (domId > maxIdx) {
+            domId = 0
+        }
+    }
+    return domId;
+
 }
 
 function previousIndex() {
@@ -431,22 +433,20 @@ async function getCards(player) {
 function updatePlayground() {
 
     let prev = previousIndex();
-    players.forEach(async ele => {
-        let val = await new Promise(rsv => setTimeout(() => rsv(ele), 1000));
 
+    players.forEach(function(elem){
+        let check = players.indexOf(elem);
+        let current = players.indexOf(currentPlayer);
+        if(check == prev || check == current){
+            getCards(elem);
+        }
 
-        // if(val == currentPlayer || val == prePlayer){
-        getCards(val);
-        console.log(val);
-        // }
-
-    });
+    })
 
     getTopCard();
 
 
     showActivePlayer();
-
 
 
 }

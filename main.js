@@ -401,7 +401,7 @@ async function getCards(player) {
             card = result.Cards[parentNode.childElementCount];
             img = generateCardImg(card);
             img.setAttribute("id", check + "card" + (parentNode.childElementCount));
-            console.log("id", check + "card" + (parentNode.childElementCount));
+          //  console.log("id", check + "card" + (parentNode.childElementCount));
             img.setAttribute("onclick", "cardCheck(this.id)");
             img.setAttribute("class", "cards");
 
@@ -410,13 +410,12 @@ async function getCards(player) {
 
 
 
-        let newScore = result.Score;
+    
+        //* Score im html aktualisieren
+        document.getElementById("score" + (check + 1)).innerText = result.Score;
 
-        document.getElementById("score" + (check + 1)).innerText = newScore;
 
-        //     console.log(result);
-
-        //! CardArr values aus result rausspeichern 
+        //* currentCards für currentPlayer zwischenspeichern 
         if (player == currentPlayer) {
             currentCards = result.Cards;
         }
@@ -503,16 +502,18 @@ function cardCheck(clickedId) {
 
 
 function draw4Check() {
-    console.log(currentCards);
     let i = 0;
     while(i < currentCards.length){
 
         if(currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color){
+            console.log("Karte gefunden.");
+            return false;
             break;
         } else {
+            console.log("Karte stimmt nicht überein.");
             i++;
         }
-
+        return true;
     }
 
 }
@@ -579,8 +580,6 @@ async function playCard(clickedId) {
         //* Nächsten Spieler auf current setzen
         currentPlayer = result.Player;
         currentNum = players.indexOf(currentPlayer);
-
-
 
         updatePlayground();
 

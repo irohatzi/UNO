@@ -429,6 +429,8 @@ async function getCards(player) {
     }
 }
 
+
+
 function updatePlayground() {
 
     let prev = previousIndex();
@@ -436,9 +438,13 @@ function updatePlayground() {
     players.forEach(function(elem){
         let check = players.indexOf(elem);
         let current = players.indexOf(currentPlayer);
-        if(check == prev || check == current){
+        console.log(currentPlayer);
+
+    // Etwas überlegen dass bei skip (val11) der current und der spieler 2 plätze weiter
+    // und das da unten ist eben für den letzten der gespielt hat und den nächsten, bei skip werden die falschen karten aktualisiert
+       // if(check == prev || check == current){
             getCards(elem);
-        }
+     //   }
 
     })
 
@@ -479,10 +485,8 @@ function cardCheck(clickedId) {
             colorTC = colorCheck;
         }
 
-
-
         if (colorRC == "Black") {
-            let bool = draw4Check();
+            let bool = wildCardCheck();
             if(bool){
                 $('#pickColor').modal();
             } else {
@@ -501,14 +505,14 @@ function cardCheck(clickedId) {
 }
 
 
-function draw4Check() {
+function wildCardCheck() {
     let i = 0;
     while(i < currentCards.length){
 
         if(currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color){
             console.log("Karte gefunden.");
             return false;
-            break;
+           // break;
         } else {
             console.log("Karte stimmt nicht überein.");
             i++;

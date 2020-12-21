@@ -80,3 +80,11 @@ div{
     margin-top: 0;
 
 }
+
+.playground div{
+    background: none;
+}
+
+.playground div.highlight{
+    background: yellow;
+}

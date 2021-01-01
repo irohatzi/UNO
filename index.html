@@ -16,6 +16,15 @@
 <body>
   <!--PLAYGROUND-->
   <div class="container-fluid">
+    <div>
+      <h2>UNOrthodox </br> The multiple personality disorder edition</h2>
+      
+      <div class="active">
+        <h3>current personality:</h3>
+        <h4 id="activePlayer">bla</h4>
+      </div>
+
+    </div>
     <div class="row playground">
       <div class="row justify-content-between active" style="width: 100%;">
         <!--PLAYER 1 Left corner up-->
@@ -23,7 +32,7 @@
           <br>
           <p class="player" id='p1'>SPIELER 1</p>
           <div class="points" id="score1"></div>
-          <div class="d-flex flex-fill flex-row" id="p1cards"></div>
+          <div class="d-flex flex-wrap" id="p1cards"></div>
 
           <br>
         </div>
@@ -33,7 +42,7 @@
           <br>
           <p class="player" id='p2'> SPIELER 2</p>
           <div class="points" id="score2"></div>
-          <div class="d-flex flex-fill flex-row" id="p2cards"></div>
+          <div class="d-flex flex-wrap" id="p2cards"></div>
 
           <br>
         </div>
@@ -50,7 +59,7 @@
 
           
             <h5>AblegeStapel</h5>
-            <h2 id="activePlayer">bla</h2>
+            
             
             <h5>HebeStapel</h5>
           </div>
@@ -66,22 +75,25 @@
           <br>
           <p class="player" id='p3'>SPIELER 3</p>
           <div class="points" id="score3"></div>
-          <div class="d-flex flex-row" id="p3cards"></div>
+          <div class="d-flex flex-wrap" id="p3cards"></div>
 
           <br>
         </div>
-        <!--
-        ND Player 3-->
+        <!--END Player 3-->
         <!--PLAYER 4 Right corner down-->
         <div class="col-6 align-self-end" id="act4">
           <br>
           <p class="player" id='p4'>SPIELER 4</p>
           <div class="points" id="score4"></div>
-          <div class="d-flex flex-row" id="p4cards"></div>
+          <div class="d-flex flex-wrap" id="p4cards"></div>
 
           <br>
         </div>
         <!--END Player 4-->
+      </br>
+
+        <p>Warning: To play this game, you have to have at least 4 personalities!</p>
+
       </div>
     </div>
     <!--END PLAYGROUND-->

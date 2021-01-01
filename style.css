@@ -1,32 +1,39 @@
-html, body {
-    height: 100%;
+body {
+    height: 100vh;
+    background-image:
+    radial-gradient(
+      rgba(0, 72, 255, 0.632),
+      #160370);
+    color: wheat;  
+    margin:30px;
 }
-div{
+
+/* div{
     border: solid red 3px;
-}
-.row{
+} */
 
+h2{
+    text-align: center;
 }
-
 
 
 .cards{
-    /* is zum spielen grad leichter:
-     width: 100px; */
-     width: 50px;
-    border: 1px solid #ddd;
+
+    display: grid;
+    width: 100px;
+
     border-radius: 3px;
     margin-top: 10px;
-    position: relative;
+    /*? this is just needed if cards should pop out when hovering */
+    transition: transform .2s; 
 }
 
-.container{
-    border: solid 3px pink;
-    position: absolute;
-    top: 5%;
-    left: 15%;
-    
-}
+
+/*? card pops out a bit when hovering over it, commented out, bec there might be better solution*/
+/* .cards:hover {
+transform: scale(1.15);
+ } */
+
 
 .points{
     position: absolute;
@@ -50,7 +57,7 @@ div{
 .deckInfo{
   position: absolute;
   bottom: 20px;
-  width: 370px; 
+  width: inherit; 
 }
 
 
@@ -58,22 +65,18 @@ div{
     position: absolute;
     top: 24px;
     right: 15px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: 4px;
     padding: 3px;
-            /* is zum spielen grad leichter:
-     width: 150px; */
-     width: 80px;
+    width: 153px; 
 
 }
 
 #topCard {
     position: absolute;
-        /* is zum spielen grad leichter:
-     width: 150px; */
-    width: 80px;
+    width: 150px; 
     top: 24px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: 4px;
     padding: 2px;
     /* unbedingt marginTop = 0 lassen, sonst ist die TC weiter unten - übernimmt margintop von den normalen karten mit */
@@ -81,10 +84,4 @@ div{
 
 }
 
-.playground div{
-    background: none;
-}
 
-.playground div.highlight{
-    background: yellow;
-}

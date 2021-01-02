@@ -5,6 +5,7 @@ body {
       rgba(0, 72, 255, 0.632),
       #160370);
     color: wheat;  
+    display: grid;
     margin:30px;
 }
 
@@ -16,23 +17,29 @@ h2{
     text-align: center;
 }
 
+/*is wie cards im tutorial*/
+.test{
+
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .cards{
-
-    display: grid;
     width: 100px;
-
     border-radius: 3px;
     margin-top: 10px;
+    margin-left: -2rem;
     /*? this is just needed if cards should pop out when hovering */
     transition: transform .2s; 
 }
 
 
+
+
 /*? card pops out a bit when hovering over it, commented out, bec there might be better solution*/
-/* .cards:hover {
+.cards:hover {
 transform: scale(1.15);
- } */
+ }
 
 
 .points{

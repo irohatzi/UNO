@@ -633,8 +633,10 @@ async function playCard(clickedId) {
 
 
         if (result.Score == 0 ) {
+            console.log(result);
             console.log(currentPlayer + "has won! Congratulations! The game has finished!");
             alert(currentPlayer + " hat gewonnen!");
+            winner(result.Player);
         }
 
 
@@ -645,5 +647,12 @@ async function playCard(clickedId) {
         alert("HTTP-Error: " + response.status)
     }
 }
+
+    function winner(result){
+        let winnerPlayer = document.createElement("h2"); 
+        winnerPlayer.setAttribute("class", "winnerPlayer");
+        winnerPlayer.innerText = result + " has won!";
+        document.getElementById('decks').appendChild(winnerPlayer);
+    }
 
 

@@ -425,12 +425,6 @@ async function getCards(player) {
 
         console.log(player + " hat neu gemischte Karten");
 
-
-        if (result.Score == 0) {
-            console.log(currentPlayer + "has won! Congratulations! The game has finished!");
-            alert("gewonnen!")
-        }
-
     }
     else {
         alert("HTTP-Error: " + response.status)
@@ -555,8 +549,6 @@ async function playCard(clickedId) {
         // }
 
 
-
-
         // let deleteCard = document.getElementById(clickedId);
         // let pic = deleteCard;
         // console.log(clickedId);
@@ -592,8 +584,12 @@ async function playCard(clickedId) {
         currentPlayer = result.Player;
         currentNum = players.indexOf(currentPlayer);
 
-        updatePlayground();
+        if (result.Score == 0 ) {
+            console.log(currentPlayer + "has won! Congratulations! The game has finished!");
+            alert(currentPlayer + " hat gewonnen!");
+        }
 
+        updatePlayground();
 
     }
     else {

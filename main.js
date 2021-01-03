@@ -278,10 +278,13 @@ async function getTopCard() {
         // console.log(result);
         card = result;
 
-        let tcDom = document.getElementById("topCard");
+        if(card.Color == "Black"){
+            card.Color = colorCheck;
+    
+        } 
+        
         img = generateCardImg(card);
-
-
+        let tcDom = document.getElementById("topCard");
         tcDom.replaceWith(img);
         img.setAttribute("id", "topCard");
         img.classList.add("swirl-in-fwd");
@@ -526,12 +529,11 @@ function cardCheck(clickedId) {
 
         if (topCard.Color == "Black") {
                 colorTC = colorCheck;
-
         }
 
         if (colorRC == "Black") {
             let bool = wildCardCheck();
-            if (bool && topCard.Color != "Black") {
+            if (bool) {
                 $('#pickColor').modal();
                 animateCard(clickedId);
             } else {
@@ -544,32 +546,38 @@ function cardCheck(clickedId) {
         } else {
             //! Animation für unpassende Farbe/Zahl
             alert("Bitte eine passende Karte spielen!");
-            fehlerMeldung1();
+           // fehlerMeldung1();
                        
         }
     } else {
         //! Animation für falsche Persönlichkeitskartenhand
         alert("Falsche Kartenhand!");
-        fehlerMeldung2();
+   //   fehlerMeldung2();
 
     }
 }
 
 
 function wildCardCheck() {
-    let i = 0;
-    while (i < currentCards.length) {
 
-        if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
-            console.log("Karte gefunden.");
-            return false;
-            // break;
-        } else {
-            console.log("Karte stimmt nicht überein.");
-            i++;
+    if(topCard.Color == "Black"){
+        console.log("Schwarz darf nicht auf Schwarz gespielt werden!")
+    } else {
+        let i = 0;
+        while (i < currentCards.length) {
+    
+            if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
+                console.log("Karte gefunden.");
+                return false;
+                // break;
+            } else {
+                console.log("Karte stimmt nicht überein.");
+                i++;
+            }
+            return true;
         }
-        return true;
     }
+
 
 }
 

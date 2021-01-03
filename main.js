@@ -286,7 +286,22 @@ async function getTopCard() {
         img.setAttribute("id", "topCard");
         img.classList.add("swirl-in-fwd");
 
+<<<<<<< HEAD
    
+=======
+      //  img.classList.remove("swirl-in-fwd");
+
+
+      /*      card = result;
+            img = generateCardImg(card);
+    
+    
+            tcDom.replaceWith(img);
+            img.setAttribute("id", "topCard");
+            
+    */
+          //  img.classList.remove("swirl-in-fwd");
+>>>>>>> 6b3c17375c6e1a8a42164d85bd184237322bc919
     
             if (card.Value == 12) {
                 direction *= -1;
@@ -353,7 +368,8 @@ async function drawCard() {
         let result = await response.json();
         console.log(result);
 
-        document.getElementById('drawDeck').classList.add("slide-out-top");
+        document.getElementById('drawDeck').classList.toggle("wobble-hor-bottom");
+       
 
 
         // let check = players.indexOf(currentPlayer);
@@ -384,6 +400,7 @@ async function drawCard() {
 
         //* getCards holt die karten vom aktuellen spieler und weißt sie dem currentCardArr zu
         updatePlayground();
+
         //   console.log(result.NextPlayer);
         // das sollte auch nach dem ablegen einer karte gemacht werden!
         //  currentPlayer = result.NextPlayer;
@@ -444,12 +461,6 @@ async function getCards(player) {
         }
 
         console.log(player + " hat neu gemischte Karten");
-
-
-        if (result.Score == 0) {
-            console.log(currentPlayer + "has won! Congratulations! The game has finished!");
-            alert("gewonnen!")
-        }
 
     }
     else {
@@ -588,8 +599,6 @@ async function playCard(clickedId) {
         // }
 
 
-
-
         // let deleteCard = document.getElementById(clickedId);
         // let pic = deleteCard;
         // console.log(clickedId);
@@ -625,14 +634,21 @@ async function playCard(clickedId) {
         currentPlayer = result.Player;
         currentNum = players.indexOf(currentPlayer);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6b3c17375c6e1a8a42164d85bd184237322bc919
         if (result.Score == 0 ) {
             console.log(currentPlayer + "has won! Congratulations! The game has finished!");
             alert(currentPlayer + " hat gewonnen!");
         }
+<<<<<<< HEAD
 
         updatePlayground();
+=======
+>>>>>>> 6b3c17375c6e1a8a42164d85bd184237322bc919
 
+        updatePlayground();
 
     }
     else {

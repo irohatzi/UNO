@@ -289,15 +289,14 @@ async function getTopCard() {
       //  img.classList.remove("swirl-in-fwd");
 
 
-            card = result;
-            let tcDom = document.getElementById("topCard");
+      /*      card = result;
             img = generateCardImg(card);
     
     
             tcDom.replaceWith(img);
             img.setAttribute("id", "topCard");
             
-    
+    */
           //  img.classList.remove("swirl-in-fwd");
     
             if (card.Value == 12) {
@@ -365,7 +364,8 @@ async function drawCard() {
         let result = await response.json();
         console.log(result);
 
-        document.getElementById('drawDeck').classList.add("slide-out-top");
+        document.getElementById('drawDeck').classList.toggle("wobble-hor-bottom");
+       
 
         // let check = players.indexOf(currentPlayer);
         // let arrCardSize = document.getElementById(playersCards[check]).childElementCount;
@@ -395,6 +395,7 @@ async function drawCard() {
 
         //* getCards holt die karten vom aktuellen spieler und weißt sie dem currentCardArr zu
         updatePlayground();
+
         //   console.log(result.NextPlayer);
         // das sollte auch nach dem ablegen einer karte gemacht werden!
         //  currentPlayer = result.NextPlayer;
@@ -455,12 +456,6 @@ async function getCards(player) {
         }
 
         console.log(player + " hat neu gemischte Karten");
-
-
-        if (result.Score == 0) {
-            console.log(currentPlayer + "has won! Congratulations! The game has finished!");
-            alert("gewonnen!")
-        }
 
     }
     else {
@@ -599,8 +594,6 @@ async function playCard(clickedId) {
         // }
 
 
-
-
         // let deleteCard = document.getElementById(clickedId);
         // let pic = deleteCard;
         // console.log(clickedId);
@@ -636,8 +629,12 @@ async function playCard(clickedId) {
         currentPlayer = result.Player;
         currentNum = players.indexOf(currentPlayer);
 
-        updatePlayground();
+        if (result.Score == 0 ) {
+            console.log(currentPlayer + "has won! Congratulations! The game has finished!");
+            alert(currentPlayer + " hat gewonnen!");
+        }
 
+        updatePlayground();
 
     }
     else {

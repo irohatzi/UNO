@@ -298,6 +298,7 @@ async function getTopCard() {
             
     */
           //  img.classList.remove("swirl-in-fwd");
+
     
             if (card.Value == 12) {
                 direction *= -1;
@@ -366,6 +367,7 @@ async function drawCard() {
 
         document.getElementById('drawDeck').classList.toggle("wobble-hor-bottom");
        
+
 
         // let check = players.indexOf(currentPlayer);
         // let arrCardSize = document.getElementById(playersCards[check]).childElementCount;
@@ -523,26 +525,30 @@ function cardCheck(clickedId) {
 
 
         if (topCard.Color == "Black") {
-            colorTC = colorCheck;
+                colorTC = colorCheck;
+
         }
 
         if (colorRC == "Black") {
             let bool = wildCardCheck();
-            if (bool) {
+            if (bool && topCard.Color != "Black") {
                 $('#pickColor').modal();
                 animateCard(clickedId);
             } else {
-                alert("Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!");
+                //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
+                alert("Ungültiger Spielzug, Sie haben noch passende Karten, oder spielen schwarz auf schwarz, bitte gültige Karte spielen!");
             }
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);
             animateCard(clickedId);
         } else {
+            //! Animation für unpassende Farbe/Zahl
             alert("Bitte eine passende Karte spielen!");
             fehlerMeldung();
                        
         }
     } else {
+        //! Animation für falsche Persönlichkeitskartenhand
         alert("Falsche Kartenhand!");
         fehlerMeldung();
 
@@ -632,12 +638,14 @@ async function playCard(clickedId) {
         currentPlayer = result.Player;
         currentNum = players.indexOf(currentPlayer);
 
+
         if (result.Score == 0 ) {
             console.log(result);
             console.log(currentPlayer + "has won! Congratulations! The game has finished!");
             alert(currentPlayer + " hat gewonnen!");
             winner(result.Player);
         }
+
 
         updatePlayground();
 

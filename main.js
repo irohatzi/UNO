@@ -286,9 +286,6 @@ async function getTopCard() {
         img.setAttribute("id", "topCard");
         img.classList.add("swirl-in-fwd");
 
-<<<<<<< HEAD
-   
-=======
       //  img.classList.remove("swirl-in-fwd");
 
 
@@ -301,7 +298,7 @@ async function getTopCard() {
             
     */
           //  img.classList.remove("swirl-in-fwd");
->>>>>>> 6b3c17375c6e1a8a42164d85bd184237322bc919
+
     
             if (card.Value == 12) {
                 direction *= -1;
@@ -634,19 +631,12 @@ async function playCard(clickedId) {
         currentPlayer = result.Player;
         currentNum = players.indexOf(currentPlayer);
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 6b3c17375c6e1a8a42164d85bd184237322bc919
         if (result.Score == 0 ) {
             console.log(currentPlayer + "has won! Congratulations! The game has finished!");
             alert(currentPlayer + " hat gewonnen!");
         }
-<<<<<<< HEAD
 
-        updatePlayground();
-=======
->>>>>>> 6b3c17375c6e1a8a42164d85bd184237322bc919
 
         updatePlayground();
 

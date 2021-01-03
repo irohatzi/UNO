@@ -539,9 +539,12 @@ function cardCheck(clickedId) {
             animateCard(clickedId);
         } else {
             alert("Bitte eine passende Karte spielen!");
+            fehlerMeldung();
+                       
         }
     } else {
         alert("Falsche Kartenhand!");
+        fehlerMeldung();
 
     }
 }
@@ -649,6 +652,13 @@ async function playCard(clickedId) {
         winnerPlayer.setAttribute("class", "winnerPlayer");
         winnerPlayer.innerText = result + " has won!";
         document.getElementById('decks').appendChild(winnerPlayer);
+    }
+
+    function fehlerMeldung(){
+        let meldung = document.createElement("h2");
+        meldung.setAttribute("class", "meldung");
+        meldung.innerText = " this card doesn't match, please play a different one";
+        document.getElementById('decks').appendChild(meldung).toggle;
     }
 
 

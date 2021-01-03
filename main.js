@@ -546,10 +546,13 @@ function cardCheck(clickedId) {
         } else {
             //! Animation für unpassende Farbe/Zahl
             alert("Bitte eine passende Karte spielen!");
+            fehlerMeldung1();
+                       
         }
     } else {
         //! Animation für falsche Persönlichkeitskartenhand
         alert("Falsche Kartenhand!");
+        fehlerMeldung2();
 
     }
 }
@@ -659,6 +662,22 @@ async function playCard(clickedId) {
         winnerPlayer.setAttribute("class", "winnerPlayer");
         winnerPlayer.innerText = result + " has won!";
         document.getElementById('decks').appendChild(winnerPlayer);
+    }
+
+    //ungültige Karte gespielt, bitte andere Karte spielen
+    function fehlerMeldung1(){
+        let meldung = document.createElement("h2");
+        meldung.setAttribute("class", "meldung");
+        meldung.innerText = "this card doesn't match, please play a different one";
+        document.getElementById('decks').appendChild(meldung);
+    }
+
+    //falsche HandKarte (falscher Spieler)
+    function fehlerMeldung2(){
+        let meldung = document.createElement("h2");
+        meldung.setAttribute("class", "meldung");
+        meldung.innerText = "it is not this Player's turn yet, please choose the correct personality to play";
+        document.getElementById('decks').appendChild(meldung);
     }
 
 

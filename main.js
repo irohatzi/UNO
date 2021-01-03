@@ -278,10 +278,12 @@ async function getTopCard() {
         // console.log(result);
         card = result;
 
-        let tcDom = document.getElementById("topCard");
+        if(card.Color == "Black"){
+            card.Color = colorCheck;
+        } 
+        
         img = generateCardImg(card);
-
-
+        let tcDom = document.getElementById("topCard");
         tcDom.replaceWith(img);
         img.setAttribute("id", "topCard");
         img.classList.add("swirl-in-fwd");
@@ -531,7 +533,7 @@ function cardCheck(clickedId) {
 
         if (colorRC == "Black") {
             let bool = wildCardCheck();
-            if (bool && topCard.Color != "Black") {
+            if (bool && (topCard.Color != "Black")) {
                 $('#pickColor').modal();
                 animateCard(clickedId);
             } else {

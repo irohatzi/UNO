@@ -289,15 +289,14 @@ async function getTopCard() {
       //  img.classList.remove("swirl-in-fwd");
 
 
-            card = result;
-            let tcDom = document.getElementById("topCard");
+      /*      card = result;
             img = generateCardImg(card);
     
     
             tcDom.replaceWith(img);
             img.setAttribute("id", "topCard");
             
-    
+    */
           //  img.classList.remove("swirl-in-fwd");
     
             if (card.Value == 12) {
@@ -365,7 +364,8 @@ async function drawCard() {
         let result = await response.json();
         console.log(result);
 
-        document.getElementById('drawDeck').classList.add("slide-out-top");
+        document.getElementById('drawDeck').classList.toggle("wobble-hor-bottom");
+       
 
         // let check = players.indexOf(currentPlayer);
         // let arrCardSize = document.getElementById(playersCards[check]).childElementCount;
@@ -395,6 +395,7 @@ async function drawCard() {
 
         //* getCards holt die karten vom aktuellen spieler und weißt sie dem currentCardArr zu
         updatePlayground();
+
         //   console.log(result.NextPlayer);
         // das sollte auch nach dem ablegen einer karte gemacht werden!
         //  currentPlayer = result.NextPlayer;

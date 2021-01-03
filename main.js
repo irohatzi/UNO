@@ -525,16 +525,17 @@ function cardCheck(clickedId) {
 
 
         if (topCard.Color == "Black") {
-            colorTC = colorCheck;
+                colorTC = colorCheck;
+
         }
 
         if (colorRC == "Black") {
             let bool = wildCardCheck();
-            if (bool) {
+            if (bool && topCard.Color != "Black") {
                 $('#pickColor').modal();
                 animateCard(clickedId);
             } else {
-                alert("Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!");
+                alert("Ungültiger Spielzug, Sie haben noch passende Karten, oder spielen schesrz auf schwarz, bitte gültige Karte spielen!");
             }
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);

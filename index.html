@@ -26,23 +26,34 @@
 
     </div>
     <div class="row playground">
-      <div class="row justify-content-between active" style="width: 100%;">
+      <div class="row justify-content-between" style="width: 100%;">
         <!--PLAYER 1 Left corner up-->
-        <div class="col-6 align-items-start" id="act1">
+        <div class="col-6 align-items-start active" id="act1">
           <br>
           <p class="player" id='p1'>SPIELER 1</p>
           <div class="points" id="score1"></div>
-          <div class="d-flex flex-wrap test" id="p1cards"></div>
+          <div class="d-flex flex-wrap cardDiv" id="p1cards"></div>
 
           <br>
         </div>
         <!--END Player 1-->
         <!--PLAYER 2 Right corner up-->
-        <div class="col-6 align-items-end"id="act2">
-          <br>
-          <p class="player" id='p2'> SPIELER 2</p>
-          <div class="points" id="score2"></div>
-          <div class="d-flex flex-wrap test" id="p2cards"></div>
+        <div class="col-6 align-items-end active"id="act2">
+          <div class="container">
+            <div class="row align-items-start">
+              <div class="col-2">
+                <p class="player" id='p2'> SPIELER 2</p>
+              </div>
+              <div class="col">
+                <p class="points">Score: </p>
+              </div>
+              <div class="col-2">
+                <div class="points" id="score2"></div>
+              </div>
+            </div>
+          
+          
+          <div class="d-flex flex-wrap cardDiv" id="p2cards"></div>
 
           <br>
         </div>
@@ -71,21 +82,21 @@
       </div>
       <div class="row justify-content-between active" style="width: 100%;">
         <!--PLAYER 3 Left corner down-->
-        <div class="col-6 align-self-start" id="act3">
+        <div class="col-6 align-self-start active" id="act3">
           <br>
           <p class="player" id='p3'>SPIELER 3</p>
           <div class="points" id="score3"></div>
-          <div class="d-flex flex-wrap test" id="p3cards"></div>
+          <div class="d-flex flex-wrap cardDiv" id="p3cards"></div>
 
           <br>
         </div>
         <!--END Player 3-->
         <!--PLAYER 4 Right corner down-->
-        <div class="col-6 align-self-end" id="act4">
+        <div class="col-6 align-self-end active" id="act4">
           <br>
           <p class="player" id='p4'>SPIELER 4</p>
           <div class="points" id="score4"></div>
-          <div class="d-flex flex-wrap test" id="p4cards"></div>
+          <div class="d-flex flex-wrap cardDiv" id="p4cards"></div>
 
           <br>
         </div>

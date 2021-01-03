@@ -41,8 +41,6 @@ let player4 = 'Greti';
 // let player4;
 
 
-
-
 let redBtn = document.getElementById("red");
 redBtn.addEventListener("click", function () {
     wildColor = "Red";
@@ -225,8 +223,19 @@ function showActivePlayer() {
 
      document.getElementById("activePlayer").innerText = currentPlayer;
 
+     let currP = currentIndex(),
+     $active = $('#p' + currP + 'cards');
+
+
+    //  $('cardDiv').classList.remove('activeP'); +
+    //  $active.classList.add('activeP');
+
+    //  $('.cardDiv').css('transform', 'scale(1)'); +
+    //  $active.css('transform', 'scale(1.1)');
+
+
+     
     // let prevP = previousIndex();
-    // let currP = currentIndex();
 
     // let highlightField = document.getElementById("act"+ currP);
     // console.log("act"+ currP);
@@ -261,25 +270,30 @@ async function getTopCard() {
     if (response.ok) {
         let result = await response.json();
        // console.log(result);
-        card = result;
+        if(topCard === result){
+            console.log("TopCard bleibt gleich.")
+        } else {
 
-        let tcDom = document.getElementById("topCard");
-        img = generateCardImg(card);
+            card = result;
+            let tcDom = document.getElementById("topCard");
+            img = generateCardImg(card);
+    
+    
+            tcDom.replaceWith(img);
+            img.setAttribute("id", "topCard");
+            
+    
+          //  img.classList.remove("swirl-in-fwd");
+    
+            if (card.Value == 12) {
+                direction *= -1;
+                console.log("Richtungswechsel abgespeichert! ", direction);
+            }
+    
+            topCard = result;
+            console.log(topCard);
 
-
-        tcDom.replaceWith(img);
-        img.setAttribute("id", "topCard");
-        img.classList.add("swirl-in-fwd");
-
-      //  img.classList.remove("swirl-in-fwd");
-
-        if (card.Value == 12) {
-            direction *= -1;
-            console.log("Richtungswechsel abgespeichert! ", direction);
-        }
-
-        topCard = result;
-        console.log(topCard);
+        } 
 
     }
     else {
@@ -290,16 +304,17 @@ async function getTopCard() {
 function currentIndex(){
 
     let domId = currentNum + direction;
-    let maxIdx = (players.length - 1);
+    // let maxIdx = (players.length - 1);
 
-    if (domId < 0) {
-        domId = maxIdx
-    }
-    else {
-        if (domId > maxIdx) {
-            domId = 0
-        }
-    }
+    // if (domId < 0) {
+    //     domId = maxIdx
+    // }
+    // else {
+    //     if (domId > maxIdx) {
+    //         domId = 0
+    //     }
+    // }
+
     return domId;
 
 }
@@ -335,6 +350,7 @@ async function drawCard() {
         let result = await response.json();
         console.log(result);
 
+        document.getElementById('drawDeck').classList.add("slide-out-top");
 
         // let check = players.indexOf(currentPlayer);
         // let arrCardSize = document.getElementById(playersCards[check]).childElementCount;
@@ -434,7 +450,7 @@ async function getCards(player) {
 
 
 
-function updatePlayground() {
+async function updatePlayground() {
 
     let prev = previousIndex();
 
@@ -446,7 +462,7 @@ function updatePlayground() {
     // Etwas überlegen dass bei skip (val11) der current und der spieler 2 plätze weiter
     // und das da unten ist eben für den letzten der gespielt hat und den nächsten, bei skip werden die falschen karten aktualisiert
        // if(check == prev || check == current){
-            getCards(elem);
+        setTimeout(() => getCards(elem), 0) 
      //   }
 
     })
@@ -492,11 +508,13 @@ function cardCheck(clickedId) {
             let bool = wildCardCheck();
             if(bool){
                 $('#pickColor').modal();
+                animateCard(clickedId);
             } else {
                 alert("Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!");
             }
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);
+            animateCard(clickedId);
         } else {
             alert("Bitte eine passende Karte spielen!");
         }
@@ -522,6 +540,10 @@ function wildCardCheck() {
         return true;
     }
 
+}
+
+function animateCard(clickedId){
+    document.getElementById(clickedId).classList.add("slide-out-top");
 }
 
 

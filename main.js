@@ -286,19 +286,7 @@ async function getTopCard() {
         img.setAttribute("id", "topCard");
         img.classList.add("swirl-in-fwd");
 
-      //  img.classList.remove("swirl-in-fwd");
-
-
-            card = result;
-            let tcDom = document.getElementById("topCard");
-            img = generateCardImg(card);
-    
-    
-            tcDom.replaceWith(img);
-            img.setAttribute("id", "topCard");
-            
-    
-          //  img.classList.remove("swirl-in-fwd");
+   
     
             if (card.Value == 12) {
                 direction *= -1;
@@ -366,7 +354,7 @@ async function drawCard() {
         console.log(result);
 
         document.getElementById('drawDeck').classList.add("slide-out-top");
-        document.getElementById('decks').appendChild("slide-out-top");
+
 
         // let check = players.indexOf(currentPlayer);
         // let arrCardSize = document.getElementById(playersCards[check]).childElementCount;
@@ -642,7 +630,7 @@ async function playCard(clickedId) {
             console.log(currentPlayer + "has won! Congratulations! The game has finished!");
             alert(currentPlayer + " hat gewonnen!");
         }
-        
+
         updatePlayground();
 
 

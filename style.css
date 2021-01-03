@@ -114,6 +114,17 @@ transform: scale(1.15);
     z-index: 10;
 }
 
+.meldung{
+    position: relative;
+    color: red;
+    font-size: xx-large;
+    opacity: 0.9;
+    border-radius: 5px;
+    background-color: seashell;
+    margin-bottom: 150px;
+    z-index: 10;
+}
+
 /** Animations */
 .slide-out-top{-webkit-animation:slide-out-top 1s cubic-bezier(.55,.085,.68,.53) both;animation:slide-out-top 1s cubic-bezier(.55,.085,.68,.53) both}
 

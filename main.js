@@ -266,9 +266,12 @@ async function getTopCard() {
         let tcDom = document.getElementById("topCard");
         img = generateCardImg(card);
 
+
         tcDom.replaceWith(img);
         img.setAttribute("id", "topCard");
+        img.classList.add("swirl-in-fwd");
 
+      //  img.classList.remove("swirl-in-fwd");
 
         if (card.Value == 12) {
             direction *= -1;
@@ -501,7 +504,6 @@ function cardCheck(clickedId) {
             playCard(clickedId);
         } else {
             alert("Bitte eine passende Karte spielen!");
-            //getCards(currentPlayer);
         }
     } else {
         alert("Falsche Kartenhand!");

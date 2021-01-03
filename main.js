@@ -107,7 +107,7 @@ players.push(player1, player2, player3, player4);
 //     players.push(player4);
 
 
-    //* erstellt ein neues Array mit den Namen in kleinbuchstaben und ohne duplikate
+//* erstellt ein neues Array mit den Namen in kleinbuchstaben und ohne duplikate
 let nameCheck = players.join(',').toLowerCase().split(',').sort().join(',').replace(/(([^,]+),)(?=\2)/g, '').split(',');
 
 if (nameCheck.length < players.length) {
@@ -223,7 +223,7 @@ btnDraw.addEventListener("click", drawCard);
 
 function showActivePlayer() {
 
-     document.getElementById("activePlayer").innerText = currentPlayer;
+    document.getElementById("activePlayer").innerText = currentPlayer;
 
     // let prevP = previousIndex();
     // let currP = currentIndex();
@@ -260,7 +260,7 @@ async function getTopCard() {
 
     if (response.ok) {
         let result = await response.json();
-       // console.log(result);
+        // console.log(result);
         card = result;
 
         let tcDom = document.getElementById("topCard");
@@ -287,7 +287,7 @@ async function getTopCard() {
     }
 }
 
-function currentIndex(){
+function currentIndex() {
 
     let domId = currentNum + direction;
     let maxIdx = (players.length - 1);
@@ -404,7 +404,7 @@ async function getCards(player) {
             card = result.Cards[parentNode.childElementCount];
             img = generateCardImg(card);
             img.setAttribute("id", check + "card" + (parentNode.childElementCount));
-          //  console.log("id", check + "card" + (parentNode.childElementCount));
+            //  console.log("id", check + "card" + (parentNode.childElementCount));
             img.setAttribute("onclick", "cardCheck(this.id)");
             img.setAttribute("class", "cards");
 
@@ -413,7 +413,7 @@ async function getCards(player) {
 
 
 
-    
+
         //* Score im html aktualisieren
         document.getElementById("score" + (check + 1)).innerText = result.Score;
 
@@ -425,6 +425,11 @@ async function getCards(player) {
 
         console.log(player + " hat neu gemischte Karten");
 
+
+        if (result.Score == 0) {
+            console.log(currentPlayer + "has won! Congratulations! The game has finished!");
+            alert("gewonnen!")
+        }
 
     }
     else {
@@ -438,16 +443,16 @@ function updatePlayground() {
 
     let prev = previousIndex();
 
-    players.forEach(function(elem){
+    players.forEach(function (elem) {
         let check = players.indexOf(elem);
         let current = players.indexOf(currentPlayer);
         console.log(currentPlayer);
 
-    // Etwas überlegen dass bei skip (val11) der current und der spieler 2 plätze weiter
-    // und das da unten ist eben für den letzten der gespielt hat und den nächsten, bei skip werden die falschen karten aktualisiert
-       // if(check == prev || check == current){
-            getCards(elem);
-     //   }
+        // Etwas überlegen dass bei skip (val11) der current und der spieler 2 plätze weiter
+        // und das da unten ist eben für den letzten der gespielt hat und den nächsten, bei skip werden die falschen karten aktualisiert
+        // if(check == prev || check == current){
+        getCards(elem);
+        //   }
 
     })
 
@@ -473,7 +478,7 @@ function cardCheck(clickedId) {
     if (i2CheckPlayer == clickedId.charAt(0)) {
         console.log(clickedId);
 
-        
+
         let removeCard = currentCards[i4CardArr];
         console.log(removeCard);
         colorRC = removeCard.Color;
@@ -490,7 +495,7 @@ function cardCheck(clickedId) {
 
         if (colorRC == "Black") {
             let bool = wildCardCheck();
-            if(bool){
+            if (bool) {
                 $('#pickColor').modal();
             } else {
                 alert("Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!");
@@ -509,12 +514,12 @@ function cardCheck(clickedId) {
 
 function wildCardCheck() {
     let i = 0;
-    while(i < currentCards.length){
+    while (i < currentCards.length) {
 
-        if(currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color){
+        if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
             console.log("Karte gefunden.");
             return false;
-           // break;
+            // break;
         } else {
             console.log("Karte stimmt nicht überein.");
             i++;

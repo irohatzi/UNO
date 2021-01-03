@@ -35,9 +35,11 @@ h2{
 
 
 /*? card pops out a bit when hovering over it, commented out, bec there might be better solution*/
-.cards:hover {
+
+ .cards:hover {
 transform: scale(1.15);
- }
+ } 
+
 
 
 .points{
@@ -58,6 +60,10 @@ transform: scale(1.15);
 .decks{
     height: 350px;
 }
+
+#drawDeck:hover {
+    transform: scale(1.15);
+     } 
 
 .deckInfo{
   position: absolute;

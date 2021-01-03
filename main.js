@@ -535,15 +535,18 @@ function cardCheck(clickedId) {
                 $('#pickColor').modal();
                 animateCard(clickedId);
             } else {
-                alert("Ungültiger Spielzug, Sie haben noch passende Karten, oder spielen schesrz auf schwarz, bitte gültige Karte spielen!");
+                //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
+                alert("Ungültiger Spielzug, Sie haben noch passende Karten, oder spielen schwarz auf schwarz, bitte gültige Karte spielen!");
             }
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);
             animateCard(clickedId);
         } else {
+            //! Animation für unpassende Farbe/Zahl
             alert("Bitte eine passende Karte spielen!");
         }
     } else {
+        //! Animation für falsche Persönlichkeitskartenhand
         alert("Falsche Kartenhand!");
 
     }

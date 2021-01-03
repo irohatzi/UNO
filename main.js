@@ -610,6 +610,12 @@ async function playCard(clickedId) {
         currentPlayer = result.Player;
         currentNum = players.indexOf(currentPlayer);
 
+
+        if (result.Score == 0 ) {
+            console.log(currentPlayer + "has won! Congratulations! The game has finished!");
+            alert(currentPlayer + " hat gewonnen!");
+        }
+        
         updatePlayground();
 
 

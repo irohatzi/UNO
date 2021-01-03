@@ -351,6 +351,7 @@ async function drawCard() {
         console.log(result);
 
         document.getElementById('drawDeck').classList.add("slide-out-top");
+        document.getElementById('decks').appendChild("slide-out-top");
 
         // let check = players.indexOf(currentPlayer);
         // let arrCardSize = document.getElementById(playersCards[check]).childElementCount;

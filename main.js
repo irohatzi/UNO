@@ -223,8 +223,8 @@ function showActivePlayer() {
 
     document.getElementById("activePlayer").innerText = currentPlayer;
 
-     let currP = currentIndex(),
-     $active = $('#p' + currP + 'cards');
+    let currP = currentIndex(),
+        $active = $('#p' + currP + 'cards');
 
 
     //  $('cardDiv').classList.remove('activeP'); +
@@ -234,7 +234,7 @@ function showActivePlayer() {
     //  $active.css('transform', 'scale(1.1)');
 
 
-     
+
     // let prevP = previousIndex();
 
     // let highlightField = document.getElementById("act"+ currP);
@@ -270,48 +270,48 @@ async function getTopCard() {
     if (response.ok) {
         let result = await response.json();
 
-       // console.log(result);
-        if(topCard === result){
+        // console.log(result);
+        if (topCard === result) {
             console.log("TopCard bleibt gleich.")
         } else {
 
-        // console.log(result);
-        card = result;
+            // console.log(result);
+            card = result;
 
-        if(card.Color == "Black"){
-            card.Color = colorCheck;
-    
-        } 
-        
-        img = generateCardImg(card);
-        let tcDom = document.getElementById("topCard");
-        tcDom.replaceWith(img);
-        img.setAttribute("id", "topCard");
-        img.classList.add("swirl-in-fwd");
+            if (card.Color == "Black") {
+                card.Color = colorCheck;
 
-      //  img.classList.remove("swirl-in-fwd");
+            }
 
-
-      /*      card = result;
             img = generateCardImg(card);
-    
-    
+            let tcDom = document.getElementById("topCard");
             tcDom.replaceWith(img);
             img.setAttribute("id", "topCard");
-            
-    */
-          //  img.classList.remove("swirl-in-fwd");
+            img.classList.add("swirl-in-fwd");
 
-    
+            //  img.classList.remove("swirl-in-fwd");
+
+
+            /*      card = result;
+                  img = generateCardImg(card);
+          
+          
+                  tcDom.replaceWith(img);
+                  img.setAttribute("id", "topCard");
+                  
+          */
+            //  img.classList.remove("swirl-in-fwd");
+
+
             if (card.Value == 12) {
                 direction *= -1;
                 console.log("Richtungswechsel abgespeichert! ", direction);
             }
-    
+
             topCard = result;
             console.log(topCard);
 
-        } 
+        }
 
     }
     else {
@@ -369,7 +369,7 @@ async function drawCard() {
         console.log(result);
 
         document.getElementById('drawDeck').classList.toggle("wobble-hor-bottom");
-       
+
 
 
         // let check = players.indexOf(currentPlayer);
@@ -429,7 +429,7 @@ async function getCards(player) {
 
     if (response.ok) {
         let result = await response.json();
-
+console.log(result);
         let check = players.indexOf(player);
 
         let parentNode = document.getElementById(playersCards[check]);
@@ -480,11 +480,12 @@ async function updatePlayground() {
         console.log(currentPlayer);
 
 
-    // Etwas überlegen dass bei skip (val11) der current und der spieler 2 plätze weiter
-    // und das da unten ist eben für den letzten der gespielt hat und den nächsten, bei skip werden die falschen karten aktualisiert
-       // if(check == prev || check == current){
-        setTimeout(() => getCards(elem), 0) 
-     //   }
+        // Etwas überlegen dass bei skip (val11) der current und der spieler 2 plätze weiter
+        // und das da unten ist eben für den letzten der gespielt hat und den nächsten, bei skip werden die falschen karten aktualisiert
+        // if(check == prev || check == current){
+       // setTimeout(() => getCards(elem), 1000)
+        getCards(elem)
+        //   }
 
         // Etwas überlegen dass bei skip (val11) der current und der spieler 2 plätze weiter
         // und das da unten ist eben für den letzten der gespielt hat und den nächsten, bei skip werden die falschen karten aktualisiert
@@ -509,7 +510,7 @@ function cardCheck(clickedId) {
     // variable für richtiger player check
     let i2CheckPlayer = players.indexOf(currentPlayer);
     // indexNummer die an der ID angehängt ist rauslesen:
-    let i4CardArr = clickedId.charAt(clickedId.length - 1);
+    let i4CardArr = clickedId.substring(5);
 
     console.log(i4CardArr);
     console.log(i2CheckPlayer);
@@ -528,31 +529,37 @@ function cardCheck(clickedId) {
 
 
         if (topCard.Color == "Black") {
-                colorTC = colorCheck;
+            colorTC = colorCheck;
         }
 
+
         if (colorRC == "Black") {
-            let bool = wildCardCheck();
-            if (bool) {
-                $('#pickColor').modal();
-                animateCard(clickedId);
+            if (topCard.Color == "Black" && valueRC == 13) {
+                alert("+4 darf nicht auf schwarz gespielt werden")
             } else {
-                //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
-                alert("Ungültiger Spielzug, Sie haben noch passende Karten, oder spielen schwarz auf schwarz, bitte gültige Karte spielen!");
+                let bool = wildCardCheck();
+                if (bool) {
+                    $('#pickColor').modal();
+                    animateCard(clickedId);
+                } else {
+                    //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
+                    alert("Ungültiger Spielzug, Sie haben noch passende Karten, oder spielen schwarz auf schwarz, bitte gültige Karte spielen!");
+                }
             }
+
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);
             animateCard(clickedId);
         } else {
             //! Animation für unpassende Farbe/Zahl
             alert("Bitte eine passende Karte spielen!");
-           // fehlerMeldung1();
-                       
+            // fehlerMeldung1();
+
         }
     } else {
         //! Animation für falsche Persönlichkeitskartenhand
         alert("Falsche Kartenhand!");
-   //   fehlerMeldung2();
+        //   fehlerMeldung2();
 
     }
 }
@@ -560,28 +567,25 @@ function cardCheck(clickedId) {
 
 function wildCardCheck() {
 
-    if(topCard.Color == "Black"){
-        console.log("Schwarz darf nicht auf Schwarz gespielt werden!")
-    } else {
-        let i = 0;
-        while (i < currentCards.length) {
-    
-            if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
-                console.log("Karte gefunden.");
-                return false;
-                // break;
-            } else {
-                console.log("Karte stimmt nicht überein.");
-                i++;
-            }
-            return true;
+
+    let i = 0;
+    while (i < currentCards.length) {
+
+        if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
+            console.log("Karte gefunden.");
+            return false;
+            // break;
+        } else {
+            console.log("Karte stimmt nicht überein.");
+            i++;
         }
+        return true;
     }
 
 
 }
 
-function animateCard(clickedId){
+function animateCard(clickedId) {
     document.getElementById(clickedId).classList.add("slide-out-top");
 }
 
@@ -647,7 +651,7 @@ async function playCard(clickedId) {
         currentNum = players.indexOf(currentPlayer);
 
 
-        if (result.Score == 0 ) {
+        if (result.Score == 0) {
             console.log(result);
             console.log(currentPlayer + "has won! Congratulations! The game has finished!");
             alert(currentPlayer + " hat gewonnen!");
@@ -663,27 +667,27 @@ async function playCard(clickedId) {
     }
 }
 
-    function winner(result){
-        let winnerPlayer = document.createElement("h2"); 
-        winnerPlayer.setAttribute("class", "winnerPlayer");
-        winnerPlayer.innerText = result + " has won!";
-        document.getElementById('decks').appendChild(winnerPlayer);
-    }
+function winner(result) {
+    let winnerPlayer = document.createElement("h2");
+    winnerPlayer.setAttribute("class", "winnerPlayer");
+    winnerPlayer.innerText = result + " has won!";
+    document.getElementById('decks').appendChild(winnerPlayer);
+}
 
-    //ungültige Karte gespielt, bitte andere Karte spielen
-    function fehlerMeldung1(){
-        let meldung = document.createElement("h2");
-        meldung.setAttribute("class", "meldung");
-        meldung.innerText = "this card doesn't match, please play a different one";
-        document.getElementById('decks').appendChild(meldung);
-    }
+//ungültige Karte gespielt, bitte andere Karte spielen
+function fehlerMeldung1() {
+    let meldung = document.createElement("h2");
+    meldung.setAttribute("class", "meldung");
+    meldung.innerText = "this card doesn't match, please play a different one";
+    document.getElementById('decks').appendChild(meldung);
+}
 
-    //falsche HandKarte (falscher Spieler)
-    function fehlerMeldung2(){
-        let meldung = document.createElement("h2");
-        meldung.setAttribute("class", "meldung");
-        meldung.innerText = "it is not this Player's turn yet, please choose the correct personality to play";
-        document.getElementById('decks').appendChild(meldung);
-    }
+//falsche HandKarte (falscher Spieler)
+function fehlerMeldung2() {
+    let meldung = document.createElement("h2");
+    meldung.setAttribute("class", "meldung");
+    meldung.innerText = "it is not this Player's turn yet, please choose the correct personality to play";
+    document.getElementById('decks').appendChild(meldung);
+}
 
 

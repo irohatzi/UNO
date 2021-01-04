@@ -520,6 +520,20 @@ function cardCheck(clickedId) {
     document.getElementById('decks').removeChild(exists2);
     }
 
+    let exists3 = document.getElementById("meldung3");
+
+    if(exists3){
+    document.getElementById("meldung3").classList.remove("bounce-out-top");
+    document.getElementById('decks').removeChild(exists3);
+    }
+
+    let exists4 = document.getElementById("meldung4");
+
+    if(exists4){
+    document.getElementById("meldung4").classList.remove("bounce-out-top");
+    document.getElementById('decks').removeChild(exists4);
+    }
+
     console.log("aktueller spieler", currentPlayer);
     // variable für richtiger player check
     let i2CheckPlayer = players.indexOf(currentPlayer);
@@ -549,7 +563,8 @@ function cardCheck(clickedId) {
 
         if (valueRC == 13) {
             if(topCard.Value == 13 || topCard.Value == 14){
-                alert("Ungültiger Spielzug, Sie spielen +4 auf schwarz!")
+                alert("Ungültiger Spielzug, Sie spielen +4 auf schwarz!");
+                fehlerMeldung4();
             } else {
                 let bool = wildCardCheck();
                 if (bool) {
@@ -558,10 +573,9 @@ function cardCheck(clickedId) {
                 } else {
                     //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
                     alert("Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!");
+                    fehlerMeldung3();
                 }
-            }
-
-            
+            }            
 
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);
@@ -569,13 +583,13 @@ function cardCheck(clickedId) {
         } else {
             //! Animation für unpassende Farbe/Zahl
             alert("Bitte eine passende Karte spielen!");
-             fehlerMeldung1();
+            fehlerMeldung1();
 
         }
     } else {
         //! Animation für falsche Persönlichkeitskartenhand
         alert("Falsche Kartenhand!");
-            fehlerMeldung2();
+        fehlerMeldung2();
 
     }
 }
@@ -690,9 +704,9 @@ function winner(result) {
 function fehlerMeldung1() {
     let meldung = document.createElement("h2");
     meldung.setAttribute("id", "meldung1");
-    meldung.innerText = "this card doesn't match, please play a different one";
+    meldung.innerText = "this card doesn't match, please play a different one or draw one from the deck";
     document.getElementById('decks').appendChild(meldung);
-    document.getElementById("meldung1").classList.add("roll-out-left");
+    document.getElementById("meldung1").classList.add("bounce-out-top");
     
 }
 
@@ -702,8 +716,25 @@ function fehlerMeldung2() {
     meldung.setAttribute("id", "meldung2");
     meldung.innerText = "it is not this Player's turn yet, please choose the correct personality to play";
     document.getElementById('decks').appendChild(meldung);
-   // document.getElementById("meldung2").classList.remove("bounce-out-top");
     document.getElementById("meldung2").classList.add("bounce-out-top");
+    
+}
+
+function fehlerMeldung3() {
+    let meldung = document.createElement("h2");
+    meldung.setAttribute("id", "meldung3");
+    meldung.innerText = "Invalid move, you still have matching cards, please play a valid card!";
+    document.getElementById('decks').appendChild(meldung);
+    document.getElementById("meldung3").classList.add("bounce-out-top");
+    
+}
+
+function fehlerMeldung4() {
+    let meldung = document.createElement("h2");
+    meldung.setAttribute("id", "meldung4");
+    meldung.innerText = "Invalid move, you play +4 on a black card!";
+    document.getElementById('decks').appendChild(meldung);
+    document.getElementById("meldung4").classList.add("bounce-out-top");
     
 }
 

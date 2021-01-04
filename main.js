@@ -700,6 +700,8 @@ function winner(result) {
     document.getElementById('decks').appendChild(winnerPlayer);
 }
 
+//FEHLERMELDUNGEN
+
 //ungültige Karte gespielt, bitte andere Karte spielen
 function fehlerMeldung1() {
     let meldung = document.createElement("h2");

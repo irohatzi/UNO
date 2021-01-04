@@ -4,7 +4,6 @@ body {
     radial-gradient(
       rgba(0, 72, 255, 0.632),
       #160370);
-    color: wheat;  
     display: grid;
     margin: 3%;
 }
@@ -13,8 +12,9 @@ body {
     border: solid red 3px;
 } */
 
-h2{
+h2, h3, h5, p{
     text-align: center;
+    color: wheat;  
 }
 
 /*is wie cards im tutorial*/

@@ -221,10 +221,13 @@ btnDraw.addEventListener("click", drawCard);
 
 function showActivePlayer() {
 
+
     document.getElementById("activePlayer").innerText = currentPlayer;
 
     let currP = currentIndex(),
         $active = $('#p' + currP + 'cards');
+
+    document.getElementById("activePlayer").classList.toggle("wobble-hor-bottom");
 
 
     //  $('cardDiv').classList.remove('activeP'); +

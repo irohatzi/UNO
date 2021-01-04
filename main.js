@@ -506,6 +506,20 @@ async function updatePlayground() {
 
 function cardCheck(clickedId) {
 
+    let exists1 = document.getElementById("meldung2");
+
+    if(exists1){
+    document.getElementById("meldung2").classList.remove("bounce-out-top");
+    document.getElementById('decks').removeChild(exists1);
+    }
+
+    let exists2 = document.getElementById("meldung1");
+
+    if(exists2){
+    document.getElementById("meldung1").classList.remove("bounce-out-top");
+    document.getElementById('decks').removeChild(exists2);
+    }
+
     console.log("aktueller spieler", currentPlayer);
     // variable für richtiger player check
     let i2CheckPlayer = players.indexOf(currentPlayer);
@@ -553,13 +567,15 @@ function cardCheck(clickedId) {
         } else {
             //! Animation für unpassende Farbe/Zahl
             alert("Bitte eine passende Karte spielen!");
-            // fehlerMeldung1();
+        //    animateError(clickedId);
+             fehlerMeldung1();
 
         }
     } else {
         //! Animation für falsche Persönlichkeitskartenhand
         alert("Falsche Kartenhand!");
-        //   fehlerMeldung2();
+    //    animateError(clickedId);
+            fehlerMeldung2();
 
     }
 }
@@ -677,17 +693,23 @@ function winner(result) {
 //ungültige Karte gespielt, bitte andere Karte spielen
 function fehlerMeldung1() {
     let meldung = document.createElement("h2");
-    meldung.setAttribute("class", "meldung");
+    meldung.setAttribute("id", "meldung1");
     meldung.innerText = "this card doesn't match, please play a different one";
     document.getElementById('decks').appendChild(meldung);
+    document.getElementById("meldung1").classList.add("roll-out-left");
+    
 }
 
 //falsche HandKarte (falscher Spieler)
 function fehlerMeldung2() {
     let meldung = document.createElement("h2");
-    meldung.setAttribute("class", "meldung");
+    meldung.setAttribute("id", "meldung2");
     meldung.innerText = "it is not this Player's turn yet, please choose the correct personality to play";
     document.getElementById('decks').appendChild(meldung);
+   // document.getElementById("meldung2").classList.remove("bounce-out-top");
+    document.getElementById("meldung2").classList.add("bounce-out-top");
+    
 }
+
 
 

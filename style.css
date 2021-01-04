@@ -125,6 +125,23 @@ transform: scale(1.15);
     z-index: 10;
 }
 
+#currentPersonality{
+    position: absolute;
+    top: 78%;
+    left: 50%;
+    margin-top: -78px;
+    margin-left: -140px;
+    
+}
+
+#activePlayer{
+    position: absolute;
+    top: 78%;
+    left: 50%;
+    transform: translate(-78%, -140%);
+    
+}
+
 /** Animations */
 .slide-out-top{-webkit-animation:slide-out-top 1s cubic-bezier(.55,.085,.68,.53) both;animation:slide-out-top 1s cubic-bezier(.55,.085,.68,.53) both}
 

@@ -533,9 +533,9 @@ function cardCheck(clickedId) {
         }
 
 
-        if (colorRC == "Black") {
-            if (topCard.Color == "Black" && valueRC == 13) {
-                alert("+4 darf nicht auf schwarz gespielt werden")
+        if (valueRC == 13) {
+            if(topCard.Value == 13 || topCard.Value == 14){
+                alert("Ungültiger Spielzug, Sie spielen +4 auf schwarz!")
             } else {
                 let bool = wildCardCheck();
                 if (bool) {
@@ -543,9 +543,11 @@ function cardCheck(clickedId) {
                     animateCard(clickedId);
                 } else {
                     //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
-                    alert("Ungültiger Spielzug, Sie haben noch passende Karten, oder spielen schwarz auf schwarz, bitte gültige Karte spielen!");
+                    alert("Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!");
                 }
             }
+
+            
 
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);
@@ -553,35 +555,31 @@ function cardCheck(clickedId) {
         } else {
             //! Animation für unpassende Farbe/Zahl
             alert("Bitte eine passende Karte spielen!");
-            // fehlerMeldung1();
+             fehlerMeldung1();
 
         }
     } else {
         //! Animation für falsche Persönlichkeitskartenhand
         alert("Falsche Kartenhand!");
-        //   fehlerMeldung2();
+           fehlerMeldung2();
 
     }
 }
 
 
 function wildCardCheck() {
-
-
     let i = 0;
-    while (i < currentCards.length) {
-
-        if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
+    while(i < currentCards.length){
+        if(currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color){
             console.log("Karte gefunden.");
             return false;
-            // break;
+           // break;
         } else {
             console.log("Karte stimmt nicht überein.");
             i++;
         }
         return true;
     }
-
 
 }
 

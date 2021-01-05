@@ -78,31 +78,43 @@ blueBtn.addEventListener('click', function () {
 });
 
 
+function startGame(){
+    $('#welcomeUno').modal();
 
-players.push(player1, player2, player3, player4);
+}
+
+startGame();
+
+const blaSub = document.getElementById('blaBtn');
+blaSub.addEventListener('click', function(evt) {
+    evt.preventDefault();
+    $('#welcomeUno').modal('hide');
+    $('#playerNames').modal('show');
+});
+
 //! Modalen Dialog öffnen um Namen einzugeben
 // $('#playerNames').modal()
 
-// document.getElementById('playerNamesForm').addEventListener('submit', function (evt) {
-//     console.log('submit')
+ document.getElementById('playerNamesForm').addEventListener('submit', function (evt) {
+     console.log('submit')
 
-//     evt.preventDefault()
-
-
-//     player1 = document.getElementById('pn1').value;
-//     players.push(player1);
+     evt.preventDefault();
 
 
-//     player2 = document.getElementById('pn2').value;
-//     players.push(player2);
+     player1 = document.getElementById('pn1').value;
+     players.push(player1);
 
 
-//     player3 = document.getElementById('pn3').value;
-//     players.push(player3);
+     player2 = document.getElementById('pn2').value;
+     players.push(player2);
 
 
-//     player4 = document.getElementById('pn4').value;
-//     players.push(player4);
+     player3 = document.getElementById('pn3').value;
+     players.push(player3);
+
+
+     player4 = document.getElementById('pn4').value;
+     players.push(player4);
 
 
 //* erstellt ein neues Array mit den Namen in kleinbuchstaben und ohne duplikate
@@ -115,11 +127,13 @@ if (nameCheck.length < players.length) {
     $('#playerNamesForm')[0].reset();
 } else {
     $('#playerNames').modal('hide');
+
+    
+    generateBackImg();
     startResponse();
 }
 
-
-// });
+ });
 
 
 
@@ -212,13 +226,15 @@ async function startResponse() {
 
 //* ClickEvent für den Stapel zum Abheben
 const btnDraw = document.getElementById('drawDeck');
-btnDraw.addEventListener('click', drawCard);
+// btnDraw.addEventListener('click', drawCard);
 btnDraw.addEventListener('click', function(e){
     e.preventDefault;
 
     btnDraw.classList.remove('wobble-hor-top');
 
     void btnDraw.offsetWidth;
+
+    drawCard();
 
     btnDraw.classList.add('wobble-hor-top');
 }, false);
@@ -234,8 +250,8 @@ function showActivePlayer() {
 
     document.getElementById('activePlayer').innerText = currentPlayer;
 
-    let currP = currentIndex(),
-        $active = $('#p' + currP + 'cards');
+    // let currP = currentIndex(),
+    //    $active = $('#p' + currP + 'cards');
 
     // document.getElementById('activePlayer').classList.toggle('wobble-hor-bottom');
 
@@ -259,6 +275,27 @@ function showActivePlayer() {
     // $(highlightField).addClass('highlight');
 
 
+    //* ClickEvent für den Stapel zum Abheben
+
+    // btnDraw.addEventListener('click', drawCard);
+    
+    animateActivePlayer(currentPlayer);
+
+
+}
+
+function animateActivePlayer(currentPlayer){
+
+    let helper = previousIndex();
+    let activeP = document.getElementById('p' +helper);
+
+    activeP.preventDefault;
+    activeP.classList.remove('wobble-hor-top');
+
+    void activeP.offsetWidth;
+
+    activeP.classList.add('wobble-hor-top');
+    
 }
 
 function generateCardImg(card) {
@@ -268,6 +305,12 @@ function generateCardImg(card) {
     pic.src = 'cards/' + color + value + '.png';
     return pic;
 
+}
+
+function generateBackImg() {
+    let picture = document.createElement('img');
+    
+    
 }
 
 async function getTopCard() {
@@ -327,7 +370,7 @@ async function getTopCard() {
         console.log(topCard);
 
     } else {
-        alert('HTTP-Error: ' + response.status)
+        ('HTTP-Error: ' + response.status)
     }
 }
 
@@ -354,7 +397,7 @@ function previousIndex() {
     let oldIdx = players.indexOf(currentPlayer);
     let maxIdx = (players.length - 1);
 
-    let prevIdx = oldIdx - direction;
+    let prevIdx = oldIdx + direction;
     if (prevIdx < 0) {
         prevIdx = maxIdx
     }
@@ -521,28 +564,28 @@ function cardCheck(clickedId) {
 
     if (exists1) {
         document.getElementById('meldung2').classList.remove('bounce-out-top');
-        document.getElementById('decks').removeChild(exists1);
+        document.getElementById('warnings').removeChild(exists1);
     }
 
     let exists2 = document.getElementById('meldung1');
 
     if (exists2) {
         document.getElementById('meldung1').classList.remove('bounce-out-top');
-        document.getElementById('decks').removeChild(exists2);
+        document.getElementById('warnings').removeChild(exists2);
     }
 
     let exists3 = document.getElementById('meldung3');
 
     if (exists3) {
         document.getElementById('meldung3').classList.remove('bounce-out-top');
-        document.getElementById('decks').removeChild(exists3);
+        document.getElementById('warnings').removeChild(exists3);
     }
 
     let exists4 = document.getElementById('meldung4');
 
     if (exists4) {
         document.getElementById('meldung4').classList.remove('bounce-out-top');
-        document.getElementById('decks').removeChild(exists4);
+        document.getElementById('warnings').removeChild(exists4);
     }
 
     console.log('aktueller spieler', currentPlayer);
@@ -574,7 +617,6 @@ function cardCheck(clickedId) {
 
         if (valueRC == 13) {
             if (topCard.Value == 13 || topCard.Value == 14) {
-                alert('Ungültiger Spielzug, Sie spielen +4 auf schwarz!');
                 fehlerMeldung4();
             } else {
                 let bool = wildCardCheck();
@@ -583,7 +625,6 @@ function cardCheck(clickedId) {
                     animateCard(clickedId);
                 } else {
                     //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
-                    alert('Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!');
                     fehlerMeldung3();
                 }
             }
@@ -593,13 +634,11 @@ function cardCheck(clickedId) {
             animateCard(clickedId);
         } else {
             //! Animation für unpassende Farbe/Zahl
-            alert('Bitte eine passende Karte spielen!');
             fehlerMeldung1();
 
         }
     } else {
         //! Animation für falsche Persönlichkeitskartenhand
-        alert('Falsche Kartenhand!');
         fehlerMeldung2();
 
     }
@@ -718,7 +757,7 @@ function fehlerMeldung1() {
     let meldung = document.createElement('h2');
     meldung.setAttribute('id', 'meldung1');
     meldung.innerText = 'This card doesn not match, please play a different one or draw one from the deck';
-    document.getElementById('decks').appendChild(meldung);
+    document.getElementById('warnings').appendChild(meldung);
     document.getElementById('meldung1').classList.add('bounce-out-top');
 
 }
@@ -728,7 +767,7 @@ function fehlerMeldung2() {
     let meldung = document.createElement('h2');
     meldung.setAttribute('id', 'meldung2');
     meldung.innerText = 'It is not this Player\'s turn yet, please choose the correct personality to play';
-    document.getElementById('decks').appendChild(meldung);
+    document.getElementById('warnings').appendChild(meldung);
     document.getElementById('meldung2').classList.add('bounce-out-top');
 
 }
@@ -737,7 +776,7 @@ function fehlerMeldung3() {
     let meldung = document.createElement('h2');
     meldung.setAttribute('id', 'meldung3');
     meldung.innerText = 'Invalid move, you still have matching cards, please play a valid card!';
-    document.getElementById('decks').appendChild(meldung);
+    document.getElementById('warnings').appendChild(meldung);
     document.getElementById('meldung3').classList.add('bounce-out-top');
 
 }
@@ -746,7 +785,7 @@ function fehlerMeldung4() {
     let meldung = document.createElement('h2');
     meldung.setAttribute('id', 'meldung4');
     meldung.innerText = 'Invalid move, you play +4 on a black card!';
-    document.getElementById('decks').appendChild(meldung);
+    document.getElementById('warnings').appendChild(meldung);
     document.getElementById('meldung4').classList.add('bounce-out-top');
 
 }

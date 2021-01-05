@@ -14,8 +14,6 @@ h2, h3, h5, p{
 }
 
 
-
-
 #header{
     margin-bottom: 2%;
     text-align: center;
@@ -40,8 +38,6 @@ h2, h3, h5, p{
     /*? this is just needed if cards should pop out when hovering */
     transition: transform .2s; 
 }
-
-
 
 
 /*? card pops out a bit when hovering over it, commented out, bec there might be better solution*/
@@ -80,6 +76,25 @@ transform: scale(1.15);
      }  */
 
 
+<<<<<<< HEAD
+=======
+
+.tC{
+    display: inline;
+    width: inherit;
+    margin-left: 30px;  
+    
+}
+
+.dC{
+    display: inline;
+    width: inherit;
+    align-self: center;
+    margin-left: 10px;
+
+}
+
+>>>>>>> b2da8f7de301cee10f0d515bb9adab861f97b88e
 #topCard, #drawDeck {
     width: 150px; 
     border-radius: 4px;
@@ -92,7 +107,11 @@ transform: scale(1.15);
     transform: scale(1.1);
     border-radius: 25%;
     background-color: lightblue;
-    opacity: 0.2;
+    opacity: 0.4;
+    color: rgb(1, 1, 41);
+    width: 65px;
+    display: inline;
+    padding: 3px;
 }
 
 .winnerPlayer{
@@ -107,24 +126,18 @@ transform: scale(1.15);
 }
 
 #meldung1, #meldung2, #meldung3, #meldung4{
-    position: absolute;
+    position: relative;
     color: red;
     font-size: xx-large;
     opacity: 0.9;
     border-radius: 5px;
     background-color: seashell;
-    margin-bottom: 150px;
     z-index: 10;
+    text-align: center;
+    align-items: center;
+    margin-left: 90px;
 }
 
-
-/* #activePlayer{
-    position: absolute;
-    top: 90%;
-    left: 20%;
-    transform: translate(-78%, -140%);
-    
-} */
 
 /** Animations */
 .slide-out-top{-webkit-animation:slide-out-top 1s cubic-bezier(.55,.085,.68,.53) both;animation:slide-out-top 1s cubic-bezier(.55,.085,.68,.53) both}

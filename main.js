@@ -288,10 +288,14 @@ function showActivePlayer() {
 function animateActivePlayer(currentPlayer){
 
     let helper = previousIndex();
-    let activeP = document.getElementById('p' +helper);
+    console.log(helper);
+    let activeP = document.getElementById('p' + helper);
 
     //activeP.preventDefault;
-    activeP.classList.remove('wobble-hor-top');
+    if(activeP.classList.contains('wobble-hor-top')){
+        activeP.classList.remove('wobble-hor-top');
+    }
+
 
     void activeP.offsetWidth;
 
@@ -617,23 +621,27 @@ function cardCheck(clickedId) {
         }
 
 
-        if (colorRC == 'Black') {
-
+        if (valueRC == 13) {
             let bool = wildCardCheck();
             if (bool) {
                 $('#pickColor').modal();
                 animateCard(clickedId);
-            if (topCard.Color == "Black" && valueRC == 13) {
+            if ((topCard.Value == 13 || topCard.Value == 14) && valueRC == 13) {
                 alert("+4 darf nicht auf schwarz gespielt werden")
+                return;
              } else {
                 //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
                 fehlerMeldung3();
                 console.log("Fehlermeldung bei Falsch Schwarz spielen");
+                return;
                 }
             }
 
-        } else if (valueRC == valueTC || colorRC == colorTC || valueRC == 14) {
+        } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);
+            animateCard(clickedId);
+        } else if (valueRC == 14){
+            $('#pickColor').modal();
             animateCard(clickedId);
         } else {
             //! Animation für unpassende Farbe/Zahl
@@ -651,17 +659,20 @@ function cardCheck(clickedId) {
 
 function wildCardCheck() {
     let i = 0;
+    let bool;
     while (i < currentCards.length) {
         if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
             console.log('Karte gefunden.');
-            return false;
+            alert("Sie haben noch passende Karten auf der Hand!")
+            bool = false;
             // break;
         } else {
             console.log(currentCards[i], topCard);
             console.log('Karte stimmt nicht überein.');
             i++;
+            bool = true;
         }
-        return true;
+        return bool;
     }
 }
 

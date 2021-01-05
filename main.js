@@ -221,10 +221,13 @@ btnDraw.addEventListener("click", drawCard);
 
 function showActivePlayer() {
 
+
     document.getElementById("activePlayer").innerText = currentPlayer;
 
     let currP = currentIndex(),
         $active = $('#p' + currP + 'cards');
+
+    document.getElementById("activePlayer").classList.toggle("wobble-hor-bottom");
 
 
     //  $('cardDiv').classList.remove('activeP'); +
@@ -699,6 +702,8 @@ function winner(result) {
     winnerPlayer.innerText = result + " has won!";
     document.getElementById('decks').appendChild(winnerPlayer);
 }
+
+//FEHLERMELDUNGEN
 
 //ungültige Karte gespielt, bitte andere Karte spielen
 function fehlerMeldung1() {

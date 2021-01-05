@@ -290,7 +290,7 @@ function animateActivePlayer(currentPlayer){
     let helper = previousIndex();
     let activeP = document.getElementById('p' +helper);
 
-    activeP.preventDefault;
+    //activeP.preventDefault;
     activeP.classList.remove('wobble-hor-top');
 
     void activeP.offsetWidth;
@@ -617,22 +617,22 @@ function cardCheck(clickedId) {
         }
 
 
-        if (valueRC == 13) {
-            if (topCard.Value == 13 || topCard.Value == 14) {
-                fehlerMeldung4();
-            } else {
-                let bool = wildCardCheck();
-                if (bool) {
-                    $('#pickColor').modal();
-                    animateCard(clickedId);
-                } else {
-                    //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
-                    fehlerMeldung3();
-                    console.log("Fehlermeldung bei Falsch Schawrz spielen");
+        if (colorRC == 'Black') {
+
+            let bool = wildCardCheck();
+            if (bool) {
+                $('#pickColor').modal();
+                animateCard(clickedId);
+            if (topCard.Color == "Black" && valueRC == 13) {
+                alert("+4 darf nicht auf schwarz gespielt werden")
+             } else {
+                //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
+                fehlerMeldung3();
+                console.log("Fehlermeldung bei Falsch Schwarz spielen");
                 }
             }
 
-        } else if (valueRC == valueTC || colorRC == colorTC) {
+        } else if (valueRC == valueTC || colorRC == colorTC || valueRC == 14) {
             playCard(clickedId);
             animateCard(clickedId);
         } else {
@@ -657,12 +657,12 @@ function wildCardCheck() {
             return false;
             // break;
         } else {
+            console.log(currentCards[i], topCard);
             console.log('Karte stimmt nicht überein.');
             i++;
         }
         return true;
     }
-
 }
 
 function animateCard(clickedId) {

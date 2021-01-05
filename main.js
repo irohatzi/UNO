@@ -292,12 +292,12 @@ function animateActivePlayer(currentPlayer){
     let activeP = document.getElementById('p' + helper);
 
     //activeP.preventDefault;
-    if(activeP.classList.contains('wobble-hor-top')){
-        activeP.classList.remove('wobble-hor-top');
-    }
+  //  if(activeP.classList.contains('wobble-hor-top')){
+  //      activeP.classList.remove('wobble-hor-top');
+//    }
 
 
-    void activeP.offsetWidth;
+ //   void activeP.offsetWidth;
 
     activeP.classList.add('wobble-hor-top');
     
@@ -620,7 +620,6 @@ function cardCheck(clickedId) {
             colorTC = colorCheck;
         }
 
-
         if (valueRC == 13) {
             let bool = wildCardCheck();
             if (bool) {
@@ -629,13 +628,13 @@ function cardCheck(clickedId) {
             if ((topCard.Value == 13 || topCard.Value == 14) && valueRC == 13) {
                 alert("+4 darf nicht auf schwarz gespielt werden")
                 return;
-             } else {
+            }
+            } else {
                 //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
                 fehlerMeldung3();
                 console.log("Fehlermeldung bei Falsch Schwarz spielen");
                 return;
-                }
-            }
+            }           
 
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);

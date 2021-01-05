@@ -213,6 +213,16 @@ async function startResponse() {
 //* ClickEvent für den Stapel zum Abheben
 const btnDraw = document.getElementById('drawDeck');
 btnDraw.addEventListener('click', drawCard);
+btnDraw.addEventListener('click', function(e){
+    e.preventDefault;
+
+    btnDraw.classList.remove('wobble-hor-top');
+
+    void btnDraw.offsetWidth;
+
+    btnDraw.classList.add('wobble-hor-top');
+}, false);
+
 
 
 
@@ -227,8 +237,9 @@ function showActivePlayer() {
     let currP = currentIndex(),
         $active = $('#p' + currP + 'cards');
 
-    document.getElementById('activePlayer').classList.toggle('wobble-hor-bottom');
+    // document.getElementById('activePlayer').classList.toggle('wobble-hor-bottom');
 
+    //document.getElementById('drawDeck').classList.remove('wobble-hor-bottom');
 
     //  $('cardDiv').classList.remove('activeP'); +
     //  $active.classList.add('activeP');
@@ -274,50 +285,48 @@ async function getTopCard() {
         let result = await response.json();
 
         // console.log(result);
-        if (topCard === result) {
-            console.log('TopCard bleibt gleich.')
-        } else {
-
-            // console.log(result);
-            card = result;
-
-            if (card.Color == 'Black') {
-                card.Color = colorCheck;
-
-            }
-
-            img = generateCardImg(card);
-            let tcDom = document.getElementById('topCard');
-            tcDom.replaceWith(img);
-            img.setAttribute('id', 'topCard');
-            img.classList.add('swirl-in-fwd');
-
-            //  img.classList.remove('swirl-in-fwd');
 
 
-            /*      card = result;
-                  img = generateCardImg(card);
-          
-          
-                  tcDom.replaceWith(img);
-                  img.setAttribute('id', 'topCard');
-                  
-          */
-            //  img.classList.remove('swirl-in-fwd');
 
+        // console.log(result);
+        card = result;
 
-            if (card.Value == 12) {
-                direction *= -1;
-                console.log('Richtungswechsel abgespeichert! ', direction);
-            }
-
-            topCard = result;
-            console.log(topCard);
+        if (card.Color == 'Black') {
+            card.Color = colorCheck;
 
         }
 
-    }
-    else {
+        img = generateCardImg(card);
+        let tcDom = document.getElementById('topCard');
+        tcDom.replaceWith(img);
+        img.setAttribute('id', 'topCard');
+       // img.classList.toggle('swirl-in-fwd');
+
+        //  img.classList.remove('swirl-in-fwd');
+
+
+        /*      card = result;
+              img = generateCardImg(card);
+      
+      
+              tcDom.replaceWith(img);
+              img.setAttribute('id', 'topCard');
+              
+      */
+        //  img.classList.remove('swirl-in-fwd');
+
+
+        if (card.Value == 12) {
+            direction *= -1;
+            console.log('Richtungswechsel abgespeichert! ', direction);
+        }
+
+
+
+        topCard = result;
+        console.log(topCard);
+
+    } else {
         alert('HTTP-Error: ' + response.status)
     }
 }
@@ -371,9 +380,8 @@ async function drawCard() {
         let result = await response.json();
         console.log(result);
 
-        document.getElementById('drawDeck').classList.toggle('wobble-hor-bottom');
-
-
+        // document.getElementById('drawDeck').classList.add('wobble-hor-bottom');
+        // setTimeout('document.getElementById(\'drawDeck\').classList.remove(\'wobble-hor-bottom\');',100);
 
         // let check = players.indexOf(currentPlayer);
         // let arrCardSize = document.getElementById(playersCards[check]).childElementCount;
@@ -432,7 +440,7 @@ async function getCards(player) {
 
     if (response.ok) {
         let result = await response.json();
-console.log(result);
+        console.log(result);
         let check = players.indexOf(player);
 
         let parentNode = document.getElementById(playersCards[check]);
@@ -486,7 +494,7 @@ async function updatePlayground() {
         // Etwas überlegen dass bei skip (val11) der current und der spieler 2 plätze weiter
         // und das da unten ist eben für den letzten der gespielt hat und den nächsten, bei skip werden die falschen karten aktualisiert
         // if(check == prev || check == current){
-       // setTimeout(() => getCards(elem), 1000)
+        // setTimeout(() => getCards(elem), 1000)
         getCards(elem)
         //   }
 
@@ -511,30 +519,30 @@ function cardCheck(clickedId) {
 
     let exists1 = document.getElementById('meldung2');
 
-    if(exists1){
-    document.getElementById('meldung2').classList.remove('bounce-out-top');
-    document.getElementById('decks').removeChild(exists1);
+    if (exists1) {
+        document.getElementById('meldung2').classList.remove('bounce-out-top');
+        document.getElementById('decks').removeChild(exists1);
     }
 
     let exists2 = document.getElementById('meldung1');
 
-    if(exists2){
-    document.getElementById('meldung1').classList.remove('bounce-out-top');
-    document.getElementById('decks').removeChild(exists2);
+    if (exists2) {
+        document.getElementById('meldung1').classList.remove('bounce-out-top');
+        document.getElementById('decks').removeChild(exists2);
     }
 
     let exists3 = document.getElementById('meldung3');
 
-    if(exists3){
-    document.getElementById('meldung3').classList.remove('bounce-out-top');
-    document.getElementById('decks').removeChild(exists3);
+    if (exists3) {
+        document.getElementById('meldung3').classList.remove('bounce-out-top');
+        document.getElementById('decks').removeChild(exists3);
     }
 
     let exists4 = document.getElementById('meldung4');
 
-    if(exists4){
-    document.getElementById('meldung4').classList.remove('bounce-out-top');
-    document.getElementById('decks').removeChild(exists4);
+    if (exists4) {
+        document.getElementById('meldung4').classList.remove('bounce-out-top');
+        document.getElementById('decks').removeChild(exists4);
     }
 
     console.log('aktueller spieler', currentPlayer);
@@ -565,7 +573,7 @@ function cardCheck(clickedId) {
 
 
         if (valueRC == 13) {
-            if(topCard.Value == 13 || topCard.Value == 14){
+            if (topCard.Value == 13 || topCard.Value == 14) {
                 alert('Ungültiger Spielzug, Sie spielen +4 auf schwarz!');
                 fehlerMeldung4();
             } else {
@@ -578,7 +586,7 @@ function cardCheck(clickedId) {
                     alert('Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!');
                     fehlerMeldung3();
                 }
-            }            
+            }
 
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);
@@ -600,11 +608,11 @@ function cardCheck(clickedId) {
 
 function wildCardCheck() {
     let i = 0;
-    while(i < currentCards.length){
-        if(currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color){
+    while (i < currentCards.length) {
+        if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
             console.log('Karte gefunden.');
             return false;
-           // break;
+            // break;
         } else {
             console.log('Karte stimmt nicht überein.');
             i++;
@@ -712,7 +720,7 @@ function fehlerMeldung1() {
     meldung.innerText = 'This card doesn not match, please play a different one or draw one from the deck';
     document.getElementById('decks').appendChild(meldung);
     document.getElementById('meldung1').classList.add('bounce-out-top');
-    
+
 }
 
 //falsche HandKarte (falscher Spieler)
@@ -722,7 +730,7 @@ function fehlerMeldung2() {
     meldung.innerText = 'It is not this Player\'s turn yet, please choose the correct personality to play';
     document.getElementById('decks').appendChild(meldung);
     document.getElementById('meldung2').classList.add('bounce-out-top');
-    
+
 }
 
 function fehlerMeldung3() {
@@ -731,7 +739,7 @@ function fehlerMeldung3() {
     meldung.innerText = 'Invalid move, you still have matching cards, please play a valid card!';
     document.getElementById('decks').appendChild(meldung);
     document.getElementById('meldung3').classList.add('bounce-out-top');
-    
+
 }
 
 function fehlerMeldung4() {
@@ -740,7 +748,7 @@ function fehlerMeldung4() {
     meldung.innerText = 'Invalid move, you play +4 on a black card!';
     document.getElementById('decks').appendChild(meldung);
     document.getElementById('meldung4').classList.add('bounce-out-top');
-    
+
 }
 
 

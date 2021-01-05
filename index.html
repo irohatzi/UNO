@@ -17,7 +17,7 @@
   <!--PLAYGROUND-->
   <div class='container-fluid'>
     <div>
-      <h2 id='header'>UNOrthodox </br> The Multiple Personality Disorder Edition</h2>
+      <h2 class='col-md-auto' id='header'>UNOrthodox </br> The Multiple Personality Disorder Edition</h2>
 
     </div>
     <div class='row playground'>
@@ -72,12 +72,15 @@
             <h3 id='currentPersonality'>current personality:</h3>
             <h4 id='activePlayer'>bla</h4>
           </div>
-          <div class='col-md-1 ml-md-auto topCard' id='decks'>
-            <h5 class='col-md-1'>AblegeStapel</h5>
+          <div class='col-md-1 ml-md-auto topCard'>
+            <div id='decks'></div>
+            <h5 class='col-md-1 tC'>AblegeStapel</h5>
           </div>
           <div class='col-md-6 ml-md-auto drawCard'>
-            <h5 class='col-md-1'>HebeStapel</h5>
-            <img src='cards\back0.png' id='drawDeck'>
+            <div>
+              <img src='cards\back0.png' id='drawDeck'>
+            </div>
+            <h5 class='col-md-1 dC'>HebeStapel</h5>
           </div>
         </div>
       </div>
@@ -124,10 +127,6 @@
           </div>
         </div>
         <!--END Player 4-->
-
-
-
-
       </div>
     </div>
 

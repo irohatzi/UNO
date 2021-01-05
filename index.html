@@ -67,20 +67,22 @@
 
       <!--DECKS IN THE MIDDLE-->
       <div class='container-fluid'>
-        <div class='row decks'>
+        <div class='row decks' id="warnings">
           <div class='col-md-2 mr-md-auto align-self-center active'>
             <h3 id='currentPersonality'>current personality:</h3>
             <h4 id='activePlayer'>bla</h4>
           </div>
           <div class='col-md-1 ml-md-auto topCard'>
-            <div id='decks'></div>
-            <h5 class='col-md-1 tC'>AblegeStapel</h5>
-          </div>
+            <div class='row'>
+              <div id='decks'></div>
+              <h5 class='row-md-1 tC'>Top-Card</h5>
+              </div>
+            </div>
           <div class='col-md-6 ml-md-auto drawCard'>
             <div>
               <img src='cards\back0.png' id='drawDeck'>
             </div>
-            <h5 class='col-md-1 dC'>HebeStapel</h5>
+            <h5 class='col-md-1 dC'>Draw-Deck</h5>
           </div>
         </div>
       </div>
@@ -183,6 +185,24 @@
       </div>
     </div>
   </div>
+
+
+  <div class='welcome'>
+    <div class='modal fade' id='welcomeUno' tabindex='-1' role='dialog' data-keyboard='false' data-backdrop='static'>
+      <div class='modal-dialog modal-dialog-centered' role='document'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h5 class='modal-title'>Welcome to UNO! <br> The Multiple Personality Disorder Edition!</h5>
+          </div>
+          <div class='row modal-body justify-content-around'>
+            <button type='submit' class='btn btn-lg btn-outline-primary' id="blaBtn">START</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
   <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'
     integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj'

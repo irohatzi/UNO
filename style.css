@@ -62,9 +62,9 @@ transform: scale(1.15);
     height: 350px;
 }
 
-#drawDeck:hover {
+/* #drawDeck:hover {
     transform: scale(1.15);
-     } 
+     }  */
 
 .deckInfo{
   position: absolute;
@@ -96,7 +96,7 @@ transform: scale(1.15);
 
 }
 
-.activeP{
+#activePlayer{
     transform: scale(1.1);
     border-radius: 25%;
     background-color: lightblue;
@@ -125,14 +125,14 @@ transform: scale(1.15);
     z-index: 10;
 }
 
-#currentPersonality{
+/* #currentPersonality{
     position: absolute;
     top: 90%;
     left: 20%;
     margin-top: -78px;
     margin-left: -140px;
     
-}
+} */
 
 #activePlayer{
     position: absolute;

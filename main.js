@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 
 //**** global variables ****/  
@@ -12,7 +12,7 @@ let currentNum;
 let player;
 let card = {};
 
-let wildColor = "";
+let wildColor = '';
 let pickedColor;
 let colorRC;
 let valueRC;
@@ -23,7 +23,7 @@ let currentCards;
 let clickedId;
 //* value that is needed to get the prev/next player
 let direction = 1;
-let colorCheck = "";
+let colorCheck = '';
 
 
 
@@ -41,37 +41,37 @@ let player4 = 'Greti';
 // let player4;
 
 
-let redBtn = document.getElementById("red");
-redBtn.addEventListener("click", function () {
-    wildColor = "Red";
-    colorCheck = "Red";
+let redBtn = document.getElementById('red');
+redBtn.addEventListener('click', function () {
+    wildColor = 'Red';
+    colorCheck = 'Red';
     $('#pickColor').modal('hide');
     console.log(clickedId);
     playCard(clickedId);
 });
 
-let yellowBtn = document.getElementById("yellow");
-yellowBtn.addEventListener("click", function () {
-    wildColor = "Yellow";
-    colorCheck = "Yellow";
+let yellowBtn = document.getElementById('yellow');
+yellowBtn.addEventListener('click', function () {
+    wildColor = 'Yellow';
+    colorCheck = 'Yellow';
     $('#pickColor').modal('hide');
     console.log(clickedId);
     playCard(clickedId);
 });
 
-let greenBtn = document.getElementById("green");
-greenBtn.addEventListener("click", function () {
-    wildColor = "Green";
-    colorCheck = "Green";
+let greenBtn = document.getElementById('green');
+greenBtn.addEventListener('click', function () {
+    wildColor = 'Green';
+    colorCheck = 'Green';
     $('#pickColor').modal('hide');
     console.log(clickedId);
     playCard(clickedId);
 });
 
-let blueBtn = document.getElementById("blue");
-blueBtn.addEventListener("click", function () {
-    wildColor = "Blue";
-    colorCheck = "Blue";
+let blueBtn = document.getElementById('blue');
+blueBtn.addEventListener('click', function () {
+    wildColor = 'Blue';
+    colorCheck = 'Blue';
     $('#pickColor').modal('hide');
     console.log(clickedId);
     playCard(clickedId);
@@ -110,9 +110,9 @@ let nameCheck = players.join(',').toLowerCase().split(',').sort().join(',').repl
 
 if (nameCheck.length < players.length) {
     console.log(nameCheck);
-    alert("Bitte 4 verschiedene Namen eingeben!");
+    alert('Bitte 4 verschiedene Namen eingeben!');
     players = [];
-    $("#playerNamesForm")[0].reset();
+    $('#playerNamesForm')[0].reset();
 } else {
     $('#playerNames').modal('hide');
     startResponse();
@@ -126,11 +126,11 @@ if (nameCheck.length < players.length) {
 
 
 async function startResponse() {
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
-        method: "POST",
+    let response = await fetch('https://nowaunoweb.azurewebsites.net/api/game/start', {
+        method: 'POST',
         body: JSON.stringify(players),
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            'Content-type': 'application/json; charset=UTF-8'
         }
     });
 
@@ -155,8 +155,8 @@ async function startResponse() {
         //* TC globaleVariable zuweisen & ins html einfügen
         topCard = result.TopCard;
         let pic = generateCardImg(topCard);
-        pic.setAttribute("id", "topCard");
-        let center = document.getElementById("decks");
+        pic.setAttribute('id', 'topCard');
+        let center = document.getElementById('decks');
         center.appendChild(pic);
 
 
@@ -165,10 +165,10 @@ async function startResponse() {
         document.getElementById('p3').innerText = player3;
         document.getElementById('p4').innerText = player4;
 
-        playersCards.push(document.getElementById("p1cards").id);
-        playersCards.push(document.getElementById("p2cards").id);
-        playersCards.push(document.getElementById("p3cards").id);
-        playersCards.push(document.getElementById("p4cards").id);
+        playersCards.push(document.getElementById('p1cards').id);
+        playersCards.push(document.getElementById('p2cards').id);
+        playersCards.push(document.getElementById('p3cards').id);
+        playersCards.push(document.getElementById('p4cards').id);
 
         // //* playerCards zuweisen & ins html einfügen
         // for (let i = 0; i < playersCards.length; i++) {
@@ -178,41 +178,41 @@ async function startResponse() {
         //         card = result.Players[i].Cards[j];
         //         img = generateCardImg(card);
 
-        //         img.setAttribute("id", i + "card" + j);
-        //         img.setAttribute("onclick", "cardCheck(this.id)");
-        //         img.setAttribute("class", "cards");
+        //         img.setAttribute('id', i + 'card' + j);
+        //         img.setAttribute('onclick', 'cardCheck(this.id)');
+        //         img.setAttribute('class', 'cards');
 
         //         document.getElementById(playersCards[i]).appendChild(img);
         //     }
         // }
 
 
-        scores.push(document.getElementById("score1").id);
-        scores.push(document.getElementById("score2").id);
-        scores.push(document.getElementById("score3").id);
-        scores.push(document.getElementById("score4").id);
+        scores.push(document.getElementById('score1').id);
+        scores.push(document.getElementById('score2').id);
+        scores.push(document.getElementById('score3').id);
+        scores.push(document.getElementById('score4').id);
 
         players.forEach(element =>
             getCards(element));
 
 
         // for (let i = 0; i < scores.length; i++) {
-        //     let score = document.createElement("p");
+        //     let score = document.createElement('p');
         //     score.innerText = result.Players[i].Score;
-        //     score.setAttribute("class", "score");
+        //     score.setAttribute('class', 'score');
 
         //     document.getElementById(scores[i]).appendChild(score);
         // }
 
     }
     else {
-        alert("HTTP-Error: " + response.status)
+        alert('HTTP-Error: ' + response.status)
     }
 }
 
 //* ClickEvent für den Stapel zum Abheben
 const btnDraw = document.getElementById('drawDeck');
-btnDraw.addEventListener("click", drawCard);
+btnDraw.addEventListener('click', drawCard);
 
 
 
@@ -222,12 +222,12 @@ btnDraw.addEventListener("click", drawCard);
 function showActivePlayer() {
 
 
-    document.getElementById("activePlayer").innerText = currentPlayer;
+    document.getElementById('activePlayer').innerText = currentPlayer;
 
     let currP = currentIndex(),
         $active = $('#p' + currP + 'cards');
 
-    document.getElementById("activePlayer").classList.toggle("wobble-hor-bottom");
+    document.getElementById('activePlayer').classList.toggle('wobble-hor-bottom');
 
 
     //  $('cardDiv').classList.remove('activeP'); +
@@ -240,32 +240,32 @@ function showActivePlayer() {
 
     // let prevP = previousIndex();
 
-    // let highlightField = document.getElementById("act"+ currP);
-    // console.log("act"+ currP);
-    // console.log("act" + (prevP));
-    // let removeHighlight = document.getElementById("act" + (prevP));
-    // $(removeHighlight).removeClass("highlight");
-    // $(highlightField).addClass("highlight");
+    // let highlightField = document.getElementById('act'+ currP);
+    // console.log('act'+ currP);
+    // console.log('act' + (prevP));
+    // let removeHighlight = document.getElementById('act' + (prevP));
+    // $(removeHighlight).removeClass('highlight');
+    // $(highlightField).addClass('highlight');
 
 
 }
 
 function generateCardImg(card) {
-    let pic = document.createElement("img");
+    let pic = document.createElement('img');
     let color = card.Color;
     let value = card.Value;
-    pic.src = "cards/" + color + value + ".png";
+    pic.src = 'cards/' + color + value + '.png';
     return pic;
 
 }
 
 async function getTopCard() {
 
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/topCard/" + gameId, {
-        method: "GET",
-        contentType: "application/json",
+    let response = await fetch('https://nowaunoweb.azurewebsites.net/api/game/topCard/' + gameId, {
+        method: 'GET',
+        contentType: 'application/json',
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            'Content-type': 'application/json; charset=UTF-8'
         }
     });
 
@@ -275,24 +275,24 @@ async function getTopCard() {
 
         // console.log(result);
         if (topCard === result) {
-            console.log("TopCard bleibt gleich.")
+            console.log('TopCard bleibt gleich.')
         } else {
 
             // console.log(result);
             card = result;
 
-            if (card.Color == "Black") {
+            if (card.Color == 'Black') {
                 card.Color = colorCheck;
 
             }
 
             img = generateCardImg(card);
-            let tcDom = document.getElementById("topCard");
+            let tcDom = document.getElementById('topCard');
             tcDom.replaceWith(img);
-            img.setAttribute("id", "topCard");
-            img.classList.add("swirl-in-fwd");
+            img.setAttribute('id', 'topCard');
+            img.classList.add('swirl-in-fwd');
 
-            //  img.classList.remove("swirl-in-fwd");
+            //  img.classList.remove('swirl-in-fwd');
 
 
             /*      card = result;
@@ -300,15 +300,15 @@ async function getTopCard() {
           
           
                   tcDom.replaceWith(img);
-                  img.setAttribute("id", "topCard");
+                  img.setAttribute('id', 'topCard');
                   
           */
-            //  img.classList.remove("swirl-in-fwd");
+            //  img.classList.remove('swirl-in-fwd');
 
 
             if (card.Value == 12) {
                 direction *= -1;
-                console.log("Richtungswechsel abgespeichert! ", direction);
+                console.log('Richtungswechsel abgespeichert! ', direction);
             }
 
             topCard = result;
@@ -318,7 +318,7 @@ async function getTopCard() {
 
     }
     else {
-        alert("HTTP-Error: " + response.status)
+        alert('HTTP-Error: ' + response.status)
     }
 }
 
@@ -359,11 +359,11 @@ function previousIndex() {
 
 async function drawCard() {
 
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/drawCard/" + gameId, {
-        method: "PUT",
-        contentType: "application/json",
+    let response = await fetch('https://nowaunoweb.azurewebsites.net/api/game/drawCard/' + gameId, {
+        method: 'PUT',
+        contentType: 'application/json',
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            'Content-type': 'application/json; charset=UTF-8'
         }
     });
 
@@ -371,7 +371,7 @@ async function drawCard() {
         let result = await response.json();
         console.log(result);
 
-        document.getElementById('drawDeck').classList.toggle("wobble-hor-bottom");
+        document.getElementById('drawDeck').classList.toggle('wobble-hor-bottom');
 
 
 
@@ -380,26 +380,26 @@ async function drawCard() {
         // console.log(arrCardSize);
         // card = result.Card;
         // img = generateCardImg(card);
-        // img.setAttribute("id", check + "card" + arrCardSize);
-        // img.setAttribute("onclick", "cardCheck(this.id)");
-        // img.setAttribute("class", "cards");
+        // img.setAttribute('id', check + 'card' + arrCardSize);
+        // img.setAttribute('onclick', 'cardCheck(this.id)');
+        // img.setAttribute('class', 'cards');
 
         // document.getElementById(playersCards[check]).appendChild(img);
 
         // //* check muss eins größer als index vom array sein!
         // check++;
-        // let newScore = document.getElementById("score" + check).innerText;
+        // let newScore = document.getElementById('score' + check).innerText;
 
         // newScore = parseInt(newScore);
         // newScore += result.Card.Score;
 
-        // document.getElementById("score" + check).innerText = newScore;
+        // document.getElementById('score' + check).innerText = newScore;
 
 
         //* Nächsten Spieler auf current setzen
         currentPlayer = result.NextPlayer;
         currentNum = players.indexOf(currentPlayer);
-        console.log("Am Zug ist nun: ", currentPlayer);
+        console.log('Am Zug ist nun: ', currentPlayer);
 
         //* getCards holt die karten vom aktuellen spieler und weißt sie dem currentCardArr zu
         updatePlayground();
@@ -412,7 +412,7 @@ async function drawCard() {
         //  }
     }
     else {
-        alert("HTTP-Error: " + response.status)
+        alert('HTTP-Error: ' + response.status)
     }
 }
 
@@ -421,12 +421,12 @@ async function drawCard() {
 async function getCards(player) {
 
 
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/getCards/" + gameId
-        + "?playerName=" + player, {
-        method: "GET",
-        contentType: "application/json",
+    let response = await fetch('https://nowaunoweb.azurewebsites.net/api/game/getCards/' + gameId
+        + '?playerName=' + player, {
+        method: 'GET',
+        contentType: 'application/json',
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            'Content-type': 'application/json; charset=UTF-8'
         }
     });
 
@@ -443,10 +443,10 @@ console.log(result);
         while (parentNode.childElementCount < result.Cards.length) {
             card = result.Cards[parentNode.childElementCount];
             img = generateCardImg(card);
-            img.setAttribute("id", check + "card" + (parentNode.childElementCount));
-            //  console.log("id", check + "card" + (parentNode.childElementCount));
-            img.setAttribute("onclick", "cardCheck(this.id)");
-            img.setAttribute("class", "cards");
+            img.setAttribute('id', check + 'card' + (parentNode.childElementCount));
+            //  console.log('id', check + 'card' + (parentNode.childElementCount));
+            img.setAttribute('onclick', 'cardCheck(this.id)');
+            img.setAttribute('class', 'cards');
 
             document.getElementById(playersCards[check]).appendChild(img);
         }
@@ -455,7 +455,7 @@ console.log(result);
 
 
         //* Score im html aktualisieren
-        document.getElementById("score" + (check + 1)).innerText = result.Score;
+        document.getElementById('score' + (check + 1)).innerText = result.Score;
 
 
         //* currentCards für currentPlayer zwischenspeichern 
@@ -463,11 +463,11 @@ console.log(result);
             currentCards = result.Cards;
         }
 
-        console.log(player + " hat neu gemischte Karten");
+        console.log(player + ' hat neu gemischte Karten');
 
     }
     else {
-        alert("HTTP-Error: " + response.status)
+        alert('HTTP-Error: ' + response.status)
     }
 }
 
@@ -509,35 +509,35 @@ async function updatePlayground() {
 
 function cardCheck(clickedId) {
 
-    let exists1 = document.getElementById("meldung2");
+    let exists1 = document.getElementById('meldung2');
 
     if(exists1){
-    document.getElementById("meldung2").classList.remove("bounce-out-top");
+    document.getElementById('meldung2').classList.remove('bounce-out-top');
     document.getElementById('decks').removeChild(exists1);
     }
 
-    let exists2 = document.getElementById("meldung1");
+    let exists2 = document.getElementById('meldung1');
 
     if(exists2){
-    document.getElementById("meldung1").classList.remove("bounce-out-top");
+    document.getElementById('meldung1').classList.remove('bounce-out-top');
     document.getElementById('decks').removeChild(exists2);
     }
 
-    let exists3 = document.getElementById("meldung3");
+    let exists3 = document.getElementById('meldung3');
 
     if(exists3){
-    document.getElementById("meldung3").classList.remove("bounce-out-top");
+    document.getElementById('meldung3').classList.remove('bounce-out-top');
     document.getElementById('decks').removeChild(exists3);
     }
 
-    let exists4 = document.getElementById("meldung4");
+    let exists4 = document.getElementById('meldung4');
 
     if(exists4){
-    document.getElementById("meldung4").classList.remove("bounce-out-top");
+    document.getElementById('meldung4').classList.remove('bounce-out-top');
     document.getElementById('decks').removeChild(exists4);
     }
 
-    console.log("aktueller spieler", currentPlayer);
+    console.log('aktueller spieler', currentPlayer);
     // variable für richtiger player check
     let i2CheckPlayer = players.indexOf(currentPlayer);
     // indexNummer die an der ID angehängt ist rauslesen:
@@ -559,14 +559,14 @@ function cardCheck(clickedId) {
         let valueTC = topCard.Value;
 
 
-        if (topCard.Color == "Black") {
+        if (topCard.Color == 'Black') {
             colorTC = colorCheck;
         }
 
 
         if (valueRC == 13) {
             if(topCard.Value == 13 || topCard.Value == 14){
-                alert("Ungültiger Spielzug, Sie spielen +4 auf schwarz!");
+                alert('Ungültiger Spielzug, Sie spielen +4 auf schwarz!');
                 fehlerMeldung4();
             } else {
                 let bool = wildCardCheck();
@@ -575,7 +575,7 @@ function cardCheck(clickedId) {
                     animateCard(clickedId);
                 } else {
                     //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
-                    alert("Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!");
+                    alert('Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!');
                     fehlerMeldung3();
                 }
             }            
@@ -585,13 +585,13 @@ function cardCheck(clickedId) {
             animateCard(clickedId);
         } else {
             //! Animation für unpassende Farbe/Zahl
-            alert("Bitte eine passende Karte spielen!");
+            alert('Bitte eine passende Karte spielen!');
             fehlerMeldung1();
 
         }
     } else {
         //! Animation für falsche Persönlichkeitskartenhand
-        alert("Falsche Kartenhand!");
+        alert('Falsche Kartenhand!');
         fehlerMeldung2();
 
     }
@@ -602,11 +602,11 @@ function wildCardCheck() {
     let i = 0;
     while(i < currentCards.length){
         if(currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color){
-            console.log("Karte gefunden.");
+            console.log('Karte gefunden.');
             return false;
            // break;
         } else {
-            console.log("Karte stimmt nicht überein.");
+            console.log('Karte stimmt nicht überein.');
             i++;
         }
         return true;
@@ -615,7 +615,7 @@ function wildCardCheck() {
 }
 
 function animateCard(clickedId) {
-    document.getElementById(clickedId).classList.add("slide-out-top");
+    document.getElementById(clickedId).classList.add('slide-out-top');
 }
 
 
@@ -623,14 +623,14 @@ async function playCard(clickedId) {
 
 
     console.log(wildColor);
-    console.log(currentPlayer, "  CurrentPlayer in playCard");
+    console.log(currentPlayer, '  CurrentPlayer in playCard');
 
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameId +
-        "?value=" + valueRC + "&color=" + colorRC + "&wildColor=" + wildColor, {
-        method: "PUT",
-        contentType: "application/json",
+    let response = await fetch('https://nowaunoweb.azurewebsites.net/api/game/playCard/' + gameId +
+        '?value=' + valueRC + '&color=' + colorRC + '&wildColor=' + wildColor, {
+        method: 'PUT',
+        contentType: 'application/json',
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            'Content-type': 'application/json; charset=UTF-8'
         }
     });
 
@@ -639,7 +639,7 @@ async function playCard(clickedId) {
         console.log(result);
         //   alert(JSON.stringify(result));
 
-        // if (colorRC == "Black") {
+        // if (colorRC == 'Black') {
         //     $('#WCForm').modal()
         // }
 
@@ -649,29 +649,29 @@ async function playCard(clickedId) {
         // console.log(clickedId);
         // console.log(deleteCard.parentElement);
         // deleteCard.parentElement.removeChild(deleteCard);
-        // let oldTc = document.getElementById("topCard");
+        // let oldTc = document.getElementById('topCard');
         // console.log(oldTc);
 
         // oldTc.replaceWith(pic);
-        // pic.setAttribute("id", "topCard");
+        // pic.setAttribute('id', 'topCard');
 
         // // Score anpassen nachdem Karte gespielt wurde
 
         // let pscore = clickedId.charAt(0);
         // pscore++;
-        // console.log("Nummer für PlayerScore", pscore);
+        // console.log('Nummer für PlayerScore', pscore);
 
-        // // clickedId = "";
+        // // clickedId = '';
         // let path = deleteCard.src;
         // let numPlus = path.replace(/^\D+/g, '');
 
         // let num = numPlus.replace('.png', '');
 
 
-        // let newScore = document.getElementById("score" + pscore).innerText;
+        // let newScore = document.getElementById('score' + pscore).innerText;
         // newScore = parseInt(newScore);
         // newScore -= num;
-        // document.getElementById("score" + pscore).innerText = newScore;
+        // document.getElementById('score' + pscore).innerText = newScore;
 
 
 
@@ -682,8 +682,8 @@ async function playCard(clickedId) {
 
         if (result.Score == 0) {
             console.log(result);
-            console.log(currentPlayer + "has won! Congratulations! The game has finished!");
-            alert(currentPlayer + " hat gewonnen!");
+            console.log(currentPlayer + 'has won! Congratulations! The game has finished!');
+            alert(currentPlayer + ' hat gewonnen!');
             winner(result.Player);
         }
 
@@ -692,14 +692,14 @@ async function playCard(clickedId) {
 
     }
     else {
-        alert("HTTP-Error: " + response.status)
+        alert('HTTP-Error: ' + response.status)
     }
 }
 
 function winner(result) {
-    let winnerPlayer = document.createElement("h2");
-    winnerPlayer.setAttribute("class", "winnerPlayer");
-    winnerPlayer.innerText = result + " has won!";
+    let winnerPlayer = document.createElement('h2');
+    winnerPlayer.setAttribute('class', 'winnerPlayer');
+    winnerPlayer.innerText = result + ' has won!';
     document.getElementById('decks').appendChild(winnerPlayer);
 }
 
@@ -707,39 +707,39 @@ function winner(result) {
 
 //ungültige Karte gespielt, bitte andere Karte spielen
 function fehlerMeldung1() {
-    let meldung = document.createElement("h2");
-    meldung.setAttribute("id", "meldung1");
-    meldung.innerText = "this card doesn't match, please play a different one or draw one from the deck";
+    let meldung = document.createElement('h2');
+    meldung.setAttribute('id', 'meldung1');
+    meldung.innerText = 'This card doesn not match, please play a different one or draw one from the deck';
     document.getElementById('decks').appendChild(meldung);
-    document.getElementById("meldung1").classList.add("bounce-out-top");
+    document.getElementById('meldung1').classList.add('bounce-out-top');
     
 }
 
 //falsche HandKarte (falscher Spieler)
 function fehlerMeldung2() {
-    let meldung = document.createElement("h2");
-    meldung.setAttribute("id", "meldung2");
-    meldung.innerText = "it is not this Player's turn yet, please choose the correct personality to play";
+    let meldung = document.createElement('h2');
+    meldung.setAttribute('id', 'meldung2');
+    meldung.innerText = 'It is not this Player\'s turn yet, please choose the correct personality to play';
     document.getElementById('decks').appendChild(meldung);
-    document.getElementById("meldung2").classList.add("bounce-out-top");
+    document.getElementById('meldung2').classList.add('bounce-out-top');
     
 }
 
 function fehlerMeldung3() {
-    let meldung = document.createElement("h2");
-    meldung.setAttribute("id", "meldung3");
-    meldung.innerText = "Invalid move, you still have matching cards, please play a valid card!";
+    let meldung = document.createElement('h2');
+    meldung.setAttribute('id', 'meldung3');
+    meldung.innerText = 'Invalid move, you still have matching cards, please play a valid card!';
     document.getElementById('decks').appendChild(meldung);
-    document.getElementById("meldung3").classList.add("bounce-out-top");
+    document.getElementById('meldung3').classList.add('bounce-out-top');
     
 }
 
 function fehlerMeldung4() {
-    let meldung = document.createElement("h2");
-    meldung.setAttribute("id", "meldung4");
-    meldung.innerText = "Invalid move, you play +4 on a black card!";
+    let meldung = document.createElement('h2');
+    meldung.setAttribute('id', 'meldung4');
+    meldung.innerText = 'Invalid move, you play +4 on a black card!';
     document.getElementById('decks').appendChild(meldung);
-    document.getElementById("meldung4").classList.add("bounce-out-top");
+    document.getElementById('meldung4').classList.add('bounce-out-top');
     
 }
 

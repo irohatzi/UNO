@@ -76,8 +76,6 @@ transform: scale(1.15);
      }  */
 
 
-<<<<<<< HEAD
-=======
 
 .tC{
     display: inline;
@@ -94,7 +92,7 @@ transform: scale(1.15);
 
 }
 
->>>>>>> b2da8f7de301cee10f0d515bb9adab861f97b88e
+
 #topCard, #drawDeck {
     width: 150px; 
     border-radius: 4px;

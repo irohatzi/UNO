@@ -13,21 +13,31 @@ body {
 } */
 
 h2, h3, h5, p{
-    text-align: center;
+ 
     color: wheat;  
 }
 
+#header{
+    margin-bottom: 2%;
+}
+
+.warning{
+    margin: 20px;
+    padding-top: 3%;
+    text-align: start;
+}
 /*is wie cards im tutorial*/
 .cardDiv{
     display: flex;
     flex-wrap: wrap;
-    padding: 30px;
+
+    /* padding: 30px; */
 }
 
 .cards{
     width: 100px;
     border-radius: 3px;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     /*? this is just needed if cards should pop out when hovering */
     transition: transform .2s; 
 }
@@ -43,54 +53,50 @@ transform: scale(1.15);
 
 
 
-.points{
+/* .points{
     position: absolute;
     top: 8px;
     right: 16px;
     font-size: 18px;
-}
+} */
 
 .player{
-    position: absolute;
+    /* position: absolute;
     top: 8px;
-    left: 16px;
+    left: 16px; */
     font-size: 18px;
     font-weight: bold;
 }
 
 .decks{
-    height: 350px;
+    margin: 2%;
 }
 
 /* #drawDeck:hover {
     transform: scale(1.15);
      }  */
 
-.deckInfo{
-  position: absolute;
-  bottom: 20px;
-  width: inherit; 
-}
+
 
 
 #drawDeck {
-    position: absolute;
+    /* position: absolute;
     top: 24px;
-    right: 15px;
+    right: 15px; */
     /* border: 1px solid #ddd; */
     border-radius: 4px;
-    padding: 3px;
-    width: 153px; 
+
+    /* padding: 3px; */
+    width: 150px; 
 
 }
 
 #topCard {
-    position: absolute;
+    /* position: absolute; */
     width: 150px; 
-    top: 24px;
+    /* top: 24px; */
     /* border: 1px solid #ddd; */
     border-radius: 4px;
-    padding: 2px;
     /* unbedingt marginTop = 0 lassen, sonst ist die TC weiter unten - übernimmt margintop von den normalen karten mit */
     margin-top: 0;
 
@@ -125,22 +131,14 @@ transform: scale(1.15);
     z-index: 10;
 }
 
-/* #currentPersonality{
-    position: absolute;
-    top: 90%;
-    left: 20%;
-    margin-top: -78px;
-    margin-left: -140px;
-    
-} */
 
-#activePlayer{
+/* #activePlayer{
     position: absolute;
     top: 90%;
     left: 20%;
     transform: translate(-78%, -140%);
     
-}
+} */
 
 /** Animations */
 .slide-out-top{-webkit-animation:slide-out-top 1s cubic-bezier(.55,.085,.68,.53) both;animation:slide-out-top 1s cubic-bezier(.55,.085,.68,.53) both}

@@ -622,13 +622,12 @@ function cardCheck(clickedId) {
 
         if (valueRC == 13) {
             let bool = wildCardCheck();
-            if (bool) {
-                $('#pickColor').modal();
-                animateCard(clickedId);
             if ((topCard.Value == 13 || topCard.Value == 14) && valueRC == 13) {
                 alert("+4 darf nicht auf schwarz gespielt werden")
                 return;
-            }
+            }else if (bool) {
+                $('#pickColor').modal();
+                animateCard(clickedId);
             } else {
                 //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
                 fehlerMeldung3();

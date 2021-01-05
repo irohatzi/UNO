@@ -259,6 +259,12 @@ function generateCardImg(card) {
 
 }
 
+function generateBackImg() {
+    let picture = document.createElement('img');
+    pic.src = 'cards/'+'.png';
+    return picture;
+}
+
 async function getTopCard() {
 
     let response = await fetch('https://nowaunoweb.azurewebsites.net/api/game/topCard/' + gameId, {

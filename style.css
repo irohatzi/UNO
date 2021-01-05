@@ -136,6 +136,13 @@ transform: scale(1.15);
     margin-left: 90px;
 }
 
+#test{
+    color: black;
+    background-color: rgb(2, 2, 34);
+    text-align: center;
+    margin-left: 105px;
+}
+
 
 /** Animations */
 .slide-out-top{-webkit-animation:slide-out-top 1s cubic-bezier(.55,.085,.68,.53) both;animation:slide-out-top 1s cubic-bezier(.55,.085,.68,.53) both}

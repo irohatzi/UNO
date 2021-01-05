@@ -84,7 +84,7 @@ function startGame(){
 
 }
 
-//startGame();
+// startGame();
 
 const blaSub = document.getElementById('blaBtn');
 blaSub.addEventListener('click', function(evt) {

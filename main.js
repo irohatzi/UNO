@@ -77,13 +77,14 @@ blueBtn.addEventListener('click', function () {
     playCard(clickedId);
 });
 
+players.push(player1, player2, player3, player4);
 
 function startGame(){
     $('#welcomeUno').modal();
 
 }
 
-startGame();
+//startGame();
 
 const blaSub = document.getElementById('blaBtn');
 blaSub.addEventListener('click', function(evt) {
@@ -95,26 +96,26 @@ blaSub.addEventListener('click', function(evt) {
 //! Modalen Dialog öffnen um Namen einzugeben
 // $('#playerNames').modal()
 
- document.getElementById('playerNamesForm').addEventListener('submit', function (evt) {
-     console.log('submit')
+//  document.getElementById('playerNamesForm').addEventListener('submit', function (evt) {
+//      console.log('submit')
 
-     evt.preventDefault();
-
-
-     player1 = document.getElementById('pn1').value;
-     players.push(player1);
+//      evt.preventDefault();
 
 
-     player2 = document.getElementById('pn2').value;
-     players.push(player2);
+//      player1 = document.getElementById('pn1').value;
+//      players.push(player1);
 
 
-     player3 = document.getElementById('pn3').value;
-     players.push(player3);
+//      player2 = document.getElementById('pn2').value;
+//      players.push(player2);
 
 
-     player4 = document.getElementById('pn4').value;
-     players.push(player4);
+//      player3 = document.getElementById('pn3').value;
+//      players.push(player3);
+
+
+//      player4 = document.getElementById('pn4').value;
+//      players.push(player4);
 
 
 //* erstellt ein neues Array mit den Namen in kleinbuchstaben und ohne duplikate
@@ -133,7 +134,7 @@ if (nameCheck.length < players.length) {
     startResponse();
 }
 
- });
+ //});
 
 
 
@@ -611,6 +612,7 @@ function cardCheck(clickedId) {
 
 
         if (topCard.Color == 'Black') {
+            console.log(colorTC);
             colorTC = colorCheck;
         }
 
@@ -626,6 +628,7 @@ function cardCheck(clickedId) {
                 } else {
                     //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
                     fehlerMeldung3();
+                    console.log("Fehlermeldung bei Falsch Schawrz spielen");
                 }
             }
 
@@ -635,11 +638,12 @@ function cardCheck(clickedId) {
         } else {
             //! Animation für unpassende Farbe/Zahl
             fehlerMeldung1();
-
+            console.log("Fehlermeldung bei unpassende Farbe/Zahl");
         }
     } else {
         //! Animation für falsche Persönlichkeitskartenhand
         fehlerMeldung2();
+        console.log("Fehlermeldung bei unpassende Kartenhand");
 
     }
 }

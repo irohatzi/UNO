@@ -134,6 +134,17 @@ transform: scale(1.15);
     margin-left: 90px;
 }
 
+#meldung5{
+    position: relative;
+    color: wheat;
+    font-size: xx-large;
+    opacity: 0.9;
+    border-radius: 1px;
+    text-align: center;
+    align-items: center;
+    margin-left: 10px;
+}
+
 .welcome .modal-title {
 
     text-align: center;

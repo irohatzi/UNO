@@ -129,7 +129,8 @@ let nameCheck = players.join(',').toLowerCase().split(',').sort().join(',').repl
 if (nameCheck.length < players.length) {
    // console.log(nameCheck);
    //! Animation für falsche Namen?
-    alert('Bitte 4 verschiedene Namen eingeben!');
+   // alert('Bitte 4 verschiedene Namen eingeben!');
+    fehlerMeldung5();
     players = [];
     $('#playerNamesForm')[0].reset();
 } else {
@@ -142,8 +143,6 @@ if (nameCheck.length < players.length) {
 }
 
 });
-
-
 
 
 
@@ -868,6 +867,15 @@ function fehlerMeldung4() {
     meldung.innerText = 'Invalid move, you play +4 on a black card!';
     document.getElementById('warnings').appendChild(meldung);
     document.getElementById('meldung4').classList.add('bounce-out-top');
+
+}
+
+function fehlerMeldung5() {
+    let meldung = document.createElement('h2');
+    meldung.setAttribute('id', 'meldung5');
+    meldung.innerText = 'Please enter 4 different names';
+    document.getElementById('playerNames').appendChild(meldung);
+    document.getElementById('meldung5').classList.add('bounce-out-top');
 
 }
 

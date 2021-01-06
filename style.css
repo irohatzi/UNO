@@ -112,16 +112,6 @@ transform: scale(1.15);
     padding: 3px;
 }
 
-.winnerPlayer{
-    position: relative;
-    color: red;
-    font-size: xx-large;
-    opacity: 0.9;
-    border-radius: 5px;
-    background-color: seashell;
-    margin-bottom: 150px;
-    z-index: 10;
-}
 
 #meldung1, #meldung2, #meldung3, #meldung4{
     position: relative;
@@ -134,6 +124,16 @@ transform: scale(1.15);
     text-align: center;
     align-items: center;
     margin-left: 90px;
+}
+
+.winnerPlayer{
+    height: 100%;
+    background-image:
+    radial-gradient(
+      rgba(0, 72, 255, 0.632),
+      #160370);
+    display: grid;
+    margin: 3%;
 }
 
 #test{

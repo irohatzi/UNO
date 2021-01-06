@@ -622,9 +622,8 @@ function cardCheck(clickedId) {
 
         if (valueRC == 13) {
             let bool = wildCardCheck();
-            if ((topCard.Value == 13 || topCard.Value == 14) && valueRC == 13) {
+            if ((topCard.Value == 13 || topCard.Value == 14) && valueRC == 13 ){
                 alert("+4 darf nicht auf schwarz gespielt werden")
-                return;
             }else if (bool) {
                 $('#pickColor').modal();
                 animateCard(clickedId);
@@ -632,7 +631,6 @@ function cardCheck(clickedId) {
                 //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
                 fehlerMeldung3();
                 console.log("Fehlermeldung bei Falsch Schwarz spielen");
-                return;
             }           
 
         } else if (valueRC == valueTC || colorRC == colorTC) {
@@ -657,20 +655,19 @@ function cardCheck(clickedId) {
 
 function wildCardCheck() {
     let i = 0;
-    let bool;
+    
     while (i < currentCards.length) {
         if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
             console.log('Karte gefunden.');
             alert("Sie haben noch passende Karten auf der Hand!")
-            bool = false;
+            return false;
             // break;
         } else {
             console.log(currentCards[i], topCard);
             console.log('Karte stimmt nicht überein.');
             i++;
-            bool = true;
         }
-        return bool;
+        return true;
     }
 }
 
@@ -760,7 +757,7 @@ function winner(result) {
     let winnerPlayer = document.createElement('h2');
     winnerPlayer.setAttribute('class', 'winnerPlayer');
     winnerPlayer.innerText = result + ' has won!';
-    document.getElementById('decks').appendChild(winnerPlayer);
+    document.getElementById('test2').appendChild(winnerPlayer);
 }
 
 //FEHLERMELDUNGEN

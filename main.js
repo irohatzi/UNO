@@ -114,7 +114,7 @@ if (nameCheck.length < players.length) {
     $('#playerNamesForm')[0].reset();
 } else {
     $('#playerNames').modal('hide');
-    $('.show').show();//Show Page Content
+    // $('.show').show();//Show Page Content
     document.body.className = document.body.className.replace('starter','');
     startResponse();
 }
@@ -172,7 +172,10 @@ async function startResponse() {
 
         players.forEach(element =>
             getCards(element));
+
+        $('.show').show();//Show Page Content    
     }
+    
     else {
         alert('HTTP-Error: ' + response.status)
     }

@@ -14,7 +14,7 @@ GUI UNO, Web II
 - Bugs will appear in one part of a working program when another 'unrelated' part is modified.
 - The subtlest bugs cause the greatest damage and problems.
   - Corollary - A subtle bug will modify storage thereby masquerading as some other problem.
-> Murphy <3
+#### Murphy <3
 
 
 ### more smart quotes we totally relate to   

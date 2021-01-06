@@ -79,7 +79,7 @@ blueBtn.addEventListener('click', function () {
 
 players.push(player1, player2, player3, player4);
 
-function startGame(){
+function startGame() {
     $('#welcomeUno').modal();
 
 }
@@ -87,7 +87,7 @@ function startGame(){
 // startGame();
 
 const blaSub = document.getElementById('blaBtn');
-blaSub.addEventListener('click', function(evt) {
+blaSub.addEventListener('click', function (evt) {
     evt.preventDefault();
     $('#welcomeUno').modal('hide');
     $('#playerNames').modal('show');
@@ -129,12 +129,12 @@ if (nameCheck.length < players.length) {
 } else {
     $('#playerNames').modal('hide');
 
-    
+
     generateBackImg();
     startResponse();
 }
 
- //});
+//});
 
 
 
@@ -228,7 +228,7 @@ async function startResponse() {
 //* ClickEvent für den Stapel zum Abheben
 const btnDraw = document.getElementById('drawDeck');
 // btnDraw.addEventListener('click', drawCard);
-btnDraw.addEventListener('click', function(e){
+btnDraw.addEventListener('click', function (e) {
     e.preventDefault;
 
     btnDraw.classList.remove('wobble-hor-top');
@@ -276,31 +276,32 @@ function showActivePlayer() {
     // $(highlightField).addClass('highlight');
 
 
+
     //* ClickEvent für den Stapel zum Abheben
 
     // btnDraw.addEventListener('click', drawCard);
-    
+
     animateActivePlayer(currentPlayer);
 
 
 }
 
-function animateActivePlayer(currentPlayer){
+function animateActivePlayer(currentPlayer) {
 
     let helper = previousIndex();
     console.log(helper);
-    let activeP = document.getElementById('p' + helper);
+    //let activeP = document.getElementById('p' + helper);
 
     //activeP.preventDefault;
-  //  if(activeP.classList.contains('wobble-hor-top')){
-  //      activeP.classList.remove('wobble-hor-top');
-//    }
+    //  if(activeP.classList.contains('wobble-hor-top')){
+    //      activeP.classList.remove('wobble-hor-top');
+    //    }
 
 
- //   void activeP.offsetWidth;
+    //   void activeP.offsetWidth;
 
-    activeP.classList.add('wobble-hor-top');
-    
+  //  activeP.classList.add('wobble-hor-top');
+
 }
 
 function generateCardImg(card) {
@@ -314,8 +315,8 @@ function generateCardImg(card) {
 
 function generateBackImg() {
     let picture = document.createElement('img');
-    
-    
+
+
 }
 
 async function getTopCard() {
@@ -348,7 +349,7 @@ async function getTopCard() {
         let tcDom = document.getElementById('topCard');
         tcDom.replaceWith(img);
         img.setAttribute('id', 'topCard');
-       // img.classList.toggle('swirl-in-fwd');
+        // img.classList.toggle('swirl-in-fwd');
 
         //  img.classList.remove('swirl-in-fwd');
 
@@ -620,58 +621,111 @@ function cardCheck(clickedId) {
             colorTC = colorCheck;
         }
 
-        if (valueRC == 13) {
-            let bool = wildCardCheck();
-            if ((topCard.Value == 13 || topCard.Value == 14) && valueRC == 13) {
-                alert("+4 darf nicht auf schwarz gespielt werden")
+        if (topCard.Value == 13 || topCard.Value == 14) {
+            if (valueRC == 13) {
+                fehlerMeldung4();
+                alert("+4 darf nicht auf schwarz gespielt werden");
                 return;
-            }else if (bool) {
+            } else {
+                colorTC = colorCheck;
+            }
+        }
+
+        if (colorRC == "Black") {
+            if (valueRC == 14) {
                 $('#pickColor').modal();
                 animateCard(clickedId);
-            } else {
-                //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
-                fehlerMeldung3();
-                console.log("Fehlermeldung bei Falsch Schwarz spielen");
-                return;
-            }           
-
+            } else if (valueRC == 13) {
+                let bool = wildCardCheck();
+                if (bool) {
+                    $('#pickColor').modal();
+                    animateCard(clickedId);
+                } else {
+                    alert("Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!");
+                }
+            }
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);
-            animateCard(clickedId);
-        } else if (valueRC == 14){
-            $('#pickColor').modal();
-            animateCard(clickedId);
         } else {
-            //! Animation für unpassende Farbe/Zahl
-            fehlerMeldung1();
-            console.log("Fehlermeldung bei unpassende Farbe/Zahl");
+            alert("Bitte eine passende Karte spielen!");
+            //getCards(currentPlayer);
         }
     } else {
-        //! Animation für falsche Persönlichkeitskartenhand
-        fehlerMeldung2();
-        console.log("Fehlermeldung bei unpassende Kartenhand");
+        alert("Falsche Kartenhand!");
 
     }
 }
 
+//         if (colorRC == 'Black') {
+//             let bool = wildCardCheck();
+//             if ((topCard.Value == 13 || topCard.Value == 14) && valueRC == 13) {
+//                 alert("+4 darf nicht auf schwarz gespielt werden")
+//                 return;
+//             }else if (bool) {
+//                 $('#pickColor').modal();
+//                 animateCard(clickedId);
+//             } else {
+//                 //! Animation für +4, darf nur gespielt werden wenn keine passende karte oder topcard nicht schwarz ist 
+//                 fehlerMeldung3();
+//                 console.log("Fehlermeldung bei Falsch Schwarz spielen");
+//                 return;
+//             }           
+
+//         } else if (valueRC == valueTC || colorRC == colorTC) {
+//             playCard(clickedId);
+//             animateCard(clickedId);
+//         } else if (valueRC == 14){
+//             $('#pickColor').modal();
+//             animateCard(clickedId);
+//         } else {
+//             //! Animation für unpassende Farbe/Zahl
+//             fehlerMeldung1();
+//             console.log("Fehlermeldung bei unpassende Farbe/Zahl");
+//         }
+//     } else {
+//         //! Animation für falsche Persönlichkeitskartenhand
+//         fehlerMeldung2();
+//         console.log("Fehlermeldung bei unpassende Kartenhand");
+
+//     }
+// }
+
+
+// function wildCardCheck() {
+//     let i = 0;
+//     let bool;
+//     while (i < currentCards.length) {
+//         if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
+//             console.log('Karte gefunden.');
+//             alert("Sie haben noch passende Karten auf der Hand!")
+//             bool = false;
+//             // break;
+//         } else {
+//             console.log(currentCards[i], topCard);
+//             console.log('Karte stimmt nicht überein.');
+//             i++;
+//             bool = true;
+//         }
+//         return bool;
+//     }
+// }
 
 function wildCardCheck() {
     let i = 0;
-    let bool;
     while (i < currentCards.length) {
+        console.log(currentCards);
         if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
-            console.log('Karte gefunden.');
-            alert("Sie haben noch passende Karten auf der Hand!")
-            bool = false;
+            console.log("Karte gefunden.", currentCards[i]);
+            fehlerMeldung3();
+            return false;
             // break;
         } else {
-            console.log(currentCards[i], topCard);
-            console.log('Karte stimmt nicht überein.');
+            console.log("Karte stimmt nicht überein.", i);
             i++;
-            bool = true;
         }
-        return bool;
-    }
+
+    } return true;
+
 }
 
 function animateCard(clickedId) {

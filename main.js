@@ -624,7 +624,7 @@ function cardCheck(clickedId) {
         if (topCard.Value == 13 || topCard.Value == 14) {
             if (valueRC == 13) {
                 fehlerMeldung4();
-                alert("+4 darf nicht auf schwarz gespielt werden");
+               // alert("+4 darf nicht auf schwarz gespielt werden");
                 return;
             } else {
                 colorTC = colorCheck;
@@ -641,17 +641,20 @@ function cardCheck(clickedId) {
                     $('#pickColor').modal();
                     animateCard(clickedId);
                 } else {
-                    alert("Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!");
+                    fehlerMeldung3();
+               //     alert("Ungültiger Spielzug, Sie haben noch passende Karten, bitte gültige Karte spielen!");
                 }
             }
         } else if (valueRC == valueTC || colorRC == colorTC) {
             playCard(clickedId);
         } else {
-            alert("Bitte eine passende Karte spielen!");
+            fehlerMeldung1();
+           // alert("Bitte eine passende Karte spielen!");
             //getCards(currentPlayer);
         }
     } else {
-        alert("Falsche Kartenhand!");
+        fehlerMeldung2();
+       // alert("Falsche Kartenhand!");
 
     }
 }
@@ -716,14 +719,12 @@ function wildCardCheck() {
         console.log(currentCards);
         if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
             console.log("Karte gefunden.", currentCards[i]);
-            fehlerMeldung3();
             return false;
             // break;
         } else {
             console.log("Karte stimmt nicht überein.", i);
             i++;
         }
-
     } return true;
 
 }

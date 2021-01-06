@@ -30,15 +30,15 @@ let colorCheck = '';
 
 // modaler dialog funzt, damit erspart man sich das permanente eingeben:
 let players = [];
-let player1 = 'Hansi';
-let player2 = 'Helga';
-let player3 = 'Wurschti';
-let player4 = 'Greti';
+// let player1 = 'Hansi';
+// let player2 = 'Helga';
+// let player3 = 'Wurschti';
+// let player4 = 'Greti';
 
-// let player1;
-// let player2;
-// let player3;
-// let player4;
+let player1;
+let player2;
+let player3;
+let player4;
 
 
 let redBtn = document.getElementById('red');
@@ -77,45 +77,53 @@ blueBtn.addEventListener('click', function () {
     playCard(clickedId);
 });
 
-players.push(player1, player2, player3, player4);
+// players.push(player1, player2, player3, player4);
+
+
 
 function startGame() {
+
+    let startPic = document.createElement('img');
+    startPic.setAttribute('class', 'starter');
+
+
     $('#welcomeUno').modal();
 
 }
 
-// startGame();
+ startGame();
 
 const blaSub = document.getElementById('blaBtn');
 blaSub.addEventListener('click', function (evt) {
     evt.preventDefault();
     $('#welcomeUno').modal('hide');
+    document.body.className = document.body.className.replace('starter','');
     $('#playerNames').modal('show');
 });
 
 //! Modalen Dialog öffnen um Namen einzugeben
 // $('#playerNames').modal()
 
-//  document.getElementById('playerNamesForm').addEventListener('submit', function (evt) {
-//      console.log('submit')
+ document.getElementById('playerNamesForm').addEventListener('submit', function (evt) {
+     console.log('submit')
 
-//      evt.preventDefault();
-
-
-//      player1 = document.getElementById('pn1').value;
-//      players.push(player1);
+     evt.preventDefault();
 
 
-//      player2 = document.getElementById('pn2').value;
-//      players.push(player2);
+     player1 = document.getElementById('pn1').value;
+     players.push(player1);
 
 
-//      player3 = document.getElementById('pn3').value;
-//      players.push(player3);
+     player2 = document.getElementById('pn2').value;
+     players.push(player2);
 
 
-//      player4 = document.getElementById('pn4').value;
-//      players.push(player4);
+     player3 = document.getElementById('pn3').value;
+     players.push(player3);
+
+
+     player4 = document.getElementById('pn4').value;
+     players.push(player4);
 
 
 //* erstellt ein neues Array mit den Namen in kleinbuchstaben und ohne duplikate
@@ -135,7 +143,7 @@ if (nameCheck.length < players.length) {
     startResponse();
 }
 
-//});
+});
 
 
 
@@ -813,6 +821,10 @@ async function playCard(clickedId) {
 }
 
 function winner(result) {
+    document.getElementsByTagName('body')[0].style = 
+    'background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)'
+    + 'background-size: 400% 400%'
+    + 'gradient 15s ease infinite';
     let winnerPlayer = document.createElement('h2');
     winnerPlayer.setAttribute('class', 'winnerPlayer');
     winnerPlayer.innerText = result + ' has won!';

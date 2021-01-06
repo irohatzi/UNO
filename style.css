@@ -1,5 +1,7 @@
-body {
+html{
     height: 100%;
+}
+body {
     background-image:
     radial-gradient(
       rgba(0, 72, 255, 0.632),
@@ -12,8 +14,6 @@ body {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
-    z-index: 100;
-
 }
 
 
@@ -143,15 +143,16 @@ transform: scale(1.15);
     margin-left: 90px;
 }
 
-#test.modal-title {
-    padding-left: 10%;
-    text-align:center;
+.welcome .modal-title {
 
+    text-align: center;
+    padding-left: 8%;
   }
 
-#test{
+.modal-content{
     color: black;
     background-color: rgb(2, 2, 34);
+    
 
 
 }

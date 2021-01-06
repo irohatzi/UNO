@@ -85,7 +85,7 @@ function startGame() {
 
     let startPic = document.createElement('img');
     startPic.setAttribute('class', 'starter');
-
+    $('.show').hide();//hide
 
     $('#welcomeUno').modal();
 
@@ -97,7 +97,6 @@ const blaSub = document.getElementById('blaBtn');
 blaSub.addEventListener('click', function (evt) {
     evt.preventDefault();
     $('#welcomeUno').modal('hide');
-    document.body.className = document.body.className.replace('starter','');
     $('#playerNames').modal('show');
 });
 
@@ -107,6 +106,7 @@ blaSub.addEventListener('click', function (evt) {
  document.getElementById('playerNamesForm').addEventListener('submit', function (evt) {
      console.log('submit')
 
+     $('.show').show();//Show Page Content
      evt.preventDefault();
 
 
@@ -137,7 +137,7 @@ if (nameCheck.length < players.length) {
     $('#playerNamesForm')[0].reset();
 } else {
     $('#playerNames').modal('hide');
-
+    document.body.className = document.body.className.replace('starter','');
 
     generateBackImg();
     startResponse();

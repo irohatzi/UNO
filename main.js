@@ -85,7 +85,7 @@ function startGame() {
 
     let startPic = document.createElement('img');
     startPic.setAttribute('class', 'starter');
-
+    $('.show').hide();//hide
 
     $('#welcomeUno').modal();
 
@@ -106,6 +106,7 @@ blaSub.addEventListener('click', function (evt) {
  document.getElementById('playerNamesForm').addEventListener('submit', function (evt) {
      console.log('submit')
 
+     $('.show').show();//Show Page Content
      evt.preventDefault();
 
 

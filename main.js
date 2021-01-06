@@ -46,7 +46,7 @@ redBtn.addEventListener('click', function () {
     wildColor = 'Red';
     colorCheck = 'Red';
     $('#pickColor').modal('hide');
-    console.log(clickedId);
+    // console.log(clickedId);
     playCard(clickedId);
 });
 
@@ -55,7 +55,7 @@ yellowBtn.addEventListener('click', function () {
     wildColor = 'Yellow';
     colorCheck = 'Yellow';
     $('#pickColor').modal('hide');
-    console.log(clickedId);
+  //  console.log(clickedId);
     playCard(clickedId);
 });
 
@@ -64,7 +64,7 @@ greenBtn.addEventListener('click', function () {
     wildColor = 'Green';
     colorCheck = 'Green';
     $('#pickColor').modal('hide');
-    console.log(clickedId);
+ //   console.log(clickedId);
     playCard(clickedId);
 });
 
@@ -73,7 +73,7 @@ blueBtn.addEventListener('click', function () {
     wildColor = 'Blue';
     colorCheck = 'Blue';
     $('#pickColor').modal('hide');
-    console.log(clickedId);
+  //  console.log(clickedId);
     playCard(clickedId);
 });
 
@@ -122,7 +122,8 @@ blaSub.addEventListener('click', function (evt) {
 let nameCheck = players.join(',').toLowerCase().split(',').sort().join(',').replace(/(([^,]+),)(?=\2)/g, '').split(',');
 
 if (nameCheck.length < players.length) {
-    console.log(nameCheck);
+   // console.log(nameCheck);
+   //! Animation für falsche Namen?
     alert('Bitte 4 verschiedene Namen eingeben!');
     players = [];
     $('#playerNamesForm')[0].reset();
@@ -151,7 +152,7 @@ async function startResponse() {
 
     if (response.ok) {
         let result = await response.json();
-        console.log(result);
+    //    console.log(result);
 
         //* gameID in globale Variable speichern
         gameId = result.Id;
@@ -289,7 +290,7 @@ function showActivePlayer() {
 function animateActivePlayer(currentPlayer) {
 
     let helper = previousIndex();
-    console.log(helper);
+    //console.log(helper);
     //let activeP = document.getElementById('p' + helper);
 
     //activeP.preventDefault;
@@ -373,7 +374,7 @@ async function getTopCard() {
 
 
         topCard = result;
-        console.log(topCard);
+    //    console.log(topCard);
 
     } else {
         ('HTTP-Error: ' + response.status)
@@ -427,7 +428,7 @@ async function drawCard() {
 
     if (response.ok) {
         let result = await response.json();
-        console.log(result);
+        // console.log(result);
 
         // document.getElementById('drawDeck').classList.add('wobble-hor-bottom');
         // setTimeout('document.getElementById(\'drawDeck\').classList.remove(\'wobble-hor-bottom\');',100);
@@ -456,7 +457,7 @@ async function drawCard() {
         //* Nächsten Spieler auf current setzen
         currentPlayer = result.NextPlayer;
         currentNum = players.indexOf(currentPlayer);
-        console.log('Am Zug ist nun: ', currentPlayer);
+       //  console.log('Am Zug ist nun: ', currentPlayer);
 
         //* getCards holt die karten vom aktuellen spieler und weißt sie dem currentCardArr zu
         updatePlayground();
@@ -489,7 +490,7 @@ async function getCards(player) {
 
     if (response.ok) {
         let result = await response.json();
-        console.log(result);
+       // console.log(result);
         let check = players.indexOf(player);
 
         let parentNode = document.getElementById(playersCards[check]);
@@ -520,7 +521,7 @@ async function getCards(player) {
             currentCards = result.Cards;
         }
 
-        console.log(player + ' hat neu gemischte Karten');
+       // console.log(player + ' hat neu gemischte Karten');
 
     }
     else {
@@ -537,7 +538,7 @@ async function updatePlayground() {
     players.forEach(function (elem) {
         let check = players.indexOf(elem);
         let current = players.indexOf(currentPlayer);
-        console.log(currentPlayer);
+       // console.log(currentPlayer);
 
 
         // Etwas überlegen dass bei skip (val11) der current und der spieler 2 plätze weiter
@@ -594,20 +595,20 @@ function cardCheck(clickedId) {
         document.getElementById('warnings').removeChild(exists4);
     }
 
-    console.log('aktueller spieler', currentPlayer);
+   // console.log('aktueller spieler', currentPlayer);
     // variable für richtiger player check
     let i2CheckPlayer = players.indexOf(currentPlayer);
-    // indexNummer die an der ID angehängt ist rauslesen:
+    // indexNummer die an der ID angehängt ist mit substring rauslesen:
     let i4CardArr = clickedId.substring(5);
 
-    console.log(i4CardArr);
-    console.log(i2CheckPlayer);
+    //console.log(i4CardArr);
+    // console.log(i2CheckPlayer);
     if (i2CheckPlayer == clickedId.charAt(0)) {
-        console.log(clickedId);
+        // console.log(clickedId);
 
 
         let removeCard = currentCards[i4CardArr];
-        console.log(removeCard);
+       // console.log(removeCard);
         colorRC = removeCard.Color;
         valueRC = removeCard.Value;
 
@@ -617,7 +618,7 @@ function cardCheck(clickedId) {
 
 
         if (topCard.Color == 'Black') {
-            console.log(colorTC);
+          //  console.log(colorTC);
             colorTC = colorCheck;
         }
 
@@ -716,13 +717,13 @@ function cardCheck(clickedId) {
 function wildCardCheck() {
     let i = 0;
     while (i < currentCards.length) {
-        console.log(currentCards);
+    //    console.log(currentCards);
         if (currentCards[i].Value == topCard.Value || currentCards[i].Color == topCard.Color) {
-            console.log("Karte gefunden.", currentCards[i]);
+        //    console.log("Karte gefunden.", currentCards[i]);
             return false;
             // break;
         } else {
-            console.log("Karte stimmt nicht überein.", i);
+       //     console.log("Karte stimmt nicht überein.", i);
             i++;
         }
     } return true;
@@ -737,8 +738,8 @@ function animateCard(clickedId) {
 async function playCard(clickedId) {
 
 
-    console.log(wildColor);
-    console.log(currentPlayer, '  CurrentPlayer in playCard');
+   // console.log(wildColor);
+    //console.log(currentPlayer, '  CurrentPlayer in playCard');
 
     let response = await fetch('https://nowaunoweb.azurewebsites.net/api/game/playCard/' + gameId +
         '?value=' + valueRC + '&color=' + colorRC + '&wildColor=' + wildColor, {
@@ -751,7 +752,7 @@ async function playCard(clickedId) {
 
     if (response.ok) {
         let result = await response.json();
-        console.log(result);
+  //      console.log(result);
         //   alert(JSON.stringify(result));
 
         // if (colorRC == 'Black') {
@@ -796,9 +797,9 @@ async function playCard(clickedId) {
 
 
         if (result.Score == 0) {
-            console.log(result);
-            console.log(currentPlayer + 'has won! Congratulations! The game has finished!');
-            alert(currentPlayer + ' hat gewonnen!');
+         //   console.log(result);
+         //   console.log(currentPlayer + 'has won! Congratulations! The game has finished!');
+          //  alert(currentPlayer + ' hat gewonnen!');
             winner(result.Player);
         }
 
@@ -815,7 +816,7 @@ function winner(result) {
     let winnerPlayer = document.createElement('h2');
     winnerPlayer.setAttribute('class', 'winnerPlayer');
     winnerPlayer.innerText = result + ' has won!';
-    document.getElementById('decks').appendChild(winnerPlayer);
+    document.getElementById('warnings').appendChild(winnerPlayer);
 }
 
 //FEHLERMELDUNGEN

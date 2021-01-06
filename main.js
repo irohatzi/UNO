@@ -80,7 +80,6 @@ blueBtn.addEventListener('click', function () {
 // players.push(player1, player2, player3, player4);
 
 
-
 function startGame() {
 
     let startPic = document.createElement('img');

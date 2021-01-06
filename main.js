@@ -1,6 +1,6 @@
 'use strict';
 
-
+// Kommentar zum pushen damit wir nochmal alles neu löschen können
 //**** global variables ****/  
 
 let gameId;

@@ -620,7 +620,7 @@ function cardCheck(clickedId) {
             colorTC = colorCheck;
         }
 
-        if (valueRC == 13) {
+        if (colorRc == 'Black') {
             let bool = wildCardCheck();
             if ((topCard.Value == 13 || topCard.Value == 14) && valueRC == 13) {
                 alert("+4 darf nicht auf schwarz gespielt werden")

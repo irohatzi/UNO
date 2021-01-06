@@ -237,7 +237,6 @@ async function getTopCard() {
 
         if (card.Value == 12) {
             direction *= -1;
-            console.log('Richtungswechsel abgespeichert! ', direction);
         }
 
         topCard = result;
@@ -490,7 +489,7 @@ function winner(result) {
 
     let winnerPlayer = document.createElement('h2');
     winnerPlayer.setAttribute('class', 'winnerPlayer');
-    winnerPlayer.innerText = result + ' has won!';
+    winnerPlayer.innerText = String.fromCodePoint(parseInt('127942')) + result + ' has won!';
 
     document.getElementById('winner').appendChild(winnerPlayer);
     endAnimation();

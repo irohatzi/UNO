@@ -17,6 +17,11 @@ body {
     animation: gradient 15s ease infinite;
 }
 
+.ball {
+    position: absolute;
+    border-radius: 100%;
+    opacity: 0.7;
+  } 
 
 h2, h3, h5, p{ 
     color: wheat;  
@@ -145,7 +150,6 @@ transform: scale(1.15);
 }
 
 .welcome .modal-title {
-
     text-align: center;
     padding-left: 8%;
   }
@@ -153,8 +157,6 @@ transform: scale(1.15);
 .modal-content{
     color: black;
     background-color: rgb(2, 2, 34);
-    
-
 
 }
 

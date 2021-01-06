@@ -826,11 +826,9 @@ function winner(result) {
     let winnerPlayer = document.createElement('h2');
     winnerPlayer.setAttribute('class', 'winnerPlayer');
     winnerPlayer.innerText = result + ' has won!';
-<<<<<<< HEAD
-    document.getElementById('test2').appendChild(winnerPlayer);
-=======
+
     document.getElementById('warnings').appendChild(winnerPlayer);
->>>>>>> e3c1a04033a23864577f457eb6e7260c35b3445c
+
 }
 
 //FEHLERMELDUNGEN

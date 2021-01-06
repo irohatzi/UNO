@@ -105,20 +105,20 @@ transform: scale(1.15);
 
 
 #meldung1, #meldung2, #meldung3, #meldung4{
-    position: relative;
+    position: absolute;
     color: red;
     font-size: xx-large;
     opacity: 0.9;
     border-radius: 5px;
     background-color: seashell;
-    z-index: 10;
-    text-align: center;
-    align-items: center;
-    margin-left: 90px;
+    margin: 0;
+    top: 75%;
+    left: 15%;
+    transform: translate(-75%, -15%);
 }
 
 #meldung5{
-    position: relative;
+    position: absolute;
     color: wheat;
     font-size: xx-large;
     opacity: 0.9;

@@ -125,16 +125,6 @@ transform: scale(1.15);
     padding: 3px;
 }
 
-.winnerPlayer{
-    position: relative;
-    color: red;
-    font-size: xx-large;
-    opacity: 0.9;
-    border-radius: 5px;
-    background-color: seashell;
-    margin-bottom: 150px;
-    z-index: 10;
-}
 
 #meldung1, #meldung2, #meldung3, #meldung4{
     position: relative;
@@ -147,6 +137,17 @@ transform: scale(1.15);
     text-align: center;
     align-items: center;
     margin-left: 90px;
+}
+
+#meldung5{
+    position: relative;
+    color: wheat;
+    font-size: xx-large;
+    opacity: 0.9;
+    border-radius: 1px;
+    text-align: center;
+    align-items: center;
+    margin-left: 10px;
 }
 
 .welcome .modal-title {

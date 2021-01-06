@@ -1,5 +1,9 @@
 # UNO
 GUI UNO, Web II
+
+
+
+
 ## What we've learned so far:
   
 - Anything that can go wrong, will - usually in the worst possible way.
@@ -15,6 +19,7 @@ GUI UNO, Web II
 - The subtlest bugs cause the greatest damage and problems.
   - Corollary - A subtle bug will modify storage thereby masquerading as some other problem.
 #### Murphy <3
+---------------------------------------------------------------------------------------------------
 
 
 ### more smart quotes we totally relate to   

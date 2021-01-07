@@ -9,11 +9,9 @@ let scores = [];
 
 let currentPlayer;
 let currentNum;
-let player;
 let card = {};
 
 let wildColor = '';
-let pickedColor;
 let colorRC;
 let valueRC;
 
@@ -75,8 +73,8 @@ function startGame() {
 
  startGame();
 
-const blaSub = document.getElementById('blaBtn');
-blaSub.addEventListener('click', function (evt) {
+const startBtn = document.getElementById('startBtn');
+startBtn.addEventListener('click', function (evt) {
     evt.preventDefault();
     $('#welcomeUno').modal('hide');
     $('#playerNames').modal('show');
@@ -87,21 +85,12 @@ blaSub.addEventListener('click', function (evt) {
 
      evt.preventDefault();
 
-
      player1 = document.getElementById('pn1').value;
-     players.push(player1);
-
-
      player2 = document.getElementById('pn2').value;
-     players.push(player2);
-
-
      player3 = document.getElementById('pn3').value;
-     players.push(player3);
-
-
      player4 = document.getElementById('pn4').value;
-     players.push(player4);
+     players.push(player1, player2, player3, player4);
+
 
 
 //* erstellt ein neues Array mit den Namen in kleinbuchstaben und ohne duplikate
@@ -159,7 +148,6 @@ async function startResponse() {
         pic.setAttribute('id', 'topCard');
         let center = document.getElementById('decks');
         center.appendChild(pic);
-
 
         document.getElementById('p1').innerText = player1;
         document.getElementById('p2').innerText = player2;
@@ -225,7 +213,6 @@ async function getTopCard() {
         }
     });
 
-
     if (response.ok) {
         let result = await response.json();
 
@@ -250,23 +237,6 @@ async function getTopCard() {
     } else {
         ('HTTP-Error: ' + response.status)
     }
-}
-
-function previousIndex() {
-
-    let oldIdx = players.indexOf(currentPlayer);
-    let maxIdx = (players.length - 1);
-
-    let prevIdx = oldIdx + direction;
-    if (prevIdx < 0) {
-        prevIdx = maxIdx
-    }
-    else {
-        if (prevIdx > maxIdx) {
-            prevIdx = 0
-        }
-    }
-    return prevIdx;
 }
 
 async function drawCard() {
@@ -341,12 +311,8 @@ async function getCards(player) {
 
 
 async function updatePlayground() {
-
-    let prev = previousIndex();
-
     players.forEach(function (elem) {
-        let check = players.indexOf(elem);
-        let current = players.indexOf(currentPlayer);
+
         getCards(elem)
     })
 
@@ -506,7 +472,7 @@ function winner(result) {
 function fehlerMeldung1() {
     let meldung = document.createElement('h2');
     meldung.setAttribute('id', 'meldung1');
-    meldung.innerText = 'This card doesn not match, please play a different one or draw one from the deck';
+    meldung.innerText = 'This card does not match, please play a different one or draw one from the deck';
     document.getElementById('warnings').appendChild(meldung);
     document.getElementById('meldung1').classList.add('bounce-out-top');
 
@@ -560,8 +526,8 @@ function endAnimation() {
         let ball = document.createElement("div");
         ball.classList.add("ball");
         ball.style.background = colors[Math.floor(Math.random() * colors.length)];
-        ball.style.left = `${Math.floor(Math.random() * 100)}vw`;
-        ball.style.top = `${Math.floor(Math.random() * 100)}vh`;
+        ball.style.left = `${Math.floor(Math.random() * 95)}vw`;
+        ball.style.top = `${Math.floor(Math.random() * 80)}vh`;
         ball.style.transform = `scale(${Math.random()})`;
         ball.style.width = `${Math.random()}em`;
         ball.style.height = ball.style.width;

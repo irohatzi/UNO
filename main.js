@@ -105,10 +105,16 @@ blaSub.addEventListener('click', function (evt) {
 
 
 //* erstellt ein neues Array mit den Namen in kleinbuchstaben und ohne duplikate
-let nameCheck = players.join(',').toLowerCase().split(',').sort().join(',').replace(/(([^,]+),)(?=\2)/g, '').split(',');
+// let nameCheck = players.join(',').toLowerCase().split(',').sort().join(',').replace(/(([^,]+),)(?=\2)/g, '').split(',');
 
-if (nameCheck.length < players.length) {
+let valueArr = players.map(function(item){ return item});
+let isDuplicate = valueArr.some(function(item, idx){ 
+    return valueArr.indexOf(item) != idx 
+});
 
+console.log(isDuplicate);
+//if (nameCheck.length < players.length) {
+if (isDuplicate) {
     fehlerMeldung5();
     players = [];
     $('#playerNamesForm')[0].reset();
